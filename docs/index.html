@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="app-version" content="1.3.0">
 <meta name="theme-color" content="#f8f6f1">
 <meta name="description" content="A little practice, a little confidence. English-to-Spanish flashcards and spelling practice for Unit 1.">
 <meta name="apple-mobile-web-app-title" content="Alaina’s Spanish">
@@ -40,6 +41,11 @@
 .progress-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.progress-mini{background:var(--paper);border-radius:13px;padding:11px;text-align:center}.progress-mini strong{display:block;font-size:20px;color:var(--purple-dark)}.progress-mini small{font-size:9px;color:var(--muted)}
 .badge-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.badge-card{border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;gap:11px;align-items:flex-start}.badge-card.locked{opacity:.5;background:#faf9fb}.badge-icon{width:38px;height:38px;border-radius:12px;background:var(--lavender);display:grid;place-items:center;font-size:20px;flex:none}.badge-card.unlocked .badge-icon{background:#fff0cf}.badge-card strong{display:block;font-size:13px}.badge-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.4}
 @media(max-width:590px){.progress-card{padding:14px}.progress-grid{grid-template-columns:1fr 1fr}.badge-grid{grid-template-columns:1fr}}
+
+/* Listen & Spell keeps the answer out of the visual and accessible prompt. */
+.mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.mode-card:nth-child(3) .mode-icon{background:var(--mint);color:var(--green)}
+.listen-prompt{text-align:center;padding:5px 0 18px}.listen-emblem{display:flex;justify-content:center;align-items:center;width:68px;height:68px;background:var(--mint);color:var(--green);border-radius:22px;margin:17px auto 14px}.listen-emblem .icon{width:31px;height:31px}.listen-prompt h2{font-size:25px;margin-bottom:6px}.listen-prompt p{font-size:12px;color:var(--muted);margin-bottom:12px}.listen-play{min-width:210px;min-height:50px}.listen-prompt .listen-status{margin:12px 0 0;min-height:20px;font-size:12px}.listen-prompt .listen-error{color:var(--red);margin:10px 0 0;font-size:12px}.listen-play:disabled{opacity:.65}
+@media(max-width:590px){.mode-grid{grid-template-columns:1fr 1fr}.mode-card:nth-child(3){grid-column:1/-1;display:flex;gap:14px;align-items:center}.mode-card:nth-child(3) .mode-icon{margin-bottom:0}.mode-card:nth-child(3)>div{padding-right:9px}.listen-prompt h2{font-size:23px}}
 </style>
 </head>
 <body>
@@ -130,7 +136,7 @@ const paths = {
   flip:'<path d="M4 8a8 8 0 0 1 14-3l3 3M3 3v5h5m12 8a8 8 0 0 1-14 3l-3-3m18 5v-5h-5"/>'
 };
 const icon = (name) => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${paths[name]||paths.sparkle}</svg>`;
-const freshProgress = () => ({items:{},rounds:0,lastQuiz:null,perfectRounds:0});
+const freshProgress = () => ({items:{},rounds:0,lastQuiz:null,perfectRounds:0,listeningRounds:0,lastListening:null});
 let storageAvailable = true, saved = null;
 try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); }
 catch (_) { storageAvailable = false; }
@@ -138,10 +144,11 @@ let progress = saved?.progress && typeof saved.progress.items === 'object' && sa
   ? saved.progress : freshProgress();
 progress.rounds = Number.isFinite(progress.rounds) ? progress.rounds : 0;
 progress.perfectRounds = Number.isFinite(progress.perfectRounds) ? progress.perfectRounds : 0;
+progress.listeningRounds = Number.isFinite(progress.listeningRounds) ? progress.listeningRounds : 0;
 const validIds = new Set(DATA.categories.map(c => c.id));
 const storedCategories = Array.isArray(saved?.settings?.categories) ? saved.settings.categories.filter(id => validIds.has(id)) : [];
 const settings = {
-  mode: saved?.settings?.mode === 'quiz' ? 'quiz' : 'flashcards',
+  mode: ['quiz','listening'].includes(saved?.settings?.mode) ? saved.settings.mode : 'flashcards',
   length: ['10','20','all'].includes(saved?.settings?.length) ? saved.settings.length : '10',
   categories: storedCategories.length ? storedCategories : DATA.categories.map(c=>c.id),
   speed: ['0.75','0.9','1'].includes(saved?.settings?.speed) ? saved.settings.speed : '0.9',
@@ -150,6 +157,65 @@ const settings = {
 let view = 'home', onlyReview = false, session = null, wordFilter = '', wordQuery = '';
 let lastOrder = [], activeUtterance = null, toastTimer = null, speechSerial = 0;
 let afterConfirm = null;
+/* Inlined inside the app closure. One initial play plus three replays. */
+const LISTEN_LIMIT = 4;
+let cancelListeningAttempt = null;
+const isSpellingMode = mode => mode === 'quiz' || mode === 'listening';
+const modeTitle = mode => mode === 'listening' ? 'Listen & Spell' : mode === 'quiz' ? 'Spelling quiz' : 'Flashcards';
+function prepareListeningQuestion() {
+  if (session.mode !== 'listening') return;
+  const card = session.cards[session.index];
+  const formIndex = Math.floor(Math.random() * card.forms.length);
+  session.listening = {formIndex, form:card.forms[formIndex], plays:0, busy:false, message:''};
+}
+function listeningPromptHTML() {
+  return `<div class="listen-prompt"><span class="card-language">LISTEN IN SPANISH</span>
+    <div class="listen-emblem" aria-hidden="true">${icon('sound')}</div>
+    <h2>Listen, then spell.</h2><p>No written clues. Take your time.</p>
+    <button type="button" class="secondary listen-play" id="listen-play" data-action="listen-play" aria-describedby="listen-status">${icon('sound')} Play Spanish</button>
+    <p id="listen-status" class="listen-status" role="status" aria-live="polite">One first listen + 3 replays.</p>
+    <p id="listen-error" class="listen-error" role="status" hidden></p></div>`;
+}
+function updateListeningControls() {
+  const q=session?.listening, play=document.getElementById('listen-play');
+  if (!q || !play || view !== 'practice' || session.checked) return;
+  const remaining=Math.max(0,LISTEN_LIMIT-q.plays);
+  play.disabled=q.busy || remaining===0;
+  play.innerHTML=icon('sound')+' '+(q.busy?'Playing Spanish…':!q.plays?'Play Spanish':remaining?`Play again (${remaining} left)`:'No replays left');
+  document.getElementById('listen-status').textContent=q.busy?'Listen carefully.':!q.plays?'One first listen + 3 replays.':remaining?`${remaining} ${remaining===1?'replay':'replays'} left for this question.`:'All 4 listens used. Now spell what you heard.';
+  const message=document.getElementById('listen-error'); message.textContent=q.message; message.hidden=!q.message;
+  document.getElementById('quiz-submit').disabled=q.busy || !q.plays;
+}
+function playListeningQuestion() {
+  const q=session?.listening;
+  if (view!=='practice' || session?.mode!=='listening' || session.checked || !q || q.busy || q.plays>=LISTEN_LIMIT) return;
+  q.busy=true; q.message=''; updateListeningControls();
+  let settled=false, startTimer=null, endTimer=null;
+  const finish=(success,message='')=>{
+    if (settled) return; settled=true;
+    clearTimeout(startTimer); clearTimeout(endTimer);
+    if (cancelListeningAttempt===cancel) cancelListeningAttempt=null;
+    q.busy=false;
+    if (session?.listening!==q || session.checked || view!=='practice') return;
+    if (success) q.plays++;
+    q.message=message; updateListeningControls();
+  };
+  const cancel=()=>finish(false,'Audio paused. Tap Play Spanish to try again. This listen was not used.');
+  const failed=()=>finish(false,'Audio did not finish. Check your volume or Spanish voice in Settings, then tap Play Spanish. This listen was not used.');
+  const timedOut=()=>{failed(); stopSpeech();};
+  startTimer=setTimeout(timedOut,6000);
+  speak(q.form,{
+    onStart:()=>{if(settled)return;clearTimeout(startTimer);endTimer=setTimeout(timedOut,30000);},
+    onEnd:()=>finish(true),
+    onFailure:failed
+  });
+  if (!settled) cancelListeningAttempt=cancel;
+}
+function heardAudioHTML(card) {
+  const q=session.listening;
+  return `<div class="audio-group"><button class="audio-button" type="button" data-action="speak" data-card="${e(card.id)}" data-form="${q.formIndex}" aria-label="Listen to the answer again">${icon('sound')} Listen to the answer</button></div>`;
+}
+
 
 function save() {
   try { localStorage.setItem(STORE,JSON.stringify({settings,progress})); storageAvailable=true; }
@@ -162,6 +228,7 @@ function toast(message) {
 }
 function announce(message) { document.getElementById('announcer').textContent=message; }
 function stopSpeech() {
+  if(cancelListeningAttempt){const cancel=cancelListeningAttempt;cancelListeningAttempt=null;cancel();}
   speechSerial++;
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   activeUtterance=null;
@@ -170,9 +237,9 @@ function spanishVoices() {
   try { return window.speechSynthesis?.getVoices().filter(v=>/^es(?:[-_]|$)/i.test(v.lang)) || []; }
   catch (_) { return []; }
 }
-function speak(text) {
+function speak(text, hooks={}) {
   if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
-    toast('Spanish audio is not available in this browser. Try Safari, Chrome, or Edge.'); return;
+    toast('Spanish audio is not available in this browser. Try Safari, Chrome, or Edge.'); hooks.onFailure?.(); return;
   }
   stopSpeech();
   const serial=speechSerial;
@@ -182,22 +249,22 @@ function speak(text) {
     ||voices.find(v=>/^es[-_]US$/i.test(v.lang))
     ||voices.find(v=>!/^es[-_]ES$/i.test(v.lang))||voices[0];
   if (!selected && window.speechSynthesis.getVoices().length) {
-    toast('This browser has no Spanish voice installed. Add a Spanish voice in your device’s speech settings, then reopen the app.'); return;
+    toast('This browser has no Spanish voice installed. Add a Spanish voice in your device’s speech settings, then reopen the app.'); hooks.onFailure?.(); return;
   }
   const utterance=new SpeechSynthesisUtterance(text);
   utterance.lang=selected?.lang || 'es-MX';
   if (selected) utterance.voice=selected;
   utterance.rate=Number(settings.speed); utterance.pitch=1; utterance.volume=1;
-  utterance.onstart=()=>{if(serial===speechSerial)announce('Playing Spanish pronunciation.');};
-  utterance.onend=()=>{if(serial===speechSerial){activeUtterance=null;announce('Pronunciation finished.');}};
+  utterance.onstart=()=>{if(serial===speechSerial){announce('Playing Spanish pronunciation.');hooks.onStart?.();}};
+  utterance.onend=()=>{if(serial===speechSerial){activeUtterance=null;announce('Pronunciation finished.');hooks.onEnd?.();}};
   utterance.onerror=(event)=>{
     if (serial!==speechSerial || ['canceled','interrupted'].includes(event.error)) return;
     activeUtterance=null;
-    toast('Audio did not play. Check your volume and Spanish voice in Settings, or try opening the app in your browser.');
+    toast('Audio did not play. Check your volume and Spanish voice in Settings, or try opening the app in your browser.');hooks.onFailure?.();
   };
   activeUtterance=utterance; // Keep the utterance alive on WebKit.
   try { window.speechSynthesis.resume(); window.speechSynthesis.speak(utterance); }
-  catch (_) { toast('Audio could not start. Try the pronunciation test in Settings.'); }
+  catch (_) { toast('Audio could not start. Try the pronunciation test in Settings.');hooks.onFailure?.(); }
 }
 function categoryName(card) { return byCategory.get(card.category).name; }
 function categoryPill(card) { return `<span class="pill">${e(categoryName(card))}</span>`; }
@@ -208,7 +275,7 @@ function achievements(){const explored=exploredTotal(),quiz=quizCorrectTotal();r
  {id:'first',icon:'🌱',name:'First Step',desc:'Practice your first card.',unlocked:explored>=1},
  {id:'round',icon:'⭐',name:'Round One',desc:'Finish your first practice round.',unlocked:progress.rounds>=1},
  {id:'explorer',icon:'🗺️',name:'Word Explorer',desc:'Explore 25 different cards.',unlocked:explored>=25},
- {id:'quiz10',icon:'✏️',name:'Spelling Starter',desc:'Get 10 quiz answers correct.',unlocked:quiz>=10},
+ {id:'quiz10',icon:'✏️',name:'Spelling Starter',desc:'Get 10 spelling answers correct.',unlocked:quiz>=10},
  {id:'half',icon:'🚀',name:'Halfway Hero',desc:'Explore 75 different cards.',unlocked:explored>=75},
  {id:'perfect',icon:'🏆',name:'Perfect Round',desc:'Finish a round without missing a word.',unlocked:progress.perfectRounds>=1},
  {id:'century',icon:'💯',name:'Century Club',desc:'Explore 100 different cards.',unlocked:explored>=100},
@@ -220,8 +287,10 @@ function audioGroup(card) {
 }
 function record(card, correct, kind) {
   const old=progress.items[card.id]||{};
-  progress.items[card.id]={seen:(Number(old.seen)||0)+1,needsReview:!correct,
-    quizCorrect:(Number(old.quizCorrect)||0)+(kind==='quiz'&&correct?1:0)};
+  progress.items[card.id]={...old,seen:(Number(old.seen)||0)+1,needsReview:!correct,
+    quizCorrect:(Number(old.quizCorrect)||0)+(isSpellingMode(kind)&&correct?1:0),
+    listeningCorrect:(Number(old.listeningCorrect)||0)+(kind==='listening'&&correct?1:0),
+    listeningAttempts:(Number(old.listeningAttempts)||0)+(kind==='listening'?1:0)};
   save();
 }
 function mount(html, focus=true) {
@@ -245,19 +314,19 @@ function renderHome() {
     </figure>
     </section>
     <section class="home-bottom" aria-label="How it works"><div class="step"><span class="step-badge">01</span><div><strong>Flip & discover</strong><p>Say the word. Tap to check.</p></div></div><div class="step"><span class="step-badge">02</span><div><strong>Listen & learn</strong><p>Hear each word in Spanish.</p></div></div><div class="step"><span class="step-badge">03</span><div><strong>Try it yourself</strong><p>A spelling quiz, at your pace.</p></div></div></section>
-    ${explored?`<section class="progress-card" aria-label="Saved practice progress"><div class="progress-card-top"><h2>Your progress</h2><button class="text-button" data-action="achievements">Achievements ${achievementCount()}/8 →</button></div><div class="progress-meter" role="progressbar" aria-label="Cards explored" aria-valuemin="0" aria-valuemax="${CARDS.length}" aria-valuenow="${explored}"><span style="width:${explored/CARDS.length*100}%"></span></div><div class="progress-grid"><div class="progress-mini"><strong>${explored}</strong><small>cards explored</small></div><div class="progress-mini"><strong>${quizCorrectTotal()}</strong><small>quiz answers right</small></div><div class="progress-mini"><strong>${needsReviewCards().length}</strong><small>to revisit</small></div><div class="progress-mini"><strong>${progress.rounds}</strong><small>rounds finished</small></div></div></section>`:''}
+    ${explored?`<section class="progress-card" aria-label="Saved practice progress"><div class="progress-card-top"><h2>Your progress</h2><button class="text-button" data-action="achievements">Achievements ${achievementCount()}/8 →</button></div><div class="progress-meter" role="progressbar" aria-label="Cards explored" aria-valuemin="0" aria-valuemax="${CARDS.length}" aria-valuenow="${explored}"><span style="width:${explored/CARDS.length*100}%"></span></div><div class="progress-grid"><div class="progress-mini"><strong>${explored}</strong><small>cards explored</small></div><div class="progress-mini"><strong>${quizCorrectTotal()}</strong><small>spelling answers right</small></div><div class="progress-mini"><strong>${needsReviewCards().length}</strong><small>to revisit</small></div><div class="progress-mini"><strong>${progress.rounds}</strong><small>rounds finished</small></div></div></section>`:''}
   </div>`);
 }
 function renderSetup(focus=true) {
   const reviewCount=needsReviewCards().length;
   if(!reviewCount)onlyReview=false;
   mount(`<section class="appear" aria-labelledby="setup-heading"><div class="view-top"><div><p class="eyebrow">One word at a time</p><h1 id="setup-heading">How shall we practice?</h1><p>Choose a mode, pick your topics, and make it your own.</p></div><button class="text-button" data-action="word-list">${icon('book')} Word list</button></div>
-    <div class="mode-grid" aria-label="Practice mode">${['flashcards','quiz'].map((mode,i)=>`<button class="mode-card" data-action="mode" data-mode="${mode}" aria-pressed="${settings.mode===mode}"><span class="mode-icon">${icon(i?'pencil':'cards')}</span><div><div class="mode-number">0${i+1} · ${i?'TEST YOURSELF':'GET COMFORTABLE'}</div><h2>${i?'Spelling quiz':'Flashcards'}</h2><p>${i?'Type the Spanish word. Check your spelling and accents.':'Say it, flip it, then listen. Keep practicing the tricky ones.'}</p></div><span class="mode-check">${settings.mode===mode?icon('check'):''}</span></button>`).join('')}</div>
+    <div class="mode-grid" aria-label="Practice mode">${['flashcards','quiz','listening'].map((mode,i)=>`<button class="mode-card" data-action="mode" data-mode="${mode}" aria-pressed="${settings.mode===mode}"><span class="mode-icon">${icon(i===2?'sound':i?'pencil':'cards')}</span><div><div class="mode-number">0${i+1} · ${i===2?'TRAIN YOUR EAR':i?'TEST YOURSELF':'GET COMFORTABLE'}</div><h2>${modeTitle(mode)}</h2><p>${i===2?'Hear Spanish, then spell it. One first listen + 3 replays.':i?'Type the Spanish word. Check your spelling and accents.':'Say it, flip it, then listen. Keep practicing the tricky ones.'}</p></div><span class="mode-check">${settings.mode===mode?icon('check'):''}</span></button>`).join('')}</div>
     <div class="setup-panel"><div class="section-label"><h2>What’s on your test?</h2><button class="text-button" data-action="toggle-topics">${settings.categories.length===DATA.categories.length?'Clear selection':'Select all topics'}</button></div>
     <div class="topic-grid">${DATA.categories.map(c=>`<label class="topic"><input type="checkbox" name="topic" value="${c.id}" ${settings.categories.includes(c.id)?'checked':''}><span class="topic-label">${e(c.name)}<small>${e(c.description)}</small></span><span class="topic-count">${c.count}</span></label>`).join('')}</div>
     <div class="setup-options"><div class="round-length"><span class="round-label">Words per round</span><div class="segmented" aria-label="Words per round">${['10','20','all'].map(n=>`<button data-action="length" data-length="${n}" aria-pressed="${settings.length===n}">${n==='all'?'All':n}</button>`).join('')}</div></div><label class="review-toggle"><input id="only-review" type="checkbox" ${onlyReview?'checked':''} ${reviewCount?'':'disabled'}><span>Just my tricky words<small>${reviewCount?reviewCount+' saved to revisit':'Tricky words will appear as you practice'}</small></span></label></div>
     </div><div id="setup-error" class="error-inline" role="status"></div>
-    <div class="setup-bottom"><p id="setup-note">Every new round is shuffled. Accents count in the quiz.<br>Either listed word form is accepted; el / la is optional.</p><button class="primary" id="begin-round" data-action="begin"></button></div>
+    <div class="setup-bottom"><p id="setup-note">${settings.mode==='listening'?'The first listen plays when each question opens. You can replay it 3 more times.<br>Spell the exact form you hear; el / la is optional.':'Every new round is shuffled. Accents count in the quiz.<br>Either listed word form is accepted; el / la is optional.'}</p><button class="primary" id="begin-round" data-action="begin"></button></div>
   </section>`,focus);
   updateSetupCount();
 }
@@ -267,7 +336,7 @@ function updateSetupCount() {
   const amount=settings.length==='all'?pool.length:Math.min(pool.length,Number(settings.length));
   const button=document.getElementById('begin-round');
   if(!button)return;
-  button.innerHTML=`Start ${amount} ${settings.mode==='quiz'?(amount===1?'question':'questions'):(amount===1?'flashcard':'flashcards')} ${icon('arrow')}`;
+  button.innerHTML=`Start ${amount} ${isSpellingMode(settings.mode)?(amount===1?'question':'questions'):(amount===1?'flashcard':'flashcards')} ${icon('arrow')}`;
   button.disabled=!amount;
   document.getElementById('setup-error').textContent=pool.length?'':onlyReview?'No tricky words in these topics yet. Turn off “Just my tricky words” or choose other topics.':'Choose at least one topic to begin.';
 }
@@ -278,14 +347,15 @@ function beginRound(overridePool=null, overrideMode=null, retry=false) {
   const cards=makeRound(pool,retry?'all':settings.length,lastOrder);
   lastOrder=cards.map(c=>c.id);
   session={mode:overrideMode||settings.mode,cards,index:0,responses:[],revealed:false,checked:false,feedback:null,input:'',originalPool:[...pool],retry};
-  view='practice';renderPractice();
+  view='practice';prepareListeningQuestion();renderPractice();
+  if(session.mode==='listening')playListeningQuestion();
 }
 function renderPractice() {
   const card=session.cards[session.index];
   const total=session.cards.length;
   const percent=session.index/total*100;
-  mount(`<section class="practice appear" aria-label="${session.mode==='quiz'?'Spelling quiz':'Flashcard practice'}"><div class="practice-top"><button class="text-button" data-action="leave">${icon('back')} My topics</button><h1>${session.mode==='quiz'?'Spelling quiz':'Flashcards'}</h1><span class="pill">${session.retry?'Review round':'Your pace'}</span></div><div class="practice-progress-label"><span>${session.mode==='quiz'?'Question':'Card'} ${session.index+1} of ${total}</span><span>${total-session.index} ${total-session.index===1?'word':'words'} to go</span></div><div class="progress-track" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${session.index}"><span style="width:${percent}%"></span></div><div class="card-meta">${categoryPill(card)}<span class="quiet">English → Spanish</span></div>${session.mode==='quiz'?quizHTML(card):flashHTML(card)}</section>`);
-  if(session.mode==='quiz') {
+  mount(`<section class="practice appear" aria-label="${modeTitle(session.mode)}"><div class="practice-top"><button class="text-button" data-action="leave">${icon('back')} My topics</button><h1>${modeTitle(session.mode)}</h1><span class="pill">${session.retry?'Review round':'Your pace'}</span></div><div class="practice-progress-label"><span>${isSpellingMode(session.mode)?'Question':'Card'} ${session.index+1} of ${total}</span><span>${total-session.index} ${total-session.index===1?'word':'words'} to go</span></div><div class="progress-track" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${session.index}"><span style="width:${percent}%"></span></div><div class="card-meta">${categoryPill(card)}<span class="quiet">${session.mode==='listening'?'Audio → Spanish spelling':'English → Spanish'}</span></div>${isSpellingMode(session.mode)?quizHTML(card):flashHTML(card)}</section>`);
+  if(isSpellingMode(session.mode)) {
     // Do not pop up the phone keyboard before the learner is ready.
     if (matchMedia('(hover: hover)').matches) document.getElementById('answer-input').focus({preventScroll:true});
   }
@@ -320,45 +390,55 @@ function rateCard(correct, skipped=false) {
   nextCard();
 }
 function quizHTML(card) {
-  return `<form id="quiz-form" novalidate><div class="quiz-card"><div class="quiz-prompt"><span class="card-language">HOW DO YOU WRITE THIS IN SPANISH?</span><div class="card-word ${card.en.length>24?'long':''}">${e(card.en)}</div>${card.number?`<div class="number-caption">${card.number}</div>`:''}</div>
+  return `<form id="quiz-form" novalidate><div class="quiz-card">${session.mode==='listening'?listeningPromptHTML():`<div class="quiz-prompt"><span class="card-language">HOW DO YOU WRITE THIS IN SPANISH?</span><div class="card-word ${card.en.length>24?'long':''}">${e(card.en)}</div>${card.number?`<div class="number-caption">${card.number}</div>`:''}</div>`}
     <label class="answer-label" for="answer-input">Your Spanish answer</label><input class="answer-input" id="answer-input" name="answer" type="text" placeholder="Type the Spanish here…" lang="es" maxlength="180" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" aria-describedby="answer-hint answer-error">
-    <div class="accent-keys" aria-label="Spanish accent letters">${['á','é','í','ó','ú','ü','ñ'].map(letter=>`<button type="button" class="accent-key" data-action="accent" data-letter="${letter}" aria-label="Insert ${letter}">${letter}</button>`).join('')}</div><p class="answer-hint" id="answer-hint">Use a word or phrase from your worksheet. Write one form, not both. Accents, ñ, and ü count; el / la is optional.</p><div id="answer-error" class="error-inline" role="status"></div><div id="quiz-feedback" aria-live="polite" aria-atomic="true"></div><button class="primary quiz-submit" id="quiz-submit" type="button" data-action="quiz-submit">Check my answer ${icon('check')}</button></div><div class="quiz-skip"><button type="button" class="text-button" id="quiz-skip" data-action="quiz-skip">I’m not sure — show me</button></div></form>`;
+    <div class="accent-keys" aria-label="Spanish accent letters">${['á','é','í','ó','ú','ü','ñ'].map(letter=>`<button type="button" class="accent-key" data-action="accent" data-letter="${letter}" aria-label="Insert ${letter}">${letter}</button>`).join('')}</div><p class="answer-hint" id="answer-hint">${session.mode==='listening'?'Spell the exact word or phrase you heard, including accents, ñ, and ü. El / la is optional.':'Use a word or phrase from your worksheet. Write one form, not both. Accents, ñ, and ü count; el / la is optional.'}</p><div id="answer-error" class="error-inline" role="status"></div><div id="quiz-feedback" aria-live="polite" aria-atomic="true"></div><button class="primary quiz-submit" id="quiz-submit" type="button" data-action="quiz-submit">Check my answer ${icon('check')}</button></div><div class="quiz-skip"><button type="button" class="text-button" id="quiz-skip" data-action="quiz-skip">I’m not sure — show me</button></div></form>`;
 }
 function checkAnswer(skipped=false) {
-  if(!session||session.mode!=='quiz'||session.checked)return;
+  if(!session||!isSpellingMode(session.mode)||session.checked)return;
+  if(session.mode==='listening'&&!skipped&&(!session.listening.plays||session.listening.busy))return;
   const input=document.getElementById('answer-input');
   const card=session.cards[session.index];
   const typed=input.value;
-  const result=skipped?{status:'skipped'}:grade(card,typed);
+  const listening=session.mode==='listening';
+  const heard=listening?session.listening.form:null;
+  const expected=listening?{...card,forms:[heard],alternatives:[]}:card;
+  const result=skipped?{status:'skipped'}:grade(expected,typed);
   if(result.status==='empty'){
     document.getElementById('answer-error').textContent='Try an answer, or tap “I’m not sure — show me.”';
     input.focus();return;
   }
+  stopSpeech();
   session.checked=true;session.input=typed;session.feedback=result;
+  if(listening){document.getElementById('listen-play').disabled=true;document.getElementById('listen-status').textContent='Answer revealed — listen again below to learn it.';document.getElementById('listen-error').hidden=true;}
   const correct=result.status==='correct';
-  session.responses.push({id:card.id,correct,status:result.status,input:typed});
-  record(card,correct,'quiz');
+  session.responses.push({id:card.id,correct,status:result.status,input:typed,...(listening?{heard}: {})});
+  record(card,correct,session.mode);
   input.disabled=true; input.classList.add(correct?'is-correct':'is-wrong');
   document.getElementById('answer-error').textContent='';
   document.querySelectorAll('.accent-key').forEach(button=>button.disabled=true);
   const heading=correct?'You got it!':result.status==='accent'?'Almost — check the accent marks.':result.status==='skipped'?'Let’s learn this one.':'Not quite — here’s the word.';
   const helper=correct?'That spelling is correct.':result.status==='accent'?'An accent mark or the dots on ü need a little attention. This goes into your review pile.':'Read it, listen to it, and give it another go in your review round.';
-  document.getElementById('quiz-feedback').innerHTML=`<div class="feedback ${correct?'correct':''}"><div class="feedback-heading">${icon(correct?'check':'info')}${heading}</div><p>${helper}</p><p class="feedback-answer" lang="es">${card.forms.map(e).join(' <span class="muted">/</span> ')}</p>${audioGroup(card)}${card.note?`<p class="study-note">${e(card.note)}</p>`:''}</div>`;
+  document.getElementById('quiz-feedback').innerHTML=`<div class="feedback ${correct?'correct':''}"><div class="feedback-heading">${icon(correct?'check':'info')}${heading}</div><p>${helper}</p>${listening?`<p>Meaning: ${e(card.en)}</p>`:''}<p class="feedback-answer" lang="es">${expected.forms.map(e).join(' <span class="muted">/</span> ')}</p>${listening?heardAudioHTML(card):audioGroup(card)}${listening?'<p class="study-note">Spell the form in the audio, not a different gender or synonym. El / la is optional.</p>':card.note?`<p class="study-note">${e(card.note)}</p>`:''}</div>`;
   const next=document.getElementById('quiz-submit');
+  next.disabled=false;
   next.innerHTML=`${session.index===session.cards.length-1?'See my results':'Next word'} ${icon('arrow')}`;
   document.getElementById('quiz-skip').hidden=true;
   next.focus({preventScroll:true});
 }
 function nextCard() {
-  if(!session)return;
+  if(!session||view!=='practice'||(isSpellingMode(session.mode)&&!session.checked))return;
   stopSpeech();
   session.index++;
   if(session.index>=session.cards.length){finishRound();return;}
   session.revealed=false;session.checked=false;session.feedback=null;session.input='';
-  renderPractice();
+  prepareListeningQuestion();renderPractice();
+  if(session.mode==='listening')playListeningQuestion();
 }
 function finishRound() {
+  if(!session||view==='results')return;
   view='results';progress.rounds++;
+  if(session.mode==='listening'){progress.listeningRounds++;progress.lastListening={correct:session.responses.filter(r=>r.correct).length,total:session.cards.length};}
   if(session.responses.length===session.cards.length && session.responses.every(r=>r.correct))progress.perfectRounds++;
   if(session.mode==='quiz')progress.lastQuiz={correct:session.responses.filter(r=>r.correct).length,total:session.cards.length};
   save();renderResults();
@@ -366,11 +446,11 @@ function finishRound() {
 function renderResults() {
   const missed=session.responses.filter(r=>!r.correct);
   const correct=session.responses.length-missed.length;
-  const quiz=session.mode==='quiz';
+  const quiz=isSpellingMode(session.mode);
   const allRight=!missed.length;
   mount(`<section class="results appear"><div class="results-hero"><span class="results-emblem" aria-hidden="true">✦</span><h1>${allRight?'Look at you go, Alaina!':'A little more confident.'}</h1><p>${allRight?'You finished the whole round. Take a breath — that’s real progress.':'Every tricky word is a chance to learn. Your review pile is ready whenever you are.'}</p></div><div class="result-stats"><div class="stat-tile"><strong>${correct}<span class="muted"> / ${session.cards.length}</span></strong><small>${quiz?'correct spellings':'cards you said you knew'}</small></div><div class="stat-tile"><strong>${missed.length}</strong><small>${missed.length===1?'word':'words'} to revisit in this round</small></div></div>
     <div class="result-actions">${missed.length?`<button class="primary" data-action="retry-missed">${quiz?'Retry tricky spellings':'Review tricky flashcards'} ${icon('repeat')}</button>${quiz?`<button class="secondary" data-action="learn-missed">${icon('cards')} Learn them first</button>`:''}`:`<button class="primary" data-action="play-again">Try a new shuffled round ${icon('arrow')}</button>`}<button class="secondary" data-action="new-topics">Choose topics</button>${missed.length?'<button class="text-button" data-action="play-again">New shuffled round</button>':''}</div>
-    ${missed.length?`<div class="review-list"><h2>Your little review pile</h2>${missed.map(r=>{const c=byId.get(r.id);return `<div class="review-row"><div><h3>${e(c.en)} <span class="word-category muted">· ${e(categoryName(c))}</span></h3>${quiz?`<p>Your answer: ${r.status==='skipped'?'Skipped':e(r.input)}</p>`:''}<p class="correct-answer" lang="es">${c.forms.map(e).join(' / ')}</p>${r.status==='accent'?'<p>Watch the accent marks.</p>':''}</div><button class="icon-button" data-action="speak" data-card="${e(c.id)}" data-form="0" aria-label="Pronounce ${e(c.forms[0])} in Spanish">${icon('sound')}</button></div>`;}).join('')}</div>`:'<p class="study-note" style="margin-top:24px">A short break counts, too. Come back when you’re ready.</p>'}</section>`);
+    ${missed.length?`<div class="review-list"><h2>Your little review pile</h2>${missed.map(r=>{const c=byId.get(r.id);return `<div class="review-row"><div><h3>${e(c.en)} <span class="word-category muted">· ${e(categoryName(c))}</span></h3>${quiz?`<p>Your answer: ${r.status==='skipped'?'Skipped':e(r.input)}</p>`:''}<p class="correct-answer" lang="es">${r.heard?e(r.heard):c.forms.map(e).join(' / ')}</p>${r.status==='accent'?'<p>Watch the accent marks.</p>':''}</div><button class="icon-button" data-action="speak" data-card="${e(c.id)}" data-form="${r.heard?Math.max(0,c.forms.indexOf(r.heard)):0}" aria-label="Pronounce ${e(c.forms[0])} in Spanish">${icon('sound')}</button></div>`;}).join('')}</div>`:'<p class="study-note" style="margin-top:24px">A short break counts, too. Come back when you’re ready.</p>'}</section>`);
 }
 function openWordList() {
   stopSpeech();view='words';wordQuery='';wordFilter='';
@@ -415,6 +495,7 @@ function handleAction(event) {
   const button=event.target.closest('[data-action]');
   if(!button||button.disabled)return;
   const action=button.dataset.action;
+  if(action==='speak'&&session?.mode==='listening'&&view==='practice'&&!session.checked)return;
   if(action==='speak') { const c=byId.get(button.dataset.card); if(c)speak(c.forms[Number(button.dataset.form)||0]); return; }
   switch(action) {
     case 'start':goSetup();break;
@@ -425,6 +506,7 @@ function handleAction(event) {
     case 'flip':flipCard();break;
     case 'rate':rateCard(button.dataset.correct==='true');break;
     case 'flash-skip':rateCard(false,true);break;
+    case 'listen-play':playListeningQuestion();break;
     case 'quiz-submit':session?.checked?nextCard():checkAnswer();break;
     case 'quiz-skip':checkAnswer(true);break;
     case 'accent': {
@@ -477,6 +559,7 @@ document.getElementById('open-about').addEventListener('click',openAbout);
 modal.addEventListener('cancel',()=>{afterConfirm=null;stopSpeech();});
 modal.addEventListener('click',event=>{if(event.target===modal){const r=modal.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeModal();}});
 window.addEventListener('pagehide',stopSpeech);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&session?.mode==='listening')stopSpeech();});
 if('speechSynthesis' in window){window.speechSynthesis.addEventListener('voiceschanged',updateVoiceOptions);spanishVoices();}
 // Progressive enhancement: the standalone HTML works without these hosted files.
 if(/^https?:$/.test(location.protocol)) {
