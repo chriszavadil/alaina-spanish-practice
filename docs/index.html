@@ -32,6 +32,14 @@
 /* Comfortable touch areas, including accented letters and audio controls. */
 @media(pointer:coarse){.icon-button,.word-form .icon-button{min-width:44px;min-height:44px}.accent-key{min-height:44px;min-width:38px;padding:8px 9px}.segmented button{min-height:44px}.text-button{min-height:44px}.setting-select{font-size:16px}}
 @media(max-width:355px){.accent-key{min-width:32px;padding-left:6px;padding-right:6px}.accent-keys{gap:5px}}
+
+/* Progress dashboard and achievements */
+.progress-card{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.progress-card-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.progress-card-top h2{font-size:18px;margin:0}.progress-card-top .text-button{font-size:11px}
+.progress-meter{height:8px;background:#e8e1ee;border-radius:99px;overflow:hidden}.progress-meter>span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),#9d83cf);border-radius:99px}
+.progress-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.progress-mini{background:var(--paper);border-radius:13px;padding:11px;text-align:center}.progress-mini strong{display:block;font-size:20px;color:var(--purple-dark)}.progress-mini small{font-size:9px;color:var(--muted)}
+.badge-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.badge-card{border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;gap:11px;align-items:flex-start}.badge-card.locked{opacity:.5;background:#faf9fb}.badge-icon{width:38px;height:38px;border-radius:12px;background:var(--lavender);display:grid;place-items:center;font-size:20px;flex:none}.badge-card.unlocked .badge-icon{background:#fff0cf}.badge-card strong{display:block;font-size:13px}.badge-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.4}
+@media(max-width:590px){.progress-card{padding:14px}.progress-grid{grid-template-columns:1fr 1fr}.badge-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -122,13 +130,14 @@ const paths = {
   flip:'<path d="M4 8a8 8 0 0 1 14-3l3 3M3 3v5h5m12 8a8 8 0 0 1-14 3l-3-3m18 5v-5h-5"/>'
 };
 const icon = (name) => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${paths[name]||paths.sparkle}</svg>`;
-const freshProgress = () => ({items:{},rounds:0,lastQuiz:null});
+const freshProgress = () => ({items:{},rounds:0,lastQuiz:null,perfectRounds:0});
 let storageAvailable = true, saved = null;
 try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); }
 catch (_) { storageAvailable = false; }
 let progress = saved?.progress && typeof saved.progress.items === 'object' && saved.progress.items
   ? saved.progress : freshProgress();
 progress.rounds = Number.isFinite(progress.rounds) ? progress.rounds : 0;
+progress.perfectRounds = Number.isFinite(progress.perfectRounds) ? progress.perfectRounds : 0;
 const validIds = new Set(DATA.categories.map(c => c.id));
 const storedCategories = Array.isArray(saved?.settings?.categories) ? saved.settings.categories.filter(id => validIds.has(id)) : [];
 const settings = {
@@ -193,6 +202,19 @@ function speak(text) {
 function categoryName(card) { return byCategory.get(card.category).name; }
 function categoryPill(card) { return `<span class="pill">${e(categoryName(card))}</span>`; }
 function needsReviewCards() { return CARDS.filter(c=>progress.items[c.id]?.needsReview===true); }
+function quizCorrectTotal(){return Object.values(progress.items).reduce((n,item)=>n+(Number(item.quizCorrect)||0),0);}
+function exploredTotal(){return CARDS.filter(c=>(Number(progress.items[c.id]?.seen)||0)>0).length;}
+function achievements(){const explored=exploredTotal(),quiz=quizCorrectTotal();return [
+ {id:'first',icon:'🌱',name:'First Step',desc:'Practice your first card.',unlocked:explored>=1},
+ {id:'round',icon:'⭐',name:'Round One',desc:'Finish your first practice round.',unlocked:progress.rounds>=1},
+ {id:'explorer',icon:'🗺️',name:'Word Explorer',desc:'Explore 25 different cards.',unlocked:explored>=25},
+ {id:'quiz10',icon:'✏️',name:'Spelling Starter',desc:'Get 10 quiz answers correct.',unlocked:quiz>=10},
+ {id:'half',icon:'🚀',name:'Halfway Hero',desc:'Explore 75 different cards.',unlocked:explored>=75},
+ {id:'perfect',icon:'🏆',name:'Perfect Round',desc:'Finish a round without missing a word.',unlocked:progress.perfectRounds>=1},
+ {id:'century',icon:'💯',name:'Century Club',desc:'Explore 100 different cards.',unlocked:explored>=100},
+ {id:'all',icon:'👑',name:'Unit 1 Champion',desc:'Explore all 147 cards.',unlocked:explored>=CARDS.length}
+];}
+function achievementCount(){return achievements().filter(a=>a.unlocked).length;}
 function audioGroup(card) {
   return `<div class="audio-group">${card.forms.map((form,i)=>`<button class="audio-button" type="button" data-action="speak" data-card="${e(card.id)}" data-form="${i}" aria-label="Pronounce ${e(form)} in Spanish">${icon('sound')}<span>${card.forms.length===1?'Listen in Spanish':e(form)}</span></button>`).join('')}</div>`;
 }
@@ -223,7 +245,7 @@ function renderHome() {
     </figure>
     </section>
     <section class="home-bottom" aria-label="How it works"><div class="step"><span class="step-badge">01</span><div><strong>Flip & discover</strong><p>Say the word. Tap to check.</p></div></div><div class="step"><span class="step-badge">02</span><div><strong>Listen & learn</strong><p>Hear each word in Spanish.</p></div></div><div class="step"><span class="step-badge">03</span><div><strong>Try it yourself</strong><p>A spelling quiz, at your pace.</p></div></div></section>
-    ${explored?`<div class="welcome-progress"><span><strong>${explored}</strong> cards explored</span><span><strong>${needsReviewCards().length}</strong> to revisit</span><span><strong>${progress.rounds}</strong> rounds completed</span></div>`:''}
+    ${explored?`<section class="progress-card" aria-label="Saved practice progress"><div class="progress-card-top"><h2>Your progress</h2><button class="text-button" data-action="achievements">Achievements ${achievementCount()}/8 →</button></div><div class="progress-meter" role="progressbar" aria-label="Cards explored" aria-valuemin="0" aria-valuemax="${CARDS.length}" aria-valuenow="${explored}"><span style="width:${explored/CARDS.length*100}%"></span></div><div class="progress-grid"><div class="progress-mini"><strong>${explored}</strong><small>cards explored</small></div><div class="progress-mini"><strong>${quizCorrectTotal()}</strong><small>quiz answers right</small></div><div class="progress-mini"><strong>${needsReviewCards().length}</strong><small>to revisit</small></div><div class="progress-mini"><strong>${progress.rounds}</strong><small>rounds finished</small></div></div></section>`:''}
   </div>`);
 }
 function renderSetup(focus=true) {
@@ -300,7 +322,7 @@ function rateCard(correct, skipped=false) {
 function quizHTML(card) {
   return `<form id="quiz-form" novalidate><div class="quiz-card"><div class="quiz-prompt"><span class="card-language">HOW DO YOU WRITE THIS IN SPANISH?</span><div class="card-word ${card.en.length>24?'long':''}">${e(card.en)}</div>${card.number?`<div class="number-caption">${card.number}</div>`:''}</div>
     <label class="answer-label" for="answer-input">Your Spanish answer</label><input class="answer-input" id="answer-input" name="answer" type="text" placeholder="Type the Spanish here…" lang="es" maxlength="180" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" aria-describedby="answer-hint answer-error">
-    <div class="accent-keys" aria-label="Spanish accent letters">${['á','é','í','ó','ú','ü','ñ'].map(letter=>`<button type="button" class="accent-key" data-action="accent" data-letter="${letter}" aria-label="Insert ${letter}">${letter}</button>`).join('')}</div><p class="answer-hint" id="answer-hint">Use a word or phrase from your worksheet. Write one form, not both. Accents, ñ, and ü count; el / la is optional.</p><div id="answer-error" class="error-inline" role="status"></div><div id="quiz-feedback" aria-live="polite" aria-atomic="true"></div><button class="primary quiz-submit" id="quiz-submit" type="submit">Check my answer ${icon('check')}</button></div><div class="quiz-skip"><button type="button" class="text-button" id="quiz-skip" data-action="quiz-skip">I’m not sure — show me</button></div></form>`;
+    <div class="accent-keys" aria-label="Spanish accent letters">${['á','é','í','ó','ú','ü','ñ'].map(letter=>`<button type="button" class="accent-key" data-action="accent" data-letter="${letter}" aria-label="Insert ${letter}">${letter}</button>`).join('')}</div><p class="answer-hint" id="answer-hint">Use a word or phrase from your worksheet. Write one form, not both. Accents, ñ, and ü count; el / la is optional.</p><div id="answer-error" class="error-inline" role="status"></div><div id="quiz-feedback" aria-live="polite" aria-atomic="true"></div><button class="primary quiz-submit" id="quiz-submit" type="button" data-action="quiz-submit">Check my answer ${icon('check')}</button></div><div class="quiz-skip"><button type="button" class="text-button" id="quiz-skip" data-action="quiz-skip">I’m not sure — show me</button></div></form>`;
 }
 function checkAnswer(skipped=false) {
   if(!session||session.mode!=='quiz'||session.checked)return;
@@ -337,6 +359,7 @@ function nextCard() {
 }
 function finishRound() {
   view='results';progress.rounds++;
+  if(session.responses.length===session.cards.length && session.responses.every(r=>r.correct))progress.perfectRounds++;
   if(session.mode==='quiz')progress.lastQuiz={correct:session.responses.filter(r=>r.correct).length,total:session.cards.length};
   save();renderResults();
 }
@@ -365,6 +388,7 @@ function modalShell(title,body,actions='') {
   if(!modal.open)modal.showModal();
 }
 function closeModal(){modal.close();afterConfirm=null;}
+function openAchievements(){const list=achievements(),count=list.filter(a=>a.unlocked).length;modalShell('Alaina’s achievements',`<p><strong>${count} of ${list.length}</strong> unlocked. These stay saved on this iPhone in the same browser.</p><div class="badge-grid">${list.map(a=>`<div class="badge-card ${a.unlocked?'unlocked':'locked'}"><span class="badge-icon" aria-hidden="true">${a.icon}</span><span><strong>${a.unlocked?'✓ ':''}${e(a.name)}</strong><small>${e(a.desc)}</small></span></div>`).join('')}</div>`);}
 function openSettings() {
   modalShell('Make yourself comfortable',`<p>A voice and a pace that feel right for you.</p><label class="setting-label" for="voice-select">Spanish pronunciation voice</label><select class="setting-select" id="voice-select"></select><p class="settings-help" id="voice-help"></p><label class="setting-label" for="speed-select">Speaking speed</label><select id="speed-select" class="setting-select"><option value="0.75" ${settings.speed==='0.75'?'selected':''}>Slow and clear</option><option value="0.9" ${settings.speed==='0.9'?'selected':''}>A little slower (recommended)</option><option value="1" ${settings.speed==='1'?'selected':''}>Normal</option></select><button class="soft-button settings-test" data-action="test-audio">${icon('sound')} Test Spanish pronunciation</button><h3>Your practice stays with you</h3><p class="settings-help">${storageAvailable?'Your completed-card progress is saved only in this browser. It does not sync between devices.':'This browser is not allowing local storage. Practice still works, but progress may disappear when you close the page.'} No microphone, account, ads, or analytics. Some device voices may use an online speech service.</p><button class="text-button danger-text" data-action="reset-progress">Reset saved practice progress</button>`);
   updateVoiceOptions();
@@ -401,6 +425,7 @@ function handleAction(event) {
     case 'flip':flipCard();break;
     case 'rate':rateCard(button.dataset.correct==='true');break;
     case 'flash-skip':rateCard(false,true);break;
+    case 'quiz-submit':session?.checked?nextCard():checkAnswer();break;
     case 'quiz-skip':checkAnswer(true);break;
     case 'accent': {
       const input=document.getElementById('answer-input');
@@ -417,6 +442,7 @@ function handleAction(event) {
     case 'retry-missed': {const pool=session.responses.filter(r=>!r.correct).map(r=>byId.get(r.id)),mode=session.mode;beginRound(pool,mode,true);break;}
     case 'learn-missed': {const pool=session.responses.filter(r=>!r.correct).map(r=>byId.get(r.id));beginRound(pool,'flashcards',true);break;}
     case 'word-list':openWordList();break;
+    case 'achievements':openAchievements();break;
     case 'dismiss':closeModal();break;
     case 'test-audio':speak('mucho gusto');break;
     case 'reset-progress':resetProgress();break;
