@@ -25,3 +25,5 @@ Run `node --test tests/core.test.cjs` and `python tests/listening_browser.py` wi
 `tests/speech_stub.js` is a test-only API double and is never loaded by the app. It exercises success, failure, cancellation, replay limits, exact-form grading, keyboard/touch navigation, persistence, and old-mode regressions. These tests do not certify audible output on a physical iPhone.
 
 Speech event reference: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance
+
+Additional recovery checks: `python tests/listening_recovery.py` covers operating-system audio interruptions, cancellations, speech exceptions, and missing Spanish voices in both browser engines. An interrupted listen immediately restores the Play control and does not spend a replay.

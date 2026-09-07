@@ -258,8 +258,10 @@ function speak(text, hooks={}) {
   utterance.onstart=()=>{if(serial===speechSerial){announce('Playing Spanish pronunciation.');hooks.onStart?.();}};
   utterance.onend=()=>{if(serial===speechSerial){activeUtterance=null;announce('Pronunciation finished.');hooks.onEnd?.();}};
   utterance.onerror=(event)=>{
-    if (serial!==speechSerial || ['canceled','interrupted'].includes(event.error)) return;
+    if (serial!==speechSerial) return;
     activeUtterance=null;
+    // An OS audio interruption must unlock listening controls immediately.
+    if (['canceled','interrupted'].includes(event.error)) { hooks.onFailure?.(); return; }
     toast('Audio did not play. Check your volume and Spanish voice in Settings, or try opening the app in your browser.');hooks.onFailure?.();
   };
   activeUtterance=utterance; // Keep the utterance alive on WebKit.
