@@ -3,17 +3,51 @@ on:
   push:
     branches: [feature/unit-2-20260909]
 permissions:
-  contents: read
+  contents: write
 jobs:
   validate:
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
-      - name: Package current source for isolated validation
-        run: git archive --format=zip HEAD > app-source.zip
-      - uses: actions/upload-artifact@v5
+      - uses: actions/setup-python@v6
         with:
-          name: unit2-source
-          path: app-source.zip
+          python-version: '3.13'
+      - name: Build candidate without changing the live branch
+        run: python tools/apply_unit2.py
+      - name: Vocabulary and grading tests
+        run: node --test tests/core.test.cjs tests/unit2.test.cjs
+      - name: Install browser test dependencies
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Unit 2 complete rounds and progress migration
+        run: python tests/unit2_tests.py
+      - name: Unit 1 regression suite
+        run: python tests/listening_browser.py
+      - name: Playback interruption and offline fallback
+        run: |
+          python tests/listening_recovery.py
+          python tests/listening_offline.py
+      - name: Save validated generated files on the candidate branch only
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html docs/index.html src/core.js src/unit2.json sw.js docs/sw.js tests/listening_browser.py tests/listening_offline.py UNIT2_AUDIT.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Materialize validated Unit 2 release'
+            git push origin HEAD:feature/unit-2-20260909
+          fi
+      - name: Package release and evidence
+        if: always()
+        run: |
+          mkdir -p test-results
+          cp -r ../hosting/listen-spell-verification test-results/legacy-verification 2>/dev/null || true
+          git archive --format=zip HEAD > test-results/app-source.zip
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: unit2-validation
+          path: test-results/
           retention-days: 7
