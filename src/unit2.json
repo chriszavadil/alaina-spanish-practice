@@ -1,0 +1,1350 @@
+{
+  "id": "unit2",
+  "name": "Unit 2",
+  "description": "Greetings, calendar, weather & classroom",
+  "source": "Six supplied textbook photos; app Unit 2 (book labels Unidad 0)",
+  "categories": [
+    {
+      "id": "u2-greetings",
+      "name": "Greetings & goodbyes",
+      "spanish": "Saludos y despedidas",
+      "symbol": "✦",
+      "description": "16 expressions, grouped by meaning",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 13
+    },
+    {
+      "id": "u2-days",
+      "name": "Days of the week",
+      "spanish": "Los días de la semana",
+      "symbol": "✦",
+      "description": "All 7 days, including their accents",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 7
+    },
+    {
+      "id": "u2-numbers",
+      "name": "Numbers 0–31",
+      "spanish": "Los números",
+      "symbol": "✦",
+      "description": "32 number cards; includes cero",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 32
+    },
+    {
+      "id": "u2-months",
+      "name": "Months",
+      "spanish": "Los meses",
+      "symbol": "✦",
+      "description": "All 12 months",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 12
+    },
+    {
+      "id": "u2-seasons",
+      "name": "Seasons",
+      "spanish": "Las estaciones",
+      "symbol": "✦",
+      "description": "Winter, spring, summer & fall",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 4
+    },
+    {
+      "id": "u2-weather",
+      "name": "Weather",
+      "spanish": "El tiempo",
+      "symbol": "✦",
+      "description": "10 conditions + llover and nevar",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 12
+    },
+    {
+      "id": "u2-classroom",
+      "name": "Classroom objects",
+      "spanish": "En el salón de clase",
+      "symbol": "✦",
+      "description": "All 9 pictured objects",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 9
+    },
+    {
+      "id": "u2-phrases",
+      "name": "Extra: dates & phrases",
+      "spanish": "Fechas y preguntas",
+      "symbol": "✦",
+      "description": "Optional: visible questions and sentence starters",
+      "unit": "unit2",
+      "supplemental": true,
+      "count": 12
+    },
+    {
+      "id": "u2-map",
+      "name": "Extra: map labels",
+      "spanish": "Los hemisferios",
+      "symbol": "✦",
+      "description": "Optional: hemispheres, equator & oceans",
+      "unit": "unit2",
+      "supplemental": true,
+      "count": 8
+    }
+  ],
+  "cards": [
+    {
+      "id": "u2-hello",
+      "category": "u2-greetings",
+      "en": "Hello",
+      "forms": [
+        "¡Hola!"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-how-are-you",
+      "category": "u2-greetings",
+      "en": "How are you?",
+      "forms": [
+        "¿Qué tal?",
+        "¿Cómo estás?"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-how-going",
+      "category": "u2-greetings",
+      "en": "How is it going?",
+      "forms": [
+        "¿Cómo te va?"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-fine-and-you",
+      "category": "u2-greetings",
+      "en": "I’m fine, and you?",
+      "forms": [
+        "Bien, ¿y tú?"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-fine-thanks",
+      "category": "u2-greetings",
+      "en": "I’m fine, thanks.",
+      "forms": [
+        "Bien, gracias."
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-life",
+      "category": "u2-greetings",
+      "en": "How’s life treating you?",
+      "forms": [
+        "¿Qué es de tu vida?"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-morning",
+      "category": "u2-greetings",
+      "en": "Good morning",
+      "forms": [
+        "Buenos días."
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-afternoon",
+      "category": "u2-greetings",
+      "en": "Good afternoon",
+      "forms": [
+        "Buenas tardes."
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-night",
+      "category": "u2-greetings",
+      "en": "Good evening / Good night",
+      "forms": [
+        "Buenas noches."
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-goodbye",
+      "category": "u2-greetings",
+      "en": "Goodbye",
+      "forms": [
+        "¡Adiós!",
+        "¡Chao!"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-tomorrow",
+      "category": "u2-greetings",
+      "en": "See you tomorrow",
+      "forms": [
+        "¡Hasta mañana!"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-soon",
+      "category": "u2-greetings",
+      "en": "See you soon",
+      "forms": [
+        "¡Hasta pronto!"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-later",
+      "category": "u2-greetings",
+      "en": "See you later",
+      "forms": [
+        "¡Hasta luego!",
+        "¡Nos vemos!"
+      ],
+      "source": "IMG_2355.jpeg",
+      "note": "Punctuation is optional in this practice quiz; accent marks still count.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-monday",
+      "category": "u2-days",
+      "en": "Monday",
+      "forms": [
+        "el lunes"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-tuesday",
+      "category": "u2-days",
+      "en": "Tuesday",
+      "forms": [
+        "el martes"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-wednesday",
+      "category": "u2-days",
+      "en": "Wednesday",
+      "forms": [
+        "el miércoles"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-thursday",
+      "category": "u2-days",
+      "en": "Thursday",
+      "forms": [
+        "el jueves"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-friday",
+      "category": "u2-days",
+      "en": "Friday",
+      "forms": [
+        "el viernes"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-saturday",
+      "category": "u2-days",
+      "en": "Saturday",
+      "forms": [
+        "el sábado"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-day-sunday",
+      "category": "u2-days",
+      "en": "Sunday",
+      "forms": [
+        "el domingo"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Days are lowercase in Spanish. The article el is optional here.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-number-0",
+      "category": "u2-numbers",
+      "en": "zero",
+      "forms": [
+        "cero"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 0
+    },
+    {
+      "id": "u2-number-1",
+      "category": "u2-numbers",
+      "en": "one",
+      "forms": [
+        "uno"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 1
+    },
+    {
+      "id": "u2-number-2",
+      "category": "u2-numbers",
+      "en": "two",
+      "forms": [
+        "dos"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 2
+    },
+    {
+      "id": "u2-number-3",
+      "category": "u2-numbers",
+      "en": "three",
+      "forms": [
+        "tres"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 3
+    },
+    {
+      "id": "u2-number-4",
+      "category": "u2-numbers",
+      "en": "four",
+      "forms": [
+        "cuatro"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 4
+    },
+    {
+      "id": "u2-number-5",
+      "category": "u2-numbers",
+      "en": "five",
+      "forms": [
+        "cinco"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 5
+    },
+    {
+      "id": "u2-number-6",
+      "category": "u2-numbers",
+      "en": "six",
+      "forms": [
+        "seis"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 6
+    },
+    {
+      "id": "u2-number-7",
+      "category": "u2-numbers",
+      "en": "seven",
+      "forms": [
+        "siete"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 7
+    },
+    {
+      "id": "u2-number-8",
+      "category": "u2-numbers",
+      "en": "eight",
+      "forms": [
+        "ocho"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 8
+    },
+    {
+      "id": "u2-number-9",
+      "category": "u2-numbers",
+      "en": "nine",
+      "forms": [
+        "nueve"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 9
+    },
+    {
+      "id": "u2-number-10",
+      "category": "u2-numbers",
+      "en": "ten",
+      "forms": [
+        "diez"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 10
+    },
+    {
+      "id": "u2-number-11",
+      "category": "u2-numbers",
+      "en": "eleven",
+      "forms": [
+        "once"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 11
+    },
+    {
+      "id": "u2-number-12",
+      "category": "u2-numbers",
+      "en": "twelve",
+      "forms": [
+        "doce"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 12
+    },
+    {
+      "id": "u2-number-13",
+      "category": "u2-numbers",
+      "en": "thirteen",
+      "forms": [
+        "trece"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 13
+    },
+    {
+      "id": "u2-number-14",
+      "category": "u2-numbers",
+      "en": "fourteen",
+      "forms": [
+        "catorce"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 14
+    },
+    {
+      "id": "u2-number-15",
+      "category": "u2-numbers",
+      "en": "fifteen",
+      "forms": [
+        "quince"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 15
+    },
+    {
+      "id": "u2-number-16",
+      "category": "u2-numbers",
+      "en": "sixteen",
+      "forms": [
+        "dieciséis"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 16
+    },
+    {
+      "id": "u2-number-17",
+      "category": "u2-numbers",
+      "en": "seventeen",
+      "forms": [
+        "diecisiete"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 17
+    },
+    {
+      "id": "u2-number-18",
+      "category": "u2-numbers",
+      "en": "eighteen",
+      "forms": [
+        "dieciocho"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 18
+    },
+    {
+      "id": "u2-number-19",
+      "category": "u2-numbers",
+      "en": "nineteen",
+      "forms": [
+        "diecinueve"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 19
+    },
+    {
+      "id": "u2-number-20",
+      "category": "u2-numbers",
+      "en": "twenty",
+      "forms": [
+        "veinte"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 20
+    },
+    {
+      "id": "u2-number-21",
+      "category": "u2-numbers",
+      "en": "twenty-one (forms on the page)",
+      "forms": [
+        "veintiuno",
+        "veintiuna",
+        "veintiún"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "The page lists three forms: veintiuno when counting, veintiuna before a feminine noun, and veintiún before a masculine noun. Choose one in the spelling quiz; in Listen & Spell, write the exact form spoken.",
+      "punctuationOptional": true,
+      "number": 21
+    },
+    {
+      "id": "u2-number-22",
+      "category": "u2-numbers",
+      "en": "twenty-two",
+      "forms": [
+        "veintidós"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 22
+    },
+    {
+      "id": "u2-number-23",
+      "category": "u2-numbers",
+      "en": "twenty-three",
+      "forms": [
+        "veintitrés"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 23
+    },
+    {
+      "id": "u2-number-24",
+      "category": "u2-numbers",
+      "en": "twenty-four",
+      "forms": [
+        "veinticuatro"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 24
+    },
+    {
+      "id": "u2-number-25",
+      "category": "u2-numbers",
+      "en": "twenty-five",
+      "forms": [
+        "veinticinco"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 25
+    },
+    {
+      "id": "u2-number-26",
+      "category": "u2-numbers",
+      "en": "twenty-six",
+      "forms": [
+        "veintiséis"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 26
+    },
+    {
+      "id": "u2-number-27",
+      "category": "u2-numbers",
+      "en": "twenty-seven",
+      "forms": [
+        "veintisiete"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 27
+    },
+    {
+      "id": "u2-number-28",
+      "category": "u2-numbers",
+      "en": "twenty-eight",
+      "forms": [
+        "veintiocho"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 28
+    },
+    {
+      "id": "u2-number-29",
+      "category": "u2-numbers",
+      "en": "twenty-nine",
+      "forms": [
+        "veintinueve"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Write this number as one word.",
+      "punctuationOptional": true,
+      "number": 29
+    },
+    {
+      "id": "u2-number-30",
+      "category": "u2-numbers",
+      "en": "thirty",
+      "forms": [
+        "treinta"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "number": 30
+    },
+    {
+      "id": "u2-number-31",
+      "category": "u2-numbers",
+      "en": "thirty-one",
+      "forms": [
+        "treinta y uno"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "Use y between the tens and ones.",
+      "punctuationOptional": true,
+      "number": 31
+    },
+    {
+      "id": "u2-month-january",
+      "category": "u2-months",
+      "en": "January",
+      "forms": [
+        "enero"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-february",
+      "category": "u2-months",
+      "en": "February",
+      "forms": [
+        "febrero"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-march",
+      "category": "u2-months",
+      "en": "March",
+      "forms": [
+        "marzo"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-april",
+      "category": "u2-months",
+      "en": "April",
+      "forms": [
+        "abril"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-may",
+      "category": "u2-months",
+      "en": "May",
+      "forms": [
+        "mayo"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-june",
+      "category": "u2-months",
+      "en": "June",
+      "forms": [
+        "junio"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-july",
+      "category": "u2-months",
+      "en": "July",
+      "forms": [
+        "julio"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-august",
+      "category": "u2-months",
+      "en": "August",
+      "forms": [
+        "agosto"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-september",
+      "category": "u2-months",
+      "en": "September",
+      "forms": [
+        "septiembre"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-october",
+      "category": "u2-months",
+      "en": "October",
+      "forms": [
+        "octubre"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-november",
+      "category": "u2-months",
+      "en": "November",
+      "forms": [
+        "noviembre"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-month-december",
+      "category": "u2-months",
+      "en": "December",
+      "forms": [
+        "diciembre"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Months are lowercase in Spanish.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-winter",
+      "category": "u2-seasons",
+      "en": "winter",
+      "forms": [
+        "el invierno"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-spring",
+      "category": "u2-seasons",
+      "en": "spring",
+      "forms": [
+        "la primavera"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-summer",
+      "category": "u2-seasons",
+      "en": "summer",
+      "forms": [
+        "el verano"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-fall",
+      "category": "u2-seasons",
+      "en": "fall / autumn",
+      "forms": [
+        "el otoño"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-good-weather",
+      "category": "u2-weather",
+      "en": "The weather is nice.",
+      "forms": [
+        "Hace buen tiempo."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-bad-weather",
+      "category": "u2-weather",
+      "en": "The weather is bad.",
+      "forms": [
+        "Hace mal tiempo."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-hot",
+      "category": "u2-weather",
+      "en": "It is hot.",
+      "forms": [
+        "Hace calor."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-cold",
+      "category": "u2-weather",
+      "en": "It is cold.",
+      "forms": [
+        "Hace frío."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-sunny",
+      "category": "u2-weather",
+      "en": "It is sunny.",
+      "forms": [
+        "Hace sol.",
+        "Está soleado."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-snowing",
+      "category": "u2-weather",
+      "en": "It is snowing.",
+      "forms": [
+        "Está nevando."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-clear",
+      "category": "u2-weather",
+      "en": "The sky is clear.",
+      "forms": [
+        "Está despejado."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-cloudy",
+      "category": "u2-weather",
+      "en": "It is cloudy.",
+      "forms": [
+        "Está nublado."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-windy",
+      "category": "u2-weather",
+      "en": "It is windy.",
+      "forms": [
+        "Hace viento.",
+        "Está ventoso."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-raining",
+      "category": "u2-weather",
+      "en": "It is raining.",
+      "forms": [
+        "Está lloviendo."
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Use the phrase from the page. Punctuation is optional; frío and está keep their accents.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-to-snow",
+      "category": "u2-weather",
+      "en": "to snow",
+      "forms": [
+        "nevar"
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "This is the infinitive printed in parentheses, not the complete weather sentence.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-to-rain",
+      "category": "u2-weather",
+      "en": "to rain",
+      "forms": [
+        "llover"
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "This is the infinitive printed in parentheses, not the complete weather sentence.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-pen",
+      "category": "u2-classroom",
+      "en": "pen",
+      "forms": [
+        "el bolígrafo"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-notebook",
+      "category": "u2-classroom",
+      "en": "notebook",
+      "forms": [
+        "el cuaderno"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-pencil-case",
+      "category": "u2-classroom",
+      "en": "pencil case",
+      "forms": [
+        "el estuche"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-eraser",
+      "category": "u2-classroom",
+      "en": "eraser",
+      "forms": [
+        "la goma"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-pencil",
+      "category": "u2-classroom",
+      "en": "pencil",
+      "forms": [
+        "el lápiz"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-book",
+      "category": "u2-classroom",
+      "en": "book",
+      "forms": [
+        "el libro"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-marker",
+      "category": "u2-classroom",
+      "en": "marker / highlighter",
+      "forms": [
+        "el marcador"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-backpack",
+      "category": "u2-classroom",
+      "en": "backpack",
+      "forms": [
+        "la mochila"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Use the word pictured on the page. The matching article is optional in this quiz.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-scissors",
+      "category": "u2-classroom",
+      "en": "scissors",
+      "forms": [
+        "las tijeras"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "The page uses the plural las tijeras. Write tijeras or las tijeras, not la tijeras.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-what-day",
+      "category": "u2-phrases",
+      "en": "What day is it today?",
+      "forms": [
+        "¿Qué día es hoy?"
+      ],
+      "source": "IMG_2356.jpeg",
+      "note": "",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-favorite-month",
+      "category": "u2-phrases",
+      "en": "My favorite month is…",
+      "forms": [
+        "Mi mes favorito es"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Sentence starter: practice just the printed words, without adding your own month.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-birthday-in",
+      "category": "u2-phrases",
+      "en": "My birthday is in…",
+      "forms": [
+        "Mi cumpleaños es en"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Sentence starter: practice just these words, without adding a month.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-school-starts",
+      "category": "u2-phrases",
+      "en": "School starts in…",
+      "forms": [
+        "La escuela empieza en"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Sentence starter: practice just these words, without adding a month.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-today-is",
+      "category": "u2-phrases",
+      "en": "Today is…",
+      "forms": [
+        "Hoy es"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Sentence starter from the speech bubbles.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-december-31",
+      "category": "u2-phrases",
+      "en": "Today is December 31.",
+      "forms": [
+        "Hoy es treinta y uno de diciembre"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "The photo writes 31 as digits. For spelling practice, write the number in words.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-year-end",
+      "category": "u2-phrases",
+      "en": "New Year’s Eve / year’s end",
+      "forms": [
+        "Fin de Año"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Event caption on the page; this quiz does not ask you to invent an unheard date.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-veterans",
+      "category": "u2-phrases",
+      "en": "Veterans Day",
+      "forms": [
+        "Día de los Veteranos"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Event caption on the page.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-independence",
+      "category": "u2-phrases",
+      "en": "Independence Day",
+      "forms": [
+        "Día de la Independencia"
+      ],
+      "source": "IMG_2357.jpeg",
+      "note": "Event caption on the page.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-what-is-this",
+      "category": "u2-phrases",
+      "en": "What is this?",
+      "forms": [
+        "¿Qué es esto?"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "Question heading above the listening exercise.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-this-is",
+      "category": "u2-phrases",
+      "en": "This is a… (masculine)",
+      "forms": [
+        "Esto es un"
+      ],
+      "source": "IMG_2360.jpeg",
+      "note": "The printed sentence starter; stop before the missing object. Un is part of this phrase.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-what-weather",
+      "category": "u2-phrases",
+      "en": "What is the weather like?",
+      "forms": [
+        "¿Qué tiempo hace?"
+      ],
+      "source": "IMG_2358.jpeg",
+      "note": "Question heading at the top of the weather page.",
+      "punctuationOptional": true,
+      "articleOptional": false
+    },
+    {
+      "id": "u2-map-north",
+      "category": "u2-map",
+      "en": "Northern Hemisphere",
+      "forms": [
+        "el hemisferio norte"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-south",
+      "category": "u2-map",
+      "en": "Southern Hemisphere",
+      "forms": [
+        "el hemisferio sur"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-equator",
+      "category": "u2-map",
+      "en": "equator",
+      "forms": [
+        "el ecuador"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional. Ecuador here means the equator, not the country.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-pacific",
+      "category": "u2-map",
+      "en": "Pacific Ocean",
+      "forms": [
+        "el océano Pacífico"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-atlantic",
+      "category": "u2-map",
+      "en": "Atlantic Ocean",
+      "forms": [
+        "el océano Atlántico"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-arctic",
+      "category": "u2-map",
+      "en": "Arctic Ocean",
+      "forms": [
+        "el océano Ártico"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-indian",
+      "category": "u2-map",
+      "en": "Indian Ocean",
+      "forms": [
+        "el océano Índico"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    },
+    {
+      "id": "u2-map-antarctic",
+      "category": "u2-map",
+      "en": "Southern / Antarctic Ocean",
+      "forms": [
+        "el océano Antártico"
+      ],
+      "source": "IMG_2359.jpeg",
+      "note": "Printed map label, with el added for noun practice; el is optional.",
+      "punctuationOptional": true
+    }
+  ]
+}
