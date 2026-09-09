@@ -159,7 +159,7 @@ try:
     page=context.new_page();page.set_default_timeout(10000);errors=[]
     page.on('pageerror',lambda err:errors.append(str(err)))
     try:
-     page.goto(URL);expect(page.locator('meta[name="app-version"]')).to_have_attribute('content','1.4.0')
+     page.goto(URL);expect(page.locator('meta[name="app-version"]')).to_have_attribute('content','1.4.1')
      test(page);assert not errors,errors
      report['checks'].append({'browser':engine,'test':test.__name__,'passed':True})
      print(engine,test.__name__,'PASS',flush=True)

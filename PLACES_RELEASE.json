@@ -1,0 +1,27 @@
+{
+  "version": "1.4.1",
+  "html_sha256_lf": "4c72cc263afba482259a12ea68cc99b79ff78b594ea0fbd20a84ae189334d557",
+  "unit1_cards": 147,
+  "unit2_cards": 116,
+  "unit2_core_cards": 96,
+  "unit2_optional_cards": 20,
+  "new_printed_entries": 7,
+  "existing_card_objects_preserved": 256,
+  "storage_key": "alaina-spanish-practice-v1",
+  "engines": [
+    "webkit",
+    "chromium"
+  ],
+  "static_test_groups_passed": 17,
+  "browser_checks": {
+    "places_and_migration": 10,
+    "unit2_full_rounds": 10,
+    "unit1_regressions": 18,
+    "accent_input": 4,
+    "speech_recovery": 8,
+    "offline_fallback": 2,
+    "cached_upgrade": 2
+  },
+  "physical_iphone_audio_tested": false,
+  "live_verified": false
+}

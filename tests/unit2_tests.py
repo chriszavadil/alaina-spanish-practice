@@ -39,24 +39,24 @@ def migration(page):
  tap(page,'[data-unit=unit2]');expect(page.locator('.progress-card h2')).to_have_text('Unit 2 progress')
  assert state(page)['progress']['items']==legacy['progress']['items']
  assert state(page)['progress']['units']['unit1']['rounds']==7
- tap(page,'[data-action=start]');assert page.locator('input[name=topic]').count()==9
- assert page.locator('input[name=topic]:checked').count()==7
+ tap(page,'[data-action=start]');assert page.locator('input[name=topic]').count()==11
+ assert page.locator('input[name=topic]:checked').count()==9
  assert page.locator('input[data-extra=true]:checked').count()==0
- # All -> 109, normal vocabulary -> 89. Repeated switches keep the two topic sets separate.
- tap(page,'[data-length=all]');expect(page.locator('#begin-round')).to_contain_text('89')
+ # All -> 116, normal vocabulary -> 96. Repeated switches keep the two topic sets separate.
+ tap(page,'[data-length=all]');expect(page.locator('#begin-round')).to_contain_text('96')
  tap(page,'[data-unit=unit1]');assert page.locator('input[name=topic]:checked').count()==2
- tap(page,'[data-unit=unit2]');assert page.locator('input[name=topic]:checked').count()==7
- tap(page,'[data-action=word-list]');expect(page.locator('#word-count')).to_contain_text('109')
+ tap(page,'[data-unit=unit2]');assert page.locator('input[name=topic]:checked').count()==9
+ tap(page,'[data-action=word-list]');expect(page.locator('#word-count')).to_contain_text('116')
  page.locator('#word-search').fill('tijeras');expect(page.locator('.word-form')).to_contain_text('las tijeras')
  tap(page,'[data-unit=unit1]');expect(page.locator('#word-count')).to_contain_text('147')
  page.reload();expect(page.locator('[data-unit=unit1]')).to_have_attribute('aria-pressed','true')
  assert state(page)['progress']['items']==legacy['progress']['items']
 def full_quiz(page):
  setup(page);tap(page,'#begin-round')
- for i in range(109):answer(page,'quiz',i)
+ for i in range(116):answer(page,'quiz',i)
  expect(page.locator('.results')).to_be_visible();s=state(page)['progress']
  assert s['rounds']==8 and s['units']['unit1']['rounds']==7 and s['units']['unit2']['rounds']==1
- assert s['units']['unit2']['lastQuiz']=={'correct':109,'total':109}
+ assert s['units']['unit2']['lastQuiz']=={'correct':116,'total':116}
  for id,item in legacy['progress']['items'].items():assert s['items'][id]==item
  page.locator('#brand-home').tap();tap(page,'[data-action=achievements]')
  expect(page.locator('.badge-card.unlocked',has_text='Unit 2 Explorer')).to_be_visible()
@@ -72,11 +72,11 @@ def full_listening(page):
   assert page.evaluate('__audio.calls.at(-1).text')==first
  assert page.evaluate('__audio.calls.length')==4
  expect(page.locator('#listen-play')).to_be_disabled()
- for i in range(109):answer(page,'listening',i)
+ for i in range(116):answer(page,'listening',i)
  expect(page.locator('.results')).to_be_visible();s=state(page)['progress']
- assert s['lastListening']=={'correct':109,'total':109}
+ assert s['lastListening']=={'correct':116,'total':116}
  assert s['units']['unit1']['rounds']==7 and s['units']['unit2']['listeningRounds']==1
- assert sum(v.get('listeningCorrect',0) for k,v in s['items'].items() if k.startswith('u2-'))==109
+ assert sum(v.get('listeningCorrect',0) for k,v in s['items'].items() if k.startswith('u2-'))==116
  for id,item in legacy['progress']['items'].items():assert s['items'][id]==item
  page.reload();assert state(page)['progress']==s
 
@@ -86,7 +86,7 @@ def flash_and_layout(page):
  for w,h in [(393,852),(320,740),(852,393),(1200,850)]:
   page.set_viewport_size({'width':w,'height':h});assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
  page.set_viewport_size({'width':393,'height':852});tap(page,'#begin-round');zero=False
- for i in range(109):
+ for i in range(116):
   if page.locator('#flash-front .card-word').inner_text()=='zero':
    zero=True;expect(page.locator('#flash-front .number-caption')).to_have_text('0')
   page.locator('#flip-card').evaluate('(b)=>b.click()');expect(page.locator('#after-flip')).to_be_visible()
@@ -118,7 +118,7 @@ try:
     ctx.add_init_script(f"if(!localStorage.getItem('{STORE}'))localStorage.setItem('{STORE}',JSON.stringify({json.dumps(legacy)}))")
     page=ctx.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     try:
-     page.goto(url);expect(page.locator('meta[name=app-version]')).to_have_attribute('content','1.4.0')
+     page.goto(url);expect(page.locator('meta[name=app-version]')).to_have_attribute('content','1.4.1')
      fn(page);assert not errors,errors;report['checks'].append({'engine':engine,'test':fn.__name__,'passed':True});print(engine,fn.__name__,'PASS',flush=True)
     except Exception:
      page.screenshot(path=str(OUT/f'FAILED-{engine}-{fn.__name__}.png'),full_page=True)

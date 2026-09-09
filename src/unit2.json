@@ -1,8 +1,8 @@
 {
   "id": "unit2",
   "name": "Unit 2",
-  "description": "Greetings, calendar, weather & classroom",
-  "source": "Six supplied textbook photos; app Unit 2 (book labels Unidad 0)",
+  "description": "Greetings, calendar, weather, classroom, places & origin",
+  "source": "Six textbook photos plus the printed Places / Origin worksheet; app Unit 2",
   "categories": [
     {
       "id": "u2-greetings",
@@ -73,6 +73,28 @@
       "unit": "unit2",
       "supplemental": false,
       "count": 9
+    },
+    {
+      "id": "u2-places",
+      "name": "Places",
+      "spanish": "Los lugares",
+      "symbol": "◎",
+      "description": "Neighborhood, capital, city, state, country & town",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 6,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-origin",
+      "name": "Origin",
+      "spanish": "El origen",
+      "symbol": "Aa",
+      "description": "The printed Mexican-origin sentence",
+      "unit": "unit2",
+      "supplemental": false,
+      "count": 1,
+      "introduced": "1.4.1"
     },
     {
       "id": "u2-phrases",
@@ -1345,6 +1367,91 @@
       "source": "IMG_2359.jpeg",
       "note": "Printed map label, with el added for noun practice; el is optional.",
       "punctuationOptional": true
+    },
+    {
+      "id": "u2-place-neighborhood",
+      "category": "u2-places",
+      "en": "neighborhood",
+      "forms": [
+        "el barrio"
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Use the word printed on the sheet. A matching el or la is optional.",
+      "punctuationOptional": true,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-place-capital",
+      "category": "u2-places",
+      "en": "capital",
+      "forms": [
+        "la capital"
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Use the word printed on the sheet. A matching el or la is optional.",
+      "punctuationOptional": true,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-place-city",
+      "category": "u2-places",
+      "en": "city",
+      "forms": [
+        "la ciudad"
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Use the word printed on the sheet. A matching el or la is optional.",
+      "punctuationOptional": true,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-place-state",
+      "category": "u2-places",
+      "en": "state",
+      "forms": [
+        "el estado"
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Use the word printed on the sheet. A matching el or la is optional.",
+      "punctuationOptional": true,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-place-country",
+      "category": "u2-places",
+      "en": "country",
+      "forms": [
+        "el país"
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Use the word printed on the sheet. A matching el or la is optional; país keeps its accent.",
+      "punctuationOptional": true,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-place-town",
+      "category": "u2-places",
+      "en": "town / village",
+      "forms": [
+        "el pueblo"
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Use the word printed on the sheet. A matching el or la is optional.",
+      "punctuationOptional": true,
+      "introduced": "1.4.1"
+    },
+    {
+      "id": "u2-origin-mexican",
+      "category": "u2-origin",
+      "en": "I am of Mexican origin.",
+      "forms": [
+        "Soy de origen mexicano."
+      ],
+      "source": "81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg",
+      "note": "Practice the complete printed sentence, including de origen. The final period is optional.",
+      "punctuationOptional": true,
+      "articleOptional": false,
+      "introduced": "1.4.1"
     }
   ]
 }

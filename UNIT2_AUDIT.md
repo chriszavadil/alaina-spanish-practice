@@ -1,8 +1,8 @@
-# Unit 2 vocabulary audit — app v1.4.0
+# Unit 2 vocabulary audit — app v1.4.1
 
-Source: the six supplied textbook photos. “Unit 2” is the requested app label; the photographed book says Unidad 0.
+Source: the six supplied textbook photos plus the additional Places / Origin worksheet. “Unit 2” is the requested app label; the photographed book says Unidad 0.
 
-109 study cards: 89 main cards selected by default, plus 20 optional date/question and map-label cards. Original Unit 1 remains unchanged (147 cards). All three modes are available.
+116 study cards: 96 main cards selected by default, plus 20 optional date/question and map-label cards. Original Unit 1 remains unchanged (147 cards). All three modes are available.
 
 ## Scope notes
 
@@ -179,3 +179,19 @@ Unit 1 grading is retained. Unit 2 ignores punctuation, not accents or letters. 
 | Arctic Ocean | el océano Ártico | IMG_2359.jpeg |
 | Indian Ocean | el océano Índico | IMG_2359.jpeg |
 | Southern / Antarctic Ocean | el océano Antártico | IMG_2359.jpeg |
+
+## Places / Origin addendum
+
+The additional worksheet contributes exactly seven printed entries; headings and handwriting are excluded. Unit 1 and all earlier Unit 2 card IDs and forms are retained. Country is intentionally available in both units with independent progress.
+
+| English | Spanish | Topic |
+|---|---|---|
+| neighborhood | el barrio | u2-places |
+| capital | la capital | u2-places |
+| city | la ciudad | u2-places |
+| state | el estado | u2-places |
+| country | el país | u2-places |
+| town / village | el pueblo | u2-places |
+| I am of Mexican origin. | Soy de origen mexicano. | u2-origin |
+
+Source: 81068452128__8FC16A2D-B990-4F9D-986E-7FFBBF334FAB.jpeg (transcribed; photo not published). Matching noun articles are optional; país still requires its accent. The origin sentence is tested in full. All three modes and the existing replay rule apply.
