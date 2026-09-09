@@ -1,7 +1,34 @@
-# Alaina's Spanish Quiz Practice
+# Alaina's Spanish Quiz Practice — v1.4.0
 
-Phone-friendly flashcards, Spanish pronunciation and spelling quizzes for 147 worksheet entries. No account, timer, advertising or analytics. Only browser-local study progress is saved. The original worksheet photographs and handwriting are not included.
+Live app: https://chriszavadil.github.io/alaina-spanish-practice/?v=1.4.0
 
-The complete self-contained application is in `docs/index.html`. Serve the `docs` folder over HTTPS. The app's X returns to the welcome screen; it does not close Safari. Use Settings to select a Spanish voice and test the audio.
+Phone-friendly Flashcards, Spelling Quiz, and Listen & Spell. No account, timer, advertising, or analytics. Study progress is browser-local; worksheet photographs and private handwriting are not published.
 
-Run `node --test tests/core.test.cjs` for the grading and vocabulary tests. See VOCABULARY_AUDIT.md for the exact word list.
+## Study units
+
+Unit 1 retains all 147 original cards. Unit 2 adds 109 cards from the six new photos: 89 main vocabulary cards, plus 20 optional date/phrase and map-label cards. The two Extra topics start unchecked. Expressions with the same meaning share a card. See `VOCABULARY_AUDIT.md` and `UNIT2_AUDIT.md` for complete lists and scope notes.
+
+Choose Unit 1 or Unit 2 on the welcome or topic screen. Both units support all three modes. Topic selections, completed-card progress, and tricky-word review are kept separately by unit; achievements span the app. The existing `alaina-spanish-practice-v1` storage key and original card IDs are retained. Do not clear site data to update.
+
+Listen & Spell plays the Spanish form once initially and permits three replays per question. It grades the exact form spoken. Failed/interrupted playback does not spend a listen. The same device voice and speed settings are used.
+
+## Hosting and updates
+
+The complete self-contained application is in both `index.html` and `docs/index.html`; their contents match. GitHub Pages hosts the app directly and does not depend on a PC or temporary tunnel. The app's X returns home, not out of Safari. Refresh the existing GitHub Pages address to update; v1.4.0 appears in the footer.
+
+## Verification
+
+CI run 34400597946 passed vocabulary/grading tests, touchscreen/mouse/keyboard accent tests, Unit 2 complete rounds, saved-progress migration, Unit 1 regression checks, speech-interruption recovery, and offline-cache fallback in Chromium and WebKit. The live public site was subsequently verified to serve the identical tested HTML, and 10 Unit 2 browser groups plus 14 Unit 1 regression groups passed against that public address. The live iPhone-size layouts were also inspected.
+
+Validated HTML SHA-256 after LF normalization: `a5b35bcf8fcac3512165a51b672ed0923416969542c49b6b5face2b5b96b7e0f`.
+
+```sh
+node --test tests/core.test.cjs tests/unit2.test.cjs
+python tests/accent_input.py
+python tests/unit2_tests.py
+python tests/listening_browser.py
+python tests/listening_recovery.py
+python tests/listening_offline.py
+```
+
+Python browser tests require Playwright with Chromium and WebKit installed. Speech events are simulated in automated tests; these checks do not certify audible output on a physical iPhone. No student browser data is touched by the isolated test contexts.
