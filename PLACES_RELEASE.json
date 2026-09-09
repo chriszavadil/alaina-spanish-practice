@@ -23,5 +23,9 @@
     "cached_upgrade": 2
   },
   "physical_iphone_audio_tested": false,
-  "live_verified": false
+  "live_verified": true,
+  "live_url": "https://chriszavadil.github.io/alaina-spanish-practice/?v=1.4.1",
+  "live_html_exact_match": true,
+  "live_browser_groups_passed": 10,
+  "live_iphone_sized_layout_inspected": true
 }
