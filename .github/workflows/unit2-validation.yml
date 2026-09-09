@@ -14,13 +14,17 @@ jobs:
         with:
           python-version: '3.13'
       - name: Build candidate without changing the live branch
-        run: python tools/apply_unit2.py
+        run: |
+          python tools/apply_unit2.py
+          python tools/accent_touch_fix.py
       - name: Vocabulary and grading tests
         run: node --test tests/core.test.cjs tests/unit2.test.cjs
       - name: Install browser test dependencies
         run: |
           pip install playwright==1.62.0
           python -m playwright install --with-deps chromium webkit
+      - name: Touch, mouse, keyboard and selection-safe accent keys
+        run: python tests/accent_input.py
       - name: Unit 2 complete rounds and progress migration
         run: python tests/unit2_tests.py
       - name: Unit 1 regression suite
