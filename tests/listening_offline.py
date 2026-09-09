@@ -19,7 +19,7 @@ with sync_playwright() as pw:
    page.locator('#answer-input').fill(word);page.locator('#quiz-submit').tap();expect(page.locator('.feedback.correct')).to_be_visible()
    stored=page.evaluate("localStorage.getItem('alaina-spanish-practice-v1')")
    server.shutdown();server.server_close();page.reload()
-   expect(page.locator('meta[name="app-version"]')).to_have_attribute('content','1.3.0')
+   expect(page.locator('meta[name="app-version"]')).to_have_attribute('content','1.4.0')
    assert page.evaluate("localStorage.getItem('alaina-spanish-practice-v1')")==stored
    page.locator('[data-action="start"]').tap();page.locator('[data-action="begin"]').tap()
    expect(page.locator('#listen-status')).to_contain_text('3 replays left')

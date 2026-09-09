@@ -9,13 +9,17 @@
   function withoutVowelMarks(value) {
     return normalize(value).normalize('NFD').replace(/[\u0301\u0308]/gu, '').normalize('NFC');
   }
+  function forCard(card, text) {
+    const value=normalize(text);
+    return card.punctuationOptional ? value.replace(/[¡¿!?.,;:…]+/gu,' ').replace(/\s+/gu,' ').trim() : value;
+  }
   function acceptedAnswers(card) {
-    const full = [...card.forms, ...(card.alternatives || [])].map(normalize);
-    return [...new Set(full.flatMap(text => /^(el|la) /u.test(text)
-      ? [text, text.replace(/^(el|la) /u, '')] : [text]))];
+    const full = [...card.forms, ...(card.alternatives || [])].map(text=>forCard(card,text));
+    return [...new Set(full.flatMap(text => card.articleOptional!==false && /^(el|la|los|las) /u.test(text)
+      ? [text, text.replace(/^(el|la|los|las) /u, '')] : [text]))];
   }
   function grade(card, input) {
-    const value = normalize(input), answers = acceptedAnswers(card);
+    const value = forCard(card,input), answers = acceptedAnswers(card);
     if (!value) return {status:'empty', expected:card.forms[0]};
     if (answers.includes(value)) return {status:'correct', expected:card.forms[0]};
     const close = answers.find(answer => withoutVowelMarks(answer) === withoutVowelMarks(value));
