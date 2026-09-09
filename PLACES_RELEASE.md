@@ -1,6 +1,6 @@
-# Places and Origin ? v1.4.1
+# Places and Origin - v1.4.1
 
-Adds exactly seven printed entries from the additional worksheet to Unit 2: el barrio (neighborhood), la capital (capital), la ciudad (city), el estado (state), el pa?s (country), el pueblo (town / village), and Soy de origen mexicano. (I am of Mexican origin.) Headings and handwritten notes are excluded.
+Adds exactly seven printed entries from the additional worksheet to Unit 2: el barrio (neighborhood), la capital (capital), la ciudad (city), el estado (state), el país (country), el pueblo (town / village), and Soy de origen mexicano. (I am of Mexican origin.) Headings and handwritten notes are excluded.
 
 They appear under Places and Origin in Flashcards, Spelling Quiz and Listen & Spell. Unit 2 now has 116 cards: 96 core plus 20 optional extras. The original 147 Unit 1 cards and earlier 109 Unit 2 card objects are unchanged.
 
