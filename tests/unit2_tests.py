@@ -118,7 +118,7 @@ try:
     ctx.add_init_script(f"if(!localStorage.getItem('{STORE}'))localStorage.setItem('{STORE}',JSON.stringify({json.dumps(legacy)}))")
     page=ctx.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     try:
-     page.goto(url);expect(page.locator('meta[name=app-version]')).to_have_attribute('content','1.4.1')
+     page.goto(url);expect(page.locator('meta[name=app-version]')).to_have_attribute('content','1.4.2')
      fn(page);assert not errors,errors;report['checks'].append({'engine':engine,'test':fn.__name__,'passed':True});print(engine,fn.__name__,'PASS',flush=True)
     except Exception:
      page.screenshot(path=str(OUT/f'FAILED-{engine}-{fn.__name__}.png'),full_page=True)

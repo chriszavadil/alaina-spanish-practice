@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="app-version" content="1.4.1">
+<meta name="app-version" content="1.4.2">
 <meta name="theme-color" content="#f8f6f1">
 <meta name="description" content="A little practice, a little confidence. English-to-Spanish flashcards and spelling practice for Units 1 and 2.">
 <meta name="apple-mobile-web-app-title" content="Alaina’s Spanish">
@@ -50,6 +50,12 @@
 .unit-picker{margin:18px 0 22px;text-align:left}.unit-picker-label{font-size:10px;font-weight:800;letter-spacing:1.6px;color:var(--muted);margin-bottom:10px}.unit-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.unit-choice{text-align:left;min-width:0;min-height:76px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:#fff}.unit-choice[aria-pressed=true]{background:var(--lavender);border:2px solid var(--purple);padding:12px 14px}.unit-choice strong{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:17px}.unit-choice small{display:block;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}.unit-choice .icon{width:17px;height:17px;color:var(--purple-dark)}.unit-save-note{margin:12px 0 0;font-size:11px;line-height:1.5;color:var(--muted)}.topic-extra-note{font-size:11px;color:var(--muted);line-height:1.5;margin:13px 0 0}.unit-current{font-size:10px;font-weight:750;color:var(--purple-dark);margin:10px 0}.app-version{font-size:9px;color:var(--muted);margin-left:7px;white-space:nowrap}.topic:has(input[data-extra=true]){border-style:dashed}.home-hero .unit-picker{max-width:410px}.progress-mini strong{font-size:19px}.progress-card-top{flex-wrap:wrap}
 @media(max-width:590px){.home-hero .unit-picker{margin:18px auto;max-width:338px}.unit-choice{padding:12px;min-height:76px}.unit-choice[aria-pressed=true]{padding:11px}.unit-choice small{font-size:10px}.unit-save-note{font-size:10px}.unit-picker{margin-top:0}.site-footer{flex-wrap:wrap}.unit-current{font-size:10px}}
 
+/* Neutral reveals are not spelling errors. */
+.feedback.skipped{background:var(--lavender);border-color:var(--line)}
+.feedback.skipped .feedback-heading{color:var(--purple-dark)}
+.answer-input.is-skipped{background:var(--paper);border-color:var(--line)}
+.result-breakdown{display:flex;gap:10px 18px;flex-wrap:wrap;font-size:12px;line-height:1.6;margin:12px 0 20px;color:var(--muted)}
+.quiz-skip .text-button{min-height:44px}
 </style>
 </head>
 <body>
@@ -59,7 +65,7 @@
   <nav class="header-actions" aria-label="App controls"><button class="icon-button" id="open-settings" aria-label="Settings" title="Settings"></button><button class="icon-button close-button" id="close-app" aria-label="Close practice" title="Close practice"></button></nav>
 </header>
 <main id="main" tabindex="-1"></main>
-<footer class="site-footer"><span>Made for your Spanish practice. <span class="app-version">v1.4.1</span> <span class="footer-heart" aria-hidden="true">♡</span></span><button class="text-button" id="open-about">About these words</button></footer>
+<footer class="site-footer"><span>Made for your Spanish practice. <span class="app-version">v1.4.2</span> <span class="footer-heart" aria-hidden="true">♡</span></span><button class="text-button" id="open-about">About these words</button></footer>
 <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <div id="toast" class="toast" role="status" hidden></div>
 <dialog id="modal" aria-labelledby="modal-title"></dialog>
@@ -92,6 +98,13 @@
     const close = answers.find(answer => withoutVowelMarks(answer) === withoutVowelMarks(value));
     return {status:close ? 'accent' : 'incorrect', expected:close || card.forms[0]};
   }
+  // A reveal request must never discard a submitted correct answer.
+  // Only an empty response may become an ungraded reveal.
+  function gradeSubmission(card, input, reveal = false) {
+    const result = grade(card, input);
+    return reveal === true && result.status === 'empty'
+      ? {...result, status:'skipped'} : result;
+  }
   function shuffle(items, random = Math.random) {
     const copy = [...items];
     for (let i = copy.length - 1; i > 0; i--) {
@@ -112,7 +125,7 @@
   function escapeHTML(value) {
     return String(value ?? '').replace(/[&<>"']/gu, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-  const api = {normalize, withoutVowelMarks, acceptedAnswers, grade, shuffle, makeRound, escapeHTML};
+  const api = {normalize, withoutVowelMarks, acceptedAnswers, grade, gradeSubmission, shuffle, makeRound, escapeHTML};
   root.SpanishCore = Object.freeze(api);
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -120,7 +133,7 @@
 <script>(function () {
 'use strict';
 const DATA = JSON.parse(document.getElementById('vocabulary-data').textContent);
-const {escapeHTML:e, grade, makeRound, normalize} = SpanishCore;
+const {escapeHTML:e, grade, gradeSubmission, makeRound, normalize} = SpanishCore;
 const CARDS = DATA.cards;
 const byId = new Map(CARDS.map(card => [card.id,card]));
 const byCategory = new Map(DATA.categories.map(category => [category.id,category]));
@@ -462,13 +475,19 @@ function rateCard(correct, skipped=false) {
   record(card,correct,'flashcards');
   nextCard();
 }
+function updateRevealLabel() {
+  const input=document.getElementById('answer-input'),button=document.getElementById('quiz-skip');
+  if(!input||!button||session?.checked)return;
+  button.textContent=normalize(input.value)?'Check & show answer':'Show answer (skip)';
+}
 function quizHTML(card) {
   return `<form id="quiz-form" novalidate><div class="quiz-card">${session.mode==='listening'?listeningPromptHTML():`<div class="quiz-prompt"><span class="card-language">HOW DO YOU WRITE THIS IN SPANISH?</span><div class="card-word ${card.en.length>24?'long':''}">${e(card.en)}</div>${card.number!==undefined?`<div class="number-caption">${card.number}</div>`:''}</div>`}
     <label class="answer-label" for="answer-input">Your Spanish answer</label><input class="answer-input" id="answer-input" name="answer" type="text" placeholder="Type the Spanish here…" lang="es" maxlength="180" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" aria-describedby="answer-hint answer-error">
-    <div class="accent-keys" aria-label="Spanish accent letters">${['á','é','í','ó','ú','ü','ñ'].map(letter=>`<button type="button" class="accent-key" data-action="accent" data-letter="${letter}" aria-label="Insert ${letter}">${letter}</button>`).join('')}</div><p class="answer-hint" id="answer-hint">${answerHint(card)}</p><div id="answer-error" class="error-inline" role="status"></div><div id="quiz-feedback" aria-live="polite" aria-atomic="true"></div><button class="primary quiz-submit" id="quiz-submit" type="button" data-action="quiz-submit">Check my answer ${icon('check')}</button></div><div class="quiz-skip"><button type="button" class="text-button" id="quiz-skip" data-action="quiz-skip">I’m not sure — show me</button></div></form>`;
+    <div class="accent-keys" aria-label="Spanish accent letters">${['á','é','í','ó','ú','ü','ñ'].map(letter=>`<button type="button" class="accent-key" data-action="accent" data-letter="${letter}" aria-label="Insert ${letter}">${letter}</button>`).join('')}</div><p class="answer-hint" id="answer-hint">${answerHint(card)}</p><div id="answer-error" class="error-inline" role="status"></div><div id="quiz-feedback" aria-live="polite" aria-atomic="true"></div><button class="primary quiz-submit" id="quiz-submit" type="button" data-action="quiz-submit">Check my answer ${icon('check')}</button></div><div class="quiz-skip"><button type="button" class="text-button" id="quiz-skip" data-action="quiz-skip">Show answer (skip)</button></div></form>`;
 }
 function checkAnswer(skipped=false) {
-  if(!session||!isSpellingMode(session.mode)||session.checked)return;
+  skipped=skipped===true;
+  if(!session||view!=='practice'||!isSpellingMode(session.mode)||session.checked)return;
   if(session.mode==='listening'&&!skipped&&(!session.listening.plays||session.listening.busy))return;
   const input=document.getElementById('answer-input');
   const card=session.cards[session.index];
@@ -476,24 +495,28 @@ function checkAnswer(skipped=false) {
   const listening=session.mode==='listening';
   const heard=listening?session.listening.form:null;
   const expected=listening?{...card,forms:[heard],alternatives:[]}:card;
-  const result=skipped?{status:'skipped'}:grade(expected,typed);
+  const result=gradeSubmission(expected,typed,skipped);
   if(result.status==='empty'){
-    document.getElementById('answer-error').textContent='Try an answer, or tap “I’m not sure — show me.”';
+    document.getElementById('answer-error').textContent='Type an answer, or choose “Show answer (skip).”';
     input.focus();return;
   }
   stopSpeech();
   session.checked=true;session.input=typed;session.feedback=result;
-  if(listening){document.getElementById('listen-play').disabled=true;document.getElementById('listen-status').textContent='Answer revealed — listen again below to learn it.';document.getElementById('listen-error').hidden=true;}
+  if(listening){document.getElementById('listen-play').disabled=true;document.getElementById('listen-play').innerHTML=icon('sound')+' Answer shown';document.getElementById('listen-status').textContent='Answer revealed — listen again below to learn it.';document.getElementById('listen-error').hidden=true;}
   const correct=result.status==='correct';
   session.responses.push({id:card.id,correct,status:result.status,input:typed,...(listening?{heard}: {})});
   record(card,correct,session.mode);
-  input.disabled=true; input.classList.add(correct?'is-correct':'is-wrong');
+  input.disabled=true; input.classList.add(correct?'is-correct':result.status==='skipped'?'is-skipped':'is-wrong');
   document.getElementById('answer-error').textContent='';
   document.querySelectorAll('.accent-key').forEach(button=>button.disabled=true);
-  const heading=correct?'You got it!':result.status==='accent'?'Almost — check the accent marks.':result.status==='skipped'?'Let’s learn this one.':'Not quite — here’s the word.';
-  const helper=correct?'That spelling is correct.':result.status==='accent'?'An accent mark or the dots on ü need a little attention. This goes into your review pile.':'Read it, listen to it, and give it another go in your review round.';
-  document.getElementById('quiz-feedback').innerHTML=`<div class="feedback ${correct?'correct':''}"><div class="feedback-heading">${icon(correct?'check':'info')}${heading}</div><p>${helper}</p>${listening?`<p>Meaning: ${e(card.en)}</p>`:''}<p class="feedback-answer" lang="es">${expected.forms.map(e).join(' <span class="muted">/</span> ')}</p>${listening?heardAudioHTML(card):audioGroup(card)}${listening?'<p class="study-note">Spell the form in the audio, not a different gender or synonym. El / la / los / las is optional.</p>':card.note?`<p class="study-note">${e(card.note)}</p>`:''}</div>`;
-  const next=document.getElementById('quiz-submit');
+  const heading=correct?'You got it!':result.status==='accent'?'Almost — check the accent marks.':result.status==='skipped'?'Answer shown — not graded.':'Not quite — here’s the word.';
+  const helper=correct?'That spelling is correct.':result.status==='skipped'?'No answer was entered. This word is saved for practice, not counted as a spelling mistake.':result.status==='accent'?'An accent mark or the dots on ü need a little attention. This goes into your review pile.':'Read it, listen to it, and give it another go in your review round.';
+  document.getElementById('quiz-feedback').innerHTML=`<div data-result="${result.status}" class="feedback ${correct?'correct':result.status==='skipped'?'skipped':''}"><div class="feedback-heading">${icon(correct?'check':'info')}${heading}</div><p>${helper}</p>${listening?`<p>Meaning: ${e(card.en)}</p>`:''}<p class="feedback-answer" lang="es">${expected.forms.map(e).join(' <span class="muted">/</span> ')}</p>${listening?heardAudioHTML(card):audioGroup(card)}${listening?'<p class="study-note">Spell the form in the audio, not a different gender or synonym. El / la / los / las is optional.</p>':card.note?`<p class="study-note">${e(card.note)}</p>`:''}</div>`;
+  // A separate Next control cannot reinterpret a queued Check click.
+  const previous=document.getElementById('quiz-submit');
+  const next=previous.cloneNode(false);
+  next.dataset.action='quiz-next';
+  previous.replaceWith(next);
   next.disabled=false;
   next.innerHTML=`${session.index===session.cards.length-1?'See my results':'Next word'} ${icon('arrow')}`;
   document.getElementById('quiz-skip').hidden=true;
@@ -524,10 +547,13 @@ function renderResults() {
   const missed=session.responses.filter(r=>!r.correct);
   const correct=session.responses.length-missed.length;
   const quiz=isSpellingMode(session.mode);
+  const shown=session.responses.filter(r=>r.status==='skipped').length;
+  const incorrect=missed.length-shown;
   const allRight=!missed.length;
   mount(`<section class="results appear"><div class="results-hero"><span class="results-emblem" aria-hidden="true">✦</span><h1>${allRight?'Look at you go, Alaina!':'A little more confident.'}</h1><p>${allRight?'You finished the whole round. Take a breath — that’s real progress.':'Every tricky word is a chance to learn. Your review pile is ready whenever you are.'}</p></div><div class="result-stats"><div class="stat-tile"><strong>${correct}<span class="muted"> / ${session.cards.length}</span></strong><small>${quiz?'correct spellings':'cards you said you knew'}</small></div><div class="stat-tile"><strong>${missed.length}</strong><small>${missed.length===1?'word':'words'} to revisit in this round</small></div></div>
+    ${quiz?`<p class="result-breakdown" aria-label="Answer breakdown"><span><strong>${correct}</strong> correct</span><span><strong>${incorrect}</strong> incorrect</span><span><strong>${shown}</strong> shown without an answer</span></p>`:''}
     <div class="result-actions">${missed.length?`<button class="primary" data-action="retry-missed">${quiz?'Retry tricky spellings':'Review tricky flashcards'} ${icon('repeat')}</button>${quiz?`<button class="secondary" data-action="learn-missed">${icon('cards')} Learn them first</button>`:''}`:`<button class="primary" data-action="play-again">Try a new shuffled round ${icon('arrow')}</button>`}<button class="secondary" data-action="new-topics">Choose topics</button>${missed.length?'<button class="text-button" data-action="play-again">New shuffled round</button>':''}</div>
-    ${missed.length?`<div class="review-list"><h2>Your little review pile</h2>${missed.map(r=>{const c=byId.get(r.id);return `<div class="review-row"><div><h3>${e(c.en)} <span class="word-category muted">· ${e(categoryName(c))}</span></h3>${quiz?`<p>Your answer: ${r.status==='skipped'?'Skipped':e(r.input)}</p>`:''}<p class="correct-answer" lang="es">${r.heard?e(r.heard):c.forms.map(e).join(' / ')}</p>${r.status==='accent'?'<p>Watch the accent marks.</p>':''}</div><button class="icon-button" data-action="speak" data-card="${e(c.id)}" data-form="${r.heard?Math.max(0,c.forms.indexOf(r.heard)):0}" aria-label="Pronounce ${e(c.forms[0])} in Spanish">${icon('sound')}</button></div>`;}).join('')}</div>`:'<p class="study-note" style="margin-top:24px">A short break counts, too. Come back when you’re ready.</p>'}</section>`);
+    ${missed.length?`<div class="review-list"><h2>Your little review pile</h2>${missed.map(r=>{const c=byId.get(r.id);return `<div class="review-row"><div><h3>${e(c.en)} <span class="word-category muted">· ${e(categoryName(c))}</span></h3>${quiz?`<p>Your answer: ${r.status==='skipped'?'Shown without an answer (not graded)':e(r.input)}</p>`:''}<p class="correct-answer" lang="es">${r.heard?e(r.heard):c.forms.map(e).join(' / ')}</p>${r.status==='accent'?'<p>Watch the accent marks.</p>':''}</div><button class="icon-button" data-action="speak" data-card="${e(c.id)}" data-form="${r.heard?Math.max(0,c.forms.indexOf(r.heard)):0}" aria-label="Pronounce ${e(c.forms[0])} in Spanish">${icon('sound')}</button></div>`;}).join('')}</div>`:'<p class="study-note" style="margin-top:24px">A short break counts, too. Come back when you’re ready.</p>'}</section>`);
 }
 function openWordList() {
   stopSpeech();view='words';wordQuery='';wordFilter='';
@@ -571,7 +597,7 @@ function resetProgress() {
 }
 function handleAction(event) {
   const button=event.target.closest('[data-action]');
-  if(!button||button.disabled)return;
+  if(!button||button.disabled||!button.isConnected)return;
   const action=button.dataset.action;
   if(action==='speak'&&session?.mode==='listening'&&view==='practice'&&!session.checked)return;
   if(action==='speak') { const c=byId.get(button.dataset.card); if(c)speak(c.forms[Number(button.dataset.form)||0]); return; }
@@ -586,7 +612,8 @@ function handleAction(event) {
     case 'rate':rateCard(button.dataset.correct==='true');break;
     case 'flash-skip':rateCard(false,true);break;
     case 'listen-play':playListeningQuestion();break;
-    case 'quiz-submit':session?.checked?nextCard():checkAnswer();break;
+    case 'quiz-submit':checkAnswer();break;
+    case 'quiz-next':nextCard();break;
     case 'quiz-skip':checkAnswer(true);break;
     case 'accent': {
       const input=document.getElementById('answer-input');
@@ -613,6 +640,10 @@ function handleAction(event) {
   }
 }
 document.addEventListener('click',handleAction);
+// Holding Enter must not check the next word or discard feedback.
+document.addEventListener('keydown',event=>{
+  if(view==='practice' && event.key==='Enter' && event.repeat)event.preventDefault();
+});
 // Remember the text selection before a touch focuses an accent button.
 let accentSelection=null;
 document.addEventListener('pointerdown',event=>{
@@ -626,11 +657,12 @@ document.addEventListener('pointerdown',event=>{
 document.addEventListener('submit',event=>{
   if(event.target.id!=='quiz-form')return;
   event.preventDefault();
-  if(session?.checked)nextCard();else checkAnswer();
+  // Form Enter checks once; only the explicit Next button advances.
+  if(!session?.checked)checkAnswer();
 });
 document.addEventListener('input',event=>{
   if(event.target.id==='word-search'){wordQuery=event.target.value;renderWordResults();}
-  if(event.target.id==='answer-input'){document.getElementById('answer-error').textContent='';}
+  if(event.target.id==='answer-input'){document.getElementById('answer-error').textContent='';updateRevealLabel();}
 });
 document.addEventListener('change',event=>{
   const el=event.target;

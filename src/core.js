@@ -25,6 +25,13 @@
     const close = answers.find(answer => withoutVowelMarks(answer) === withoutVowelMarks(value));
     return {status:close ? 'accent' : 'incorrect', expected:close || card.forms[0]};
   }
+  // A reveal request must never discard a submitted correct answer.
+  // Only an empty response may become an ungraded reveal.
+  function gradeSubmission(card, input, reveal = false) {
+    const result = grade(card, input);
+    return reveal === true && result.status === 'empty'
+      ? {...result, status:'skipped'} : result;
+  }
   function shuffle(items, random = Math.random) {
     const copy = [...items];
     for (let i = copy.length - 1; i > 0; i--) {
@@ -45,7 +52,7 @@
   function escapeHTML(value) {
     return String(value ?? '').replace(/[&<>"']/gu, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-  const api = {normalize, withoutVowelMarks, acceptedAnswers, grade, shuffle, makeRound, escapeHTML};
+  const api = {normalize, withoutVowelMarks, acceptedAnswers, grade, gradeSubmission, shuffle, makeRound, escapeHTML};
   root.SpanishCore = Object.freeze(api);
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -67,7 +67,7 @@ try:
     ctx.add_init_script(f"if(!localStorage.getItem('{STORE}'))localStorage.setItem('{STORE}',JSON.stringify({json.dumps(initial)}))")
     p=ctx.new_page();p.set_default_timeout(10000);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
     try:
-     p.goto(url);expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.4.1')
+     p.goto(url);expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.4.2')
      if 'migration' in name:migration(p,initial,name=='filtered-migration')
      else:round_of_seven(p,initial,name)
      assert not errors,errors;report['checks'].append({'engine':engine,'test':name,'passed':True});print(engine,name,'PASS',flush=True)

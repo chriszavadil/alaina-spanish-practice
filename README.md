@@ -1,6 +1,6 @@
 # Alaina's Spanish Quiz Practice — v1.4.1
 
-Live app: https://chriszavadil.github.io/alaina-spanish-practice/?v=1.4.1
+Live app: https://chriszavadil.github.io/alaina-spanish-practice/?v=1.4.2
 
 Phone-friendly Flashcards, Spelling Quiz, and Listen & Spell. No account, timer, advertising, or analytics. Study progress is browser-local; worksheet photographs and private handwriting are not published.
 
@@ -14,7 +14,7 @@ Listen & Spell plays the Spanish form once initially and permits three replays p
 
 ## Hosting and updates
 
-The complete self-contained application is in both `index.html` and `docs/index.html`; their contents match. GitHub Pages hosts the app directly and does not depend on a PC or temporary tunnel. The app's X returns home, not out of Safari. Refresh the existing GitHub Pages address to update; v1.4.1 appears in the footer.
+The complete self-contained application is in both `index.html` and `docs/index.html`; their contents match. GitHub Pages hosts the app directly and does not depend on a PC or temporary tunnel. The app's X returns home, not out of Safari. Refresh the existing GitHub Pages address to update; v1.4.2 appears in the footer.
 
 ## Verification of the preceding v1.4.0 release
 
@@ -38,3 +38,9 @@ Python browser tests require Playwright with Chromium and WebKit installed. Spee
 The latest worksheet adds exactly seven printed entries under Places and Origin. Existing card objects, artwork, voice settings, replay rules, storage key and hosting address are retained. Previously earned achievements remain unlocked when the unit expands. The new topics are selected automatically once for learners who had all original core topics selected; intentional topic filters and optional extras remain unchanged.
 
 Run the existing regression suites plus `node --test tests/places.test.cjs` and `python tests/places_addendum.py` to verify this update. `tools/extend_unit2_places.py` records the assertion-checked update from the materialized v1.4.0 app; `tools/apply_unit2.py` and `tools/unit2_data.py` retain the original six-page migration history. The current canonical Unit 2 vocabulary is in `src/unit2.json`.
+
+## Correct-answer / reveal repair (v1.4.2)
+
+See `GRADING_FIX.md`. Any typed answer is checked even when the learner uses the reveal button. Blank reveals have neutral, explicitly ungraded feedback, and results separate incorrect responses from reveals. Check and Next use separate actions. All vocabulary, units, existing progress and achievements are retained; old scores are not silently rewritten.
+
+Regression commands: `node --test tests/grading_paths.test.cjs`, `python tests/grading_paths.py`, `python tests/held_enter.py`, and `python tests/grading_cached_upgrade.py`, in addition to the existing suites. `GRADING_FIX_VERIFICATION.json` records release verification.

@@ -1,4 +1,4 @@
-"""Verify an installed 1.4.0 cache upgrades on the same origin without losing progress."""
+"""Verify an installed 1.4.1 cache upgrades on the same origin without losing progress."""
 from pathlib import Path
 from http.server import ThreadingHTTPServer,SimpleHTTPRequestHandler
 import functools,json,subprocess,tempfile,threading,os
@@ -8,7 +8,7 @@ files=['index.html','sw.js','manifest.webmanifest','icon-192.png','icon-512.png'
 with tempfile.TemporaryDirectory(prefix='alaina-upgrade-') as folder:
  oldroot=Path(folder)
  for f in files:
-  (oldroot/f).write_bytes(subprocess.check_output(['git','show','9e416a2:'+f],cwd=ROOT))
+  (oldroot/f).write_bytes(subprocess.check_output(['git','show','85ddbd9:'+f],cwd=ROOT))
   # Model real release chronology: the old release predates the new one.
   # Otherwise this artificial directory swap can yield an incorrect HTTP 304.
   os.utime(oldroot/f,(1577836800,1577836800))
@@ -28,7 +28,7 @@ with tempfile.TemporaryDirectory(prefix='alaina-upgrade-') as folder:
    p=ctx.new_page();p.set_default_timeout(12000)
    try:
     p.goto(f'http://127.0.0.1:{server.server_port}/');p.evaluate('navigator.serviceWorker.ready');p.wait_for_function('!!navigator.serviceWorker.controller')
-    expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.4.0')
+    expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.4.1')
     p.locator('[data-action=achievements]').tap();expect(p.locator('.badge-card.unlocked',has_text='Unit 2 Explorer')).to_be_visible();p.locator('[data-action=dismiss]').tap()
     before=p.evaluate(f'JSON.parse(localStorage.getItem("{STORE}"))')
     active['root']=ROOT;p.reload()
@@ -43,5 +43,5 @@ with tempfile.TemporaryDirectory(prefix='alaina-upgrade-') as folder:
     assert after['progress']['earnedAchievements']['unit2'] is True
     assert after['settings']['placesRevision']==1
     p.reload();p.locator('[data-action=achievements]').tap();expect(p.locator('.badge-card.unlocked',has_text='Unit 2 Explorer')).to_be_visible()
-    print(engine,'cached 1.4.0 -> 1.4.1, same origin, progress and earned badge preserved PASS',flush=True)
+    print(engine,'cached 1.4.1 -> 1.4.2, same origin, progress and earned badge preserved PASS',flush=True)
    finally:ctx.close();b.close();server.shutdown();server.server_close()

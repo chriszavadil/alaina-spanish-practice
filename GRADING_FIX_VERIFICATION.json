@@ -1,0 +1,59 @@
+{
+  "version": "1.4.2",
+  "html_sha256_lf": "34bbdad69fb8ab367e6e2a691bbe067ebd51f63e89379e1e8ade695e833d3496",
+  "base_commit": "85ddbd9206cd52f5fcb67027c638929db9ee0b86",
+  "unit1_cards": 147,
+  "unit2_cards": 116,
+  "existing_card_objects_preserved": 263,
+  "storage_key": "alaina-spanish-practice-v1",
+  "candidate_final_acceptance_utc": "2026-09-10T16:25:43.740623+00:00",
+  "static_tests_passed": 21,
+  "engines": [
+    "webkit",
+    "chromium"
+  ],
+  "completed_browser_groups": {
+    "grading_paths": 18,
+    "unit1_regressions": 18,
+    "unit2_rounds_and_migration": 10,
+    "places_and_migration": 10,
+    "accent_input": 4,
+    "speech_recovery": 8,
+    "offline_fallback": 2,
+    "cached_upgrade": 2,
+    "held_enter": 2
+  },
+  "new_acceptance_commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/core.test.cjs",
+        "tests/unit2.test.cjs",
+        "tests/places.test.cjs",
+        "tests/grading_paths.test.cjs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\chris\\Alaina-Spanish-Practice\\.venv\\Scripts\\python.exe",
+        "-u",
+        "tests/held_enter.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\chris\\Alaina-Spanish-Practice\\.venv\\Scripts\\python.exe",
+        "-u",
+        "tests/grading_cached_upgrade.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "speech": "test-only simulated API events",
+  "physical_iphone_audio_tested": false,
+  "student_browser_data_accessed": false,
+  "live_verified": false
+}

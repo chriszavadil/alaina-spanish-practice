@@ -18,6 +18,6 @@ test('Country retains its accent and correct article; origin requires the comple
 test('Single-file app, hosted copy and Spanish core agree; both service workers share the new version',()=>{
  assert.equal(html,fs.readFileSync(path.join(root,'docs/index.html'),'utf8'));
  assert.ok(html.includes(fs.readFileSync(path.join(root,'src/core.js'),'utf8').trim()));
- for(const f of ['sw.js','docs/sw.js'])assert.ok(fs.readFileSync(path.join(root,f),'utf8').includes("'v1.4.1'"));
+ for(const f of ['sw.js','docs/sw.js'])assert.ok(fs.readFileSync(path.join(root,f),'utf8').includes("'v1.4.2'"));
  assert.ok(html.includes("const STORE = 'alaina-spanish-practice-v1'"));
 });
