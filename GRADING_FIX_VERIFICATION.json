@@ -55,5 +55,23 @@
   "speech": "test-only simulated API events",
   "physical_iphone_audio_tested": false,
   "student_browser_data_accessed": false,
-  "live_verified": false
+  "live_verified": true,
+  "live_url": "https://chriszavadil.github.io/alaina-spanish-practice/?v=1.4.2",
+  "live_html_exact_match": true,
+  "live_verified_utc": "2026-09-10T16:32:58.939462+00:00",
+  "live_test_suites": [
+    {
+      "suite": "grading_paths",
+      "groups_passed": 18,
+      "exit_code": 0
+    },
+    {
+      "suite": "unit1_regression",
+      "groups_passed": 14,
+      "exit_code": 0
+    }
+  ],
+  "live_browser_groups_passed": 32,
+  "release_commit": "96edd5dc67638a33223bd1fa6c6dd4ba0de39a0e",
+  "live_iphone_sized_screenshot_captured": true
 }

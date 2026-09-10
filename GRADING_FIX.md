@@ -22,3 +22,9 @@ References consulted for event handling:
 - https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event
 - https://developer.mozilla.org/en-US/docs/Web/API/SubmitEvent/submitter
 - https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event
+
+## Published and verified
+
+The permanent GitHub Pages site serves the exact tested v1.4.2 application. All 32 live browser check groups passed (18 grading-path groups and 14 existing-mode groups) in WebKit and Chromium. This includes the reported el martes case via Check, reveal and Enter, all 263 words through the reveal path, saved progress, exact-form listening, and replay limits. The update uses the same address; refresh and look for v1.4.2 in the footer. Do not clear browser data.
+
+Live address: https://chriszavadil.github.io/alaina-spanish-practice/?v=1.4.2
