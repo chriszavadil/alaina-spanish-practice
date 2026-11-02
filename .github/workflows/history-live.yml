@@ -1,0 +1,34 @@
+name: History Studio public release verification
+on:
+  push:
+    branches: [main]
+    paths: ['history/**', 'docs/history/**', '.github/workflows/history-live.yml', 'tools/verify_history_live.py']
+permissions:
+  contents: read
+jobs:
+  verify-live:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Install mobile browser engines
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Verify exact public release and both apps
+        run: python tools/verify_history_live.py
+      - name: Collect public-browser evidence
+        if: always()
+        run: |
+          mkdir -p history-live-results
+          cp -r history-test-results history-live-results/history-tests 2>/dev/null || true
+          cp -r ../hosting/listen-spell-verification history-live-results/spanish-tests 2>/dev/null || true
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: history-live-verification
+          path: history-live-results/
+          retention-days: 7
