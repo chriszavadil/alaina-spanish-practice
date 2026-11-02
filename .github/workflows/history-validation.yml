@@ -23,23 +23,6 @@ jobs:
         run: |
           node --test tests/history.test.cjs
           node --test tests/core.test.cjs tests/unit2.test.cjs tests/grading_paths.test.cjs
-      - name: Package candidate for visual review
-        run: |
-          python - <<'PY'
-          import zipfile
-          from pathlib import Path
-          with zipfile.ZipFile('history-candidate.zip','w',zipfile.ZIP_DEFLATED) as z:
-              for folder in ['history','history-src']:
-                  for p in Path(folder).glob('*'):
-                      if p.is_file():z.write(p,str(p))
-              for p in Path('tests').glob('history*'):z.write(p,str(p))
-              z.write('HISTORY_BUILD.json','HISTORY_BUILD.json')
-          PY
-      - uses: actions/upload-artifact@v5
-        with:
-          name: history-candidate
-          path: history-candidate.zip
-          retention-days: 7
       - name: Install browser testing tools
         run: |
           pip install playwright==1.62.0
@@ -55,7 +38,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add history docs/history history-src/app.js history-src/data.json sw.js docs/sw.js HISTORY_BUILD.json
+          git add history docs/history history-src/app.js history-src/data.json tests/history_browser.py sw.js docs/sw.js HISTORY_BUILD.json
           if ! git diff --cached --quiet; then
             git commit -m 'Build validated independent History Studio'
             git push origin HEAD:feature/history-studio-20261102

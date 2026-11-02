@@ -16,7 +16,7 @@ Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{getVoic
 def tap(p,sel):p.locator(sel).tap()
 def stored(p):return p.evaluate(f'JSON.parse(localStorage.getItem("{STORE}"))')
 def begin(p,mode='type',length='all'):
- tap(p,'[data-action=setup]');tap(p,f'[data-mode={mode}]');tap(p,f'[data-length={length}]');tap(p,'#begin-round')
+ tap(p,'[data-action=setup]');tap(p,f'[data-mode={mode}]');tap(p,f'[data-length="{length}"]');tap(p,'#begin-round')
 def nextq(p):
  expect(p.locator('#quiz-action')).to_be_enabled();tap(p,'#quiz-action')
 def card_for_prompt(p):
