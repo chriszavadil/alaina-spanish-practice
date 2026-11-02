@@ -1,0 +1,65 @@
+name: History Studio validation
+on:
+  push:
+    branches: [feature/history-studio-20261102]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Build independent history app
+        run: python tools/build_history.py
+      - name: Content, grading, syntax and Spanish preservation
+        run: |
+          node --test tests/history.test.cjs
+          node --test tests/core.test.cjs tests/unit2.test.cjs tests/grading_paths.test.cjs
+      - name: Install browser testing tools
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: All four modes, grading, progress, storage isolation and iPhone layouts
+        run: python tests/history_browser.py
+      - name: Upgrade from old Spanish cache and verify both apps offline
+        run: python tests/history_offline.py
+      - name: Commit validated app to candidate branch only
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add history docs/history sw.js docs/sw.js HISTORY_BUILD.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build validated independent History Studio'
+            git push origin HEAD:feature/history-studio-20261102
+          fi
+      - name: Package history app and evidence
+        if: always()
+        run: |
+          mkdir -p history-test-results
+          cp HISTORY_BUILD.json history-test-results/ 2>/dev/null || true
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          with zipfile.ZipFile('history-test-results/Alaina-History-Studio.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in Path('history').glob('*'):
+                  if p.is_file():z.write(p,p.name)
+              z.write('HISTORY_README.md','README.md')
+          with zipfile.ZipFile('history-test-results/History-source.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in Path('history-src').glob('*'):
+                  if p.is_file():z.write(p,str(p))
+              for p in Path('tests').glob('history*'):z.write(p,str(p))
+              z.write('tools/build_history.py','tools/build_history.py')
+          PY
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: history-validation
+          path: history-test-results/
+          retention-days: 7
