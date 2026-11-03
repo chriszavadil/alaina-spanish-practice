@@ -19,8 +19,9 @@ for c in d['cards']:
  if c['id']=='caravan':c['sources']=['caravan','silk']
  if c['id']=='luxury-goods':c['sources']=['luxury','silk']
 p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-# Scope the test to the Cancel action rather than both Cancel and the close icon.
 p=root/'tests/history_browser.py';s=p.read_text(encoding='utf-8').replace("f'[data-length={length}]'", "f'[data-length=\"{length}\"]'")
 s=s.replace("tap(p,'[data-action=reset]');tap(p,'[data-action=dismiss]');assert", "tap(p,'[data-action=reset]');tap(p,'#modal .button-row [data-action=dismiss]');assert")
+# Do not return a function from evaluate: Playwright otherwise invokes the injected stub immediately.
+s=s.replace("Storage.prototype.setItem=function(){throw new Error('Blocked by browser')} ", "() => { Storage.prototype.setItem=function(){throw new Error('Blocked by browser')}; }")
 p.write_text(s,encoding='utf-8')
-print('Finalized safe imports, direct sources, phone polish and precise test locators.')
+print('Finalized safe imports, direct sources, phone polish and precise browser checks.')
