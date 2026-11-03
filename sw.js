@@ -1,6 +1,6 @@
 /* Cache this app only. No analytics or external requests. */
 const PREFIX = 'alaina-spanish-' + new URL(self.registration.scope).pathname + ':';
-const CACHE = PREFIX + 'v1.4.2';
+const CACHE = PREFIX + 'v1.4.2-route-isolation';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting()));
@@ -14,7 +14,7 @@ self.addEventListener('fetch', event => {
   const base = new URL(self.registration.scope);
   if (url.origin !== base.origin || !url.pathname.startsWith(base.pathname)) return;
   const allowed = FILES.map(path => new URL(path, base).pathname);
-  if (event.request.mode === 'navigate') {
+  if (event.request.mode === 'navigate' && allowed.includes(url.pathname)) {
     event.respondWith(fetch(event.request).then(async response => {
       if (response.ok) { const cache = await caches.open(CACHE); await cache.put(new URL('./index.html', base), response.clone()); }
       return response;
