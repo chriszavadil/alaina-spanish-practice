@@ -1,0 +1,99 @@
+name: Scenario Practice validation
+on:
+  push:
+    branches: [feature/history-scenarios-1.1.0]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Apply and build candidate
+        run: |
+          python tools/add_history_scenarios.py
+          python tools/build_history.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('.github/workflows/history-live.yml');s=p.read_text()
+          line='          cp -r history-scenario-results history-live-results/scenario-tests 2>/dev/null || true\n'
+          if line not in s:
+              s=s.replace('          cp -r history-test-results',line+'          cp -r history-test-results')
+              p.write_text(s)
+          PY
+      - name: Check vocabulary, grading and unchanged Spanish application
+        run: |
+          node --test tests/history.test.cjs tests/history_scenarios.test.cjs
+          node --test tests/core.test.cjs tests/unit2.test.cjs tests/grading_paths.test.cjs
+          git diff --exit-code 2f5a9fac5b193ff4821bcad748b7a6c08fa58ed4 -- index.html docs/index.html src/core.js src/data.json src/unit2.json sw.js docs/sw.js
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          old=json.loads(subprocess.check_output(['git','show','2f5a9fac5b193ff4821bcad748b7a6c08fa58ed4:history-src/data.json']))
+          new=json.loads(Path('history-src/data.json').read_text())
+          assert old['cards']==[{k:v for k,v in c.items() if k!='scenarios'} for c in new['cards']]
+          assert old['categories']==new['categories'] and old['sources']==new['sources']
+          print('All original definitions, terms, sources and categories preserved.')
+          PY
+      - name: Install existing browser test dependencies
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Installed-history update and independent offline apps
+        run: |
+          python tests/history_scenario_upgrade.py
+          python tests/history_offline.py
+      - name: All scenarios, existing modes, saved rounds and backup safety
+        run: |
+          python - <<'PY'
+          import subprocess,sys
+          from pathlib import Path
+          out=Path('history-scenario-results');out.mkdir(exist_ok=True)
+          jobs=[]
+          for script in ['history_scenarios.py','history_browser.py']:
+              log=(out/(script+'.log')).open('w')
+              jobs.append((script,subprocess.Popen([sys.executable,'-u','tests/'+script],stdout=log,stderr=subprocess.STDOUT),log))
+          failed=[]
+          for script,proc,log in jobs:
+              code=proc.wait();log.close()
+              print((out/(script+'.log')).read_text(),flush=True)
+              if code:failed.append(script)
+          if failed:raise SystemExit('Failed: '+', '.join(failed))
+          subprocess.run([sys.executable,'tests/history_backup.py'],check=True)
+          PY
+      - name: Save tested files on candidate branch only
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add history docs/history history-src/app.js history-src/data.json history-src/shell.html history-src/style.css history-src/sw.js tests/history_browser.py tools/verify_history_live.py HISTORY_BUILD.json .github/workflows/history-live.yml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build tested Scenario Practice release 1.1.0'
+            git push origin HEAD:feature/history-scenarios-1.1.0
+          fi
+      - name: Collect test evidence and website package
+        if: always()
+        run: |
+          mkdir -p scenario-release-results
+          cp -r history-scenario-results scenario-release-results/scenarios 2>/dev/null || true
+          cp -r history-test-results scenario-release-results/history 2>/dev/null || true
+          cp HISTORY_BUILD.json scenario-release-results/
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          with zipfile.ZipFile('scenario-release-results/Alaina-History-1.1.0.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in Path('history').glob('*'):
+                  if p.is_file():z.write(p,p.name)
+          PY
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: scenario-validation
+          path: scenario-release-results/
+          retention-days: 7
