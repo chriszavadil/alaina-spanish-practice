@@ -24,6 +24,7 @@ jobs:
         if: always()
         run: |
           mkdir -p history-live-results
+          cp -r history-scenario-results history-live-results/scenario-tests 2>/dev/null || true
           cp -r history-test-results history-live-results/history-tests 2>/dev/null || true
           cp -r ../hosting/listen-spell-verification history-live-results/spanish-tests 2>/dev/null || true
       - uses: actions/upload-artifact@v5
