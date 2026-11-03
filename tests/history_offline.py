@@ -4,6 +4,7 @@ from http.server import ThreadingHTTPServer,SimpleHTTPRequestHandler
 from playwright.sync_api import sync_playwright,expect
 import subprocess,threading,tempfile,shutil,os,json
 ROOT=Path(__file__).resolve().parents[1];BASE='0c9000dff065170c2489b396789b3a9625614cb3'
+OUT=ROOT/'history-test-results';OUT.mkdir(parents=True,exist_ok=True)
 class Quiet(SimpleHTTPRequestHandler):
  def __init__(self,*a,**kw):super().__init__(*a,directory=str(active['root']),**kw)
  def log_message(self,*a):pass
@@ -38,4 +39,4 @@ with tempfile.TemporaryDirectory() as tmp:
     assert p.evaluate("localStorage.getItem('alaina-spanish-practice-v1')")==saved
     print(engine,'Spanish-to-history first visit; independent caches; both apps offline; both progress stores preserved PASS',flush=True);checks.append({'engine':engine,'passed':True})
    finally:ctx.close();b.close();server.shutdown();server.server_close()
-(ROOT/'history-test-results/cache-isolation.json').write_text(json.dumps(checks,indent=2))
+(OUT/'cache-isolation.json').write_text(json.dumps(checks,indent=2))
