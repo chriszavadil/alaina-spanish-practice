@@ -13,6 +13,11 @@ server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Handler,directory=s
 threading.Thread(target=server.serve_forever,daemon=True).start();URL=args.url or f'http://127.0.0.1:{server.server_port}/history/'
 def tap(p,s):p.locator(s).tap()
 def db(p):return p.evaluate(f'JSON.parse(localStorage.getItem("{STORE}"))')
+def seed_next_load(p,value,marker):
+ # The running app saves on pagehide. Inject old data after that save, before the next app initializes.
+ # Each fixture is injected only once so later reloads exercise real persistence.
+ p.add_init_script('if(!sessionStorage.getItem('+json.dumps(marker)+')){localStorage.setItem('+json.dumps(STORE)+',JSON.stringify('+json.dumps(value)+'));sessionStorage.setItem('+json.dumps(marker)+',"1");}')
+ p.reload()
 def question(p):
  q=db(p)['session'];c=BY[q['ids'][q['index']]];return q,c,c['scenarios'][q['questions'][q['index']]['scenarioIndex']]
 def nextq(p):expect(p.locator('#quiz-action')).to_be_enabled();tap(p,'#quiz-action')
@@ -77,12 +82,12 @@ def resume_and_backup(p):
  expect(p.locator('.prompt')).to_have_text(item['text']);assert db(p)['progress']==before;nextq(p);expect(p.locator('.progress-label')).to_contain_text('2 of 5')
 def old_progress_and_filters(p):
  old={'schema':1,'settings':{'mode':'type','length':'5','topics':['exchange'],'rate':'0.75'},'progress':{'items':{'caravan':{'seen':4,'correct':2,'attempts':3,'meaning':2,'spelling':0,'review':True}},'rounds':8,'perfect':2,'earned':{'first':True,'round':True,'perfect':True}},'session':None,'lastOrder':['caravan']}
- p.evaluate('(x)=>localStorage.setItem("'+STORE+'",JSON.stringify(x))',old);p.reload();start(p)
+ seed_next_load(p,old,'seed-legacy-progress');start(p)
  assert db(p)['progress']==old['progress'];q=db(p)['session'];assert len(q['ids'])==4 and all(BY[i]['category']=='exchange' for i in q['ids'])
  tap(p,'header [data-action=home]');tap(p,'[data-action=setup]');tap(p,'[data-action=all-topics]');tap(p,'[data-action=all-topics]')
  expect(p.locator('#begin-round')).to_be_disabled();assert db(p)['progress']==old['progress']
  old['session']={'id':'legacy','mode':'type','ids':['caravan'],'index':0,'responses':[],'checked':False,'revealed':False,'input':'Cara','selected':None,'plays':0,'finished':False,'questions':[{'scenario':False,'options':['caravan','dynasty','islam','jihad']}]}
- p.evaluate('(x)=>localStorage.setItem("'+STORE+'",JSON.stringify(x))',old);p.reload();tap(p,'[data-action=resume]');expect(p.locator('#answer')).to_have_value('Cara');expect(p.locator('.prompt')).to_have_text(BY['caravan']['definition'])
+ seed_next_load(p,old,'seed-legacy-round');tap(p,'[data-action=resume]');expect(p.locator('#answer')).to_have_value('Cara');expect(p.locator('.prompt')).to_have_text(BY['caravan']['definition'])
 def phone_and_storage(p):
  start(p,'5')
  for w,h in [(393,852),(320,740),(852,393),(1200,850)]:
