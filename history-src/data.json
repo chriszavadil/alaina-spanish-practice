@@ -2,35 +2,320 @@
   "title": "Alaina’s History Studio",
   "set": "Global Tapestry",
   "version": "1.0.0",
-  "categories": [{"id":"power","name":"Power & society","label":"How people organized","symbol":"01"},{"id":"belief","name":"Beliefs & ideas","label":"How people understood the world","symbol":"02"},{"id":"exchange","name":"Trade & change","label":"How people and ideas connected","symbol":"03"}],
+  "categories": [
+    {
+      "id": "power",
+      "name": "Power & society",
+      "label": "How people organized",
+      "symbol": "01"
+    },
+    {
+      "id": "belief",
+      "name": "Beliefs & ideas",
+      "label": "How people understood the world",
+      "symbol": "02"
+    },
+    {
+      "id": "exchange",
+      "name": "Trade & change",
+      "label": "How people and ideas connected",
+      "symbol": "03"
+    }
+  ],
   "sources": {
-    "caliphate":{"name":"Oxford Learner’s Dictionaries · Caliphate","url":"https://www.oxfordlearnersdictionaries.com/definition/english/caliphate"},
-    "christianity":{"name":"Gettysburg College · Christianity","url":"https://www.gettysburg.edu/offices/religious-spiritual-life/world-religions-101/christianity"},
-    "city":{"name":"Cambridge Dictionary · City state","url":"https://dictionary.cambridge.org/us/dictionary/english/city-state"},
-    "silk":{"name":"UNESCO · About the Silk Roads","url":"https://www.unesco.org/en/silk-roads/about-silk-roads"},
-    "feudal":{"name":"UC San Diego · Feudalism glossary","url":"https://pages.ucsd.edu/~dkjordan/cgi-bin/glossary.pl?tyimuh=feudalism"},
-    "plague":{"name":"CDC · About plague","url":"https://www.cdc.gov/plague/about/index.html"},
-    "blackdeath":{"name":"National Geographic · The plague","url":"https://www.nationalgeographic.com/science/article/the-plague"},
-    "china":{"name":"Smithsonian National Museum of Asian Art · Philosophies of China","url":"https://asia.si.edu/education/educator-resources/teaching-china-with-the-smithsonian/lesson-plans/philosophies-of-china/"},
-    "islam":{"name":"Gettysburg College · Islam and jihad","url":"https://www.gettysburg.edu/offices/religious-spiritual-life/world-religions-101/islam"},
-    "dynasty":{"name":"Cambridge Dictionary · Dynasty","url":"https://dictionary.cambridge.org/us/dictionary/english/dynasty"},
-    "merit":{"name":"Cambridge Dictionary · Meritocracy","url":"https://dictionary.cambridge.org/us/dictionary/english/meritocracy"}
+    "caliphate": {
+      "name": "Oxford Learner’s Dictionaries · Caliphate",
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/caliphate"
+    },
+    "christianity": {
+      "name": "Gettysburg College · Christianity",
+      "url": "https://www.gettysburg.edu/offices/religious-spiritual-life/world-religions-101/christianity"
+    },
+    "city": {
+      "name": "Cambridge Dictionary · City state",
+      "url": "https://dictionary.cambridge.org/us/dictionary/english/city-state"
+    },
+    "silk": {
+      "name": "UNESCO · About the Silk Roads",
+      "url": "https://www.unesco.org/en/silk-roads/about-silk-roads"
+    },
+    "feudal": {
+      "name": "UC San Diego · Feudalism glossary",
+      "url": "https://pages.ucsd.edu/~dkjordan/cgi-bin/glossary.pl?tyimuh=feudalism"
+    },
+    "plague": {
+      "name": "CDC · About plague",
+      "url": "https://www.cdc.gov/plague/about/index.html"
+    },
+    "blackdeath": {
+      "name": "National Geographic · The plague",
+      "url": "https://www.nationalgeographic.com/science/article/the-plague"
+    },
+    "china": {
+      "name": "Smithsonian National Museum of Asian Art · Beliefs and Values in Ancient China",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/lesson-plans/beliefs-and-values-in-ancient-china-buddhism-daoism-and-confucianism/"
+    },
+    "islam": {
+      "name": "Gettysburg College · Islam and jihad",
+      "url": "https://www.gettysburg.edu/offices/religious-spiritual-life/world-religions-101/islam"
+    },
+    "dynasty": {
+      "name": "Cambridge Dictionary · Dynasty",
+      "url": "https://dictionary.cambridge.org/us/dictionary/english/dynasty"
+    },
+    "merit": {
+      "name": "Cambridge Dictionary · Meritocracy",
+      "url": "https://dictionary.cambridge.org/us/dictionary/english/meritocracy"
+    },
+    "caravan": {
+      "name": "Oxford Learner’s Dictionaries · Caravan",
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/caravan"
+    },
+    "luxury": {
+      "name": "Oxford Learner’s Dictionaries · Luxury",
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/luxury_1"
+    }
   },
   "cards": [
-    {"id":"caliphate","term":"Caliphate","category":"power","aliases":[],"definition":"A state or territory led by a caliph, a ruler who claims leadership of the Muslim community as a successor to Muhammad.","example":"A caliphate combines political rule with a claim to religious leadership.","scenario":"A territory is governed by a caliph. Which political term describes it?","cue":"Caliph = leader; caliphate = the state or rule.","note":"A caliph is not a new prophet. This is a historical political institution, not another name for Islam.","sketch":"A simple building with a leader’s chair inside. Label it ‘caliph’. Place a border around the territory.","sources":["caliphate","islam"]},
-    {"id":"christianity","term":"Christianity","category":"belief","aliases":[],"definition":"A monotheistic religion centered on Jesus Christ, his life and teachings, and Christian beliefs about his death and resurrection.","example":"The teachings of Jesus are central to Christianity.","scenario":"A religion centers on Jesus Christ and beliefs about his resurrection. Which is it?","cue":"Christ → Christianity.","note":"Monotheistic means belief in one God. Christians belong to many different traditions and denominations.","sketch":"Draw a simple cross beside an open book. Use the labels ‘Jesus’ and ‘teachings’.","sources":["christianity"]},
-    {"id":"city-state","term":"City-state","category":"power","aliases":["city state","citystate"],"definition":"An independent state made up of a city and the surrounding territory it governs.","example":"A city-state has its own government rather than being only a city inside a larger state.","scenario":"One city and its nearby land govern themselves independently. What is this political unit?","cue":"A city that acts as its own state.","note":"Independence is the key difference between a city-state and an ordinary city.","sketch":"Draw a city wall around a few buildings and nearby fields, with one flag inside.","sources":["city"]},
-    {"id":"caravan","term":"Caravan","category":"exchange","aliases":[],"definition":"A group of travelers, often merchants with pack animals, moving together across long distances.","example":"Merchants traveled in a caravan carrying goods between trading centers.","scenario":"Merchants and their loaded pack animals travel together across a long land route. What is the group called?","cue":"Caravan = the traveling group, not the route.","note":"Camels are a familiar example, but caravans could also use other pack animals.","sketch":"Draw three pack animals in a line, each with a small bundle on its back.","sources":["silk"]},
-    {"id":"feudalism","term":"Feudalism","category":"power","aliases":[],"definition":"A system of relationships in medieval Europe in which lords granted land or rights to vassals in return for loyalty and service, often military service.","example":"A vassal might receive a fief in exchange for military service under feudalism.","scenario":"A lord grants a vassal land rights in return for loyalty and military service. Which term fits?","cue":"Land ↔ loyalty and service.","note":"This is a simplified classroom model. Medieval arrangements varied; historians debate how broadly this label should be used.","sketch":"Draw a parcel of land and a shield with arrows between them. Label the arrows ‘land’ and ‘service’.","sources":["feudal"]},
-    {"id":"silk-road","term":"Silk Road","category":"exchange","aliases":["Silk Roads"],"definition":"A network of trade routes linking regions of Asia with the Middle East and Europe, carrying goods, ideas, technologies, and beliefs.","example":"Traders exchanged more than silk along the Silk Road.","scenario":"Goods, beliefs, and technologies move across connected trade routes between Asia and Europe. Which network is described?","cue":"Many connected routes—not one road.","note":"‘Silk Roads’ emphasizes the network. Wider connections included maritime routes and Africa.","sketch":"Connect three towns with several dotted routes instead of one straight line.","sources":["silk"]},
-    {"id":"black-plague","term":"Black Plague","category":"exchange","aliases":["Black Death"],"definition":"The devastating plague pandemic of the 1300s, commonly called the Black Death, that killed millions across parts of Eurasia and North Africa.","example":"The Black Plague caused major population losses in medieval Europe.","scenario":"A fourteenth-century plague pandemic devastates communities across several regions. Which event is this?","cue":"Black Plague = Black Death.","note":"Plague is caused by the bacterium Yersinia pestis—not a virus. Infected fleas helped transmit it.","sketch":"Draw a small flea beside a town and a calendar labeled ‘1300s’; avoid graphic images.","sources":["plague","blackdeath"]},
-    {"id":"daoism","term":"Daoism","category":"belief","aliases":["Taoism"],"definition":"A Chinese philosophical and religious tradition that emphasizes living in harmony with the Dao, or ‘Way’, and the natural order.","example":"Daoism encourages harmony with the natural flow of life.","scenario":"A Chinese tradition emphasizes harmony with the Way and the natural order. Which one?","cue":"Dao = Way.","note":"Taoism is an alternative English spelling and is accepted here.","sketch":"Draw a winding stream between two hills to suggest following nature’s flow.","sources":["china"]},
-    {"id":"islam","term":"Islam","category":"belief","aliases":[],"definition":"A monotheistic religion whose followers, called Muslims, submit to one God, Allah, and regard Muhammad as God’s final prophet.","example":"Muslims follow Islam and regard the Quran as sacred scripture.","scenario":"Followers are called Muslims and regard Muhammad as God’s final prophet. Which religion?","cue":"Islam = religion; Muslim = follower.","note":"Allah is the Arabic word for God. Muslims worship God, not Muhammad.","sketch":"Draw a book labeled ‘Quran’ and five simple pillars for the Five Pillars.","sources":["islam"]},
-    {"id":"luxury-goods","term":"Luxury Goods","category":"exchange","aliases":["luxury good"],"definition":"Nonessential items valued for comfort, beauty, rarity, or status, often costing much more than basic necessities.","example":"Fine silk and precious stones could be traded as luxury goods.","scenario":"A merchant sells rare silk and jewels for status and beauty rather than basic survival. What kind of goods are these?","cue":"Wanted for comfort or status; not basic needs.","note":"Whether an item is a luxury depends on its society and circumstances.","sketch":"Draw a gem beside a roll of fine cloth, each with a price tag.","sources":["silk"]},
-    {"id":"jihad","term":"Jihad","category":"belief","aliases":[],"definition":"In Islam, striving or struggle in the path of God, including efforts to live faithfully and do what is right.","example":"A Muslim’s effort to resist wrongdoing can be understood as jihad.","scenario":"A Muslim describes the effort to overcome wrongdoing and live faithfully. Which term names this striving?","cue":"Striving or effort—not simply a synonym for war.","note":"The term also has an armed-struggle meaning in Islamic history and law. Its meaning depends on context.","sketch":"Draw a person choosing between two paths, with the better path labeled ‘right action’.","sources":["islam"]},
-    {"id":"dynasty","term":"Dynasty","category":"power","aliases":[],"definition":"A succession of rulers from the same family or lineage.","example":"When several generations of one family rule, they form a dynasty.","scenario":"A ruler is followed by relatives, and the same family remains in power for generations. What is this line of rulers?","cue":"Rule passed through a family.","note":"The term describes a line of rulers, not just one powerful individual.","sketch":"Draw a small family tree with a crown above each generation.","sources":["dynasty"]},
-    {"id":"confucianism","term":"Confucianism","category":"belief","aliases":[],"definition":"A Chinese ethical and philosophical tradition associated with Confucius, emphasizing moral behavior, education, family duties, and good relationships.","example":"Respect for family responsibilities is important in Confucianism.","scenario":"A Chinese tradition emphasizes education, moral conduct, and duties within family and society. Which one?","cue":"Confucius → conduct, learning, relationships.","note":"It focuses on how people should behave and relate to one another.","sketch":"Draw a student, a teacher, and a family connected by lines labeled ‘respect’.","sources":["china"]},
-    {"id":"meritocracy","term":"Meritocracy","category":"power","aliases":[],"definition":"A system in which people gain positions or rewards based on ability and achievement rather than inherited status or personal connections.","example":"Selecting an official by demonstrated ability reflects the ideal of meritocracy.","scenario":"Candidates are selected for skill and achievement, not family connections. What principle is being used?","cue":"Merit = demonstrated ability and achievement.","note":"This describes an ideal. Calling a system meritocratic does not prove that everyone has equal opportunities.","sketch":"Draw a skills test leading to a job, rather than a family tree leading to that job.","sources":["merit"]},
-    {"id":"buddhism","term":"Buddhism","category":"belief","aliases":[],"definition":"A religious and philosophical tradition based on the Buddha’s teachings about suffering, ethical living, and the path to liberation.","example":"Meditation is an important practice in many forms of Buddhism.","scenario":"A tradition follows the Buddha’s teachings about suffering and liberation. Which one?","cue":"Buddha → Buddhism.","note":"Practices vary among Buddhist traditions. Meditation is not their only practice.","sketch":"Draw a seated person beside a path labeled ‘ethical living’ and ‘wisdom’.","sources":["china"]}
+    {
+      "id": "caliphate",
+      "term": "Caliphate",
+      "category": "power",
+      "aliases": [],
+      "definition": "A state or territory led by a caliph, a ruler who claims leadership of the Muslim community as a successor to Muhammad.",
+      "example": "A caliphate combines political rule with a claim to religious leadership.",
+      "scenario": "A territory is governed by a caliph. Which political term describes it?",
+      "cue": "Caliph = leader; caliphate = the state or rule.",
+      "note": "A caliph is not a new prophet. This is a historical political institution, not another name for Islam.",
+      "sketch": "A simple building with a leader’s chair inside. Label it ‘caliph’. Place a border around the territory.",
+      "sources": [
+        "caliphate",
+        "islam"
+      ]
+    },
+    {
+      "id": "christianity",
+      "term": "Christianity",
+      "category": "belief",
+      "aliases": [],
+      "definition": "A monotheistic religion centered on Jesus Christ, his life and teachings, and Christian beliefs about his death and resurrection.",
+      "example": "The teachings of Jesus are central to Christianity.",
+      "scenario": "A religion centers on Jesus Christ and beliefs about his resurrection. Which is it?",
+      "cue": "Christ → Christianity.",
+      "note": "Monotheistic means belief in one God. Christians belong to many different traditions and denominations.",
+      "sketch": "Draw a simple cross beside an open book. Use the labels ‘Jesus’ and ‘teachings’.",
+      "sources": [
+        "christianity"
+      ]
+    },
+    {
+      "id": "city-state",
+      "term": "City-state",
+      "category": "power",
+      "aliases": [
+        "city state",
+        "citystate"
+      ],
+      "definition": "An independent state made up of a city and the surrounding territory it governs.",
+      "example": "A city-state has its own government rather than being only a city inside a larger state.",
+      "scenario": "One city and its nearby land govern themselves independently. What is this political unit?",
+      "cue": "A city that acts as its own state.",
+      "note": "Independence is the key difference between a city-state and an ordinary city.",
+      "sketch": "Draw a city wall around a few buildings and nearby fields, with one flag inside.",
+      "sources": [
+        "city"
+      ]
+    },
+    {
+      "id": "caravan",
+      "term": "Caravan",
+      "category": "exchange",
+      "aliases": [],
+      "definition": "A group of travelers, often merchants with pack animals, moving together across long distances.",
+      "example": "Merchants traveled in a caravan carrying goods between trading centers.",
+      "scenario": "Merchants and their loaded pack animals travel together across a long land route. What is the group called?",
+      "cue": "Caravan = the traveling group, not the route.",
+      "note": "Camels are a familiar example, but caravans could also use other pack animals.",
+      "sketch": "Draw three pack animals in a line, each with a small bundle on its back.",
+      "sources": [
+        "caravan",
+        "silk"
+      ]
+    },
+    {
+      "id": "feudalism",
+      "term": "Feudalism",
+      "category": "power",
+      "aliases": [],
+      "definition": "A system of relationships in medieval Europe in which lords granted land or rights to vassals in return for loyalty and service, often military service.",
+      "example": "A vassal might receive a fief in exchange for military service under feudalism.",
+      "scenario": "A lord grants a vassal land rights in return for loyalty and military service. Which term fits?",
+      "cue": "Land ↔ loyalty and service.",
+      "note": "This is a simplified classroom model. Medieval arrangements varied; historians debate how broadly this label should be used.",
+      "sketch": "Draw a parcel of land and a shield with arrows between them. Label the arrows ‘land’ and ‘service’.",
+      "sources": [
+        "feudal"
+      ]
+    },
+    {
+      "id": "silk-road",
+      "term": "Silk Road",
+      "category": "exchange",
+      "aliases": [
+        "Silk Roads"
+      ],
+      "definition": "A network of trade routes linking regions of Asia with the Middle East and Europe, carrying goods, ideas, technologies, and beliefs.",
+      "example": "Traders exchanged more than silk along the Silk Road.",
+      "scenario": "Goods, beliefs, and technologies move across connected trade routes between Asia and Europe. Which network is described?",
+      "cue": "Many connected routes—not one road.",
+      "note": "‘Silk Roads’ emphasizes the network. Wider connections included maritime routes and Africa.",
+      "sketch": "Connect three towns with several dotted routes instead of one straight line.",
+      "sources": [
+        "silk"
+      ]
+    },
+    {
+      "id": "black-plague",
+      "term": "Black Plague",
+      "category": "exchange",
+      "aliases": [
+        "Black Death"
+      ],
+      "definition": "The devastating plague pandemic of the 1300s, commonly called the Black Death, that killed millions across parts of Eurasia and North Africa.",
+      "example": "The Black Plague caused major population losses in medieval Europe.",
+      "scenario": "A fourteenth-century plague pandemic devastates communities across several regions. Which event is this?",
+      "cue": "Black Plague = Black Death.",
+      "note": "Plague is caused by the bacterium Yersinia pestis—not a virus. Infected fleas helped transmit it.",
+      "sketch": "Draw a small flea beside a town and a calendar labeled ‘1300s’; avoid graphic images.",
+      "sources": [
+        "plague",
+        "blackdeath"
+      ]
+    },
+    {
+      "id": "daoism",
+      "term": "Daoism",
+      "category": "belief",
+      "aliases": [
+        "Taoism"
+      ],
+      "definition": "A Chinese philosophical and religious tradition that emphasizes living in harmony with the Dao, or ‘Way’, and the natural order.",
+      "example": "Daoism encourages harmony with the natural flow of life.",
+      "scenario": "A Chinese tradition emphasizes harmony with the Way and the natural order. Which one?",
+      "cue": "Dao = Way.",
+      "note": "Taoism is an alternative English spelling and is accepted here.",
+      "sketch": "Draw a winding stream between two hills to suggest following nature’s flow.",
+      "sources": [
+        "china"
+      ]
+    },
+    {
+      "id": "islam",
+      "term": "Islam",
+      "category": "belief",
+      "aliases": [],
+      "definition": "A monotheistic religion whose followers, called Muslims, submit to one God, Allah, and regard Muhammad as God’s final prophet.",
+      "example": "Muslims follow Islam and regard the Quran as sacred scripture.",
+      "scenario": "Followers are called Muslims and regard Muhammad as God’s final prophet. Which religion?",
+      "cue": "Islam = religion; Muslim = follower.",
+      "note": "Allah is the Arabic word for God. Muslims worship God, not Muhammad.",
+      "sketch": "Draw a book labeled ‘Quran’ and five simple pillars for the Five Pillars.",
+      "sources": [
+        "islam"
+      ]
+    },
+    {
+      "id": "luxury-goods",
+      "term": "Luxury Goods",
+      "category": "exchange",
+      "aliases": [
+        "luxury good"
+      ],
+      "definition": "Nonessential items valued for comfort, beauty, rarity, or status, often costing much more than basic necessities.",
+      "example": "Fine silk and precious stones could be traded as luxury goods.",
+      "scenario": "A merchant sells rare silk and jewels for status and beauty rather than basic survival. What kind of goods are these?",
+      "cue": "Wanted for comfort or status; not basic needs.",
+      "note": "Whether an item is a luxury depends on its society and circumstances.",
+      "sketch": "Draw a gem beside a roll of fine cloth, each with a price tag.",
+      "sources": [
+        "luxury",
+        "silk"
+      ]
+    },
+    {
+      "id": "jihad",
+      "term": "Jihad",
+      "category": "belief",
+      "aliases": [],
+      "definition": "In Islam, striving or struggle in the path of God, including efforts to live faithfully and do what is right.",
+      "example": "A Muslim’s effort to resist wrongdoing can be understood as jihad.",
+      "scenario": "A Muslim describes the effort to overcome wrongdoing and live faithfully. Which term names this striving?",
+      "cue": "Striving or effort—not simply a synonym for war.",
+      "note": "The term also has an armed-struggle meaning in Islamic history and law. Its meaning depends on context.",
+      "sketch": "Draw a person choosing between two paths, with the better path labeled ‘right action’.",
+      "sources": [
+        "islam"
+      ]
+    },
+    {
+      "id": "dynasty",
+      "term": "Dynasty",
+      "category": "power",
+      "aliases": [],
+      "definition": "A succession of rulers from the same family or lineage.",
+      "example": "When several generations of one family rule, they form a dynasty.",
+      "scenario": "A ruler is followed by relatives, and the same family remains in power for generations. What is this line of rulers?",
+      "cue": "Rule passed through a family.",
+      "note": "The term describes a line of rulers, not just one powerful individual.",
+      "sketch": "Draw a small family tree with a crown above each generation.",
+      "sources": [
+        "dynasty"
+      ]
+    },
+    {
+      "id": "confucianism",
+      "term": "Confucianism",
+      "category": "belief",
+      "aliases": [],
+      "definition": "A Chinese ethical and philosophical tradition associated with Confucius, emphasizing moral behavior, education, family duties, and good relationships.",
+      "example": "Respect for family responsibilities is important in Confucianism.",
+      "scenario": "A Chinese tradition emphasizes education, moral conduct, and duties within family and society. Which one?",
+      "cue": "Confucius → conduct, learning, relationships.",
+      "note": "It focuses on how people should behave and relate to one another.",
+      "sketch": "Draw a student, a teacher, and a family connected by lines labeled ‘respect’.",
+      "sources": [
+        "china"
+      ]
+    },
+    {
+      "id": "meritocracy",
+      "term": "Meritocracy",
+      "category": "power",
+      "aliases": [],
+      "definition": "A system in which people gain positions or rewards based on ability and achievement rather than inherited status or personal connections.",
+      "example": "Selecting an official by demonstrated ability reflects the ideal of meritocracy.",
+      "scenario": "Candidates are selected for skill and achievement, not family connections. What principle is being used?",
+      "cue": "Merit = demonstrated ability and achievement.",
+      "note": "This describes an ideal. Calling a system meritocratic does not prove that everyone has equal opportunities.",
+      "sketch": "Draw a skills test leading to a job, rather than a family tree leading to that job.",
+      "sources": [
+        "merit"
+      ]
+    },
+    {
+      "id": "buddhism",
+      "term": "Buddhism",
+      "category": "belief",
+      "aliases": [],
+      "definition": "A religious and philosophical tradition based on the Buddha’s teachings about suffering, ethical living, and the path to liberation.",
+      "example": "Meditation is an important practice in many forms of Buddhism.",
+      "scenario": "A tradition follows the Buddha’s teachings about suffering and liberation. Which one?",
+      "cue": "Buddha → Buddhism.",
+      "note": "Practices vary among Buddhist traditions. Meditation is not their only practice.",
+      "sketch": "Draw a seated person beside a path labeled ‘ethical living’ and ‘wisdom’.",
+      "sources": [
+        "china"
+      ]
+    }
   ]
 }

@@ -111,12 +111,12 @@ def audio_recovery(p):
 
 def reset_isolation(p):
  begin(p,'type','5');c=card_for_prompt(p);answer(p,c['term']);home(p);before=stored(p)['progress']
- tap(p,'#settings');tap(p,'[data-action=reset]');tap(p,'[data-action=dismiss]');assert stored(p)['progress']==before
+ tap(p,'#settings');tap(p,'[data-action=reset]');tap(p,'#modal .button-row [data-action=dismiss]');assert stored(p)['progress']==before
  tap(p,'#settings');tap(p,'[data-action=reset]');tap(p,'[data-action=confirm]');assert stored(p)['progress']['items']=={}
  assert p.evaluate(f'localStorage.getItem("{SPAN}")')=='SPANISH_SENTINEL_DO_NOT_TOUCH'
 
 def blocked_storage(p):
- p.evaluate("Storage.prototype.setItem=function(){throw new Error('Blocked by browser')} ")
+ p.evaluate("() => { Storage.prototype.setItem=function(){throw new Error('Blocked by browser')}; }")
  begin(p,'type','5');expect(p.locator('#storage-warning')).to_be_visible();answer(p,card_for_prompt(p)['term']);nextq(p)
  expect(p.locator('.progress-label')).to_contain_text('2 of 5')
 
