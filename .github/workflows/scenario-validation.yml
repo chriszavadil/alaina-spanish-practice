@@ -45,16 +45,28 @@ jobs:
         run: |
           pip install playwright==1.62.0
           python -m playwright install --with-deps chromium webkit
-      - name: All 30 scenarios, explanations, scoring and saved rounds
-        run: python tests/history_scenarios.py
-      - name: Original four history modes and backup safety
-        run: |
-          python tests/history_browser.py
-          python tests/history_backup.py
       - name: Installed-history update and independent offline apps
         run: |
           python tests/history_scenario_upgrade.py
           python tests/history_offline.py
+      - name: All scenarios, existing modes, saved rounds and backup safety
+        run: |
+          python - <<'PY'
+          import subprocess,sys
+          from pathlib import Path
+          out=Path('history-scenario-results');out.mkdir(exist_ok=True)
+          jobs=[]
+          for script in ['history_scenarios.py','history_browser.py']:
+              log=(out/(script+'.log')).open('w')
+              jobs.append((script,subprocess.Popen([sys.executable,'-u','tests/'+script],stdout=log,stderr=subprocess.STDOUT),log))
+          failed=[]
+          for script,proc,log in jobs:
+              code=proc.wait();log.close()
+              print((out/(script+'.log')).read_text(),flush=True)
+              if code:failed.append(script)
+          if failed:raise SystemExit('Failed: '+', '.join(failed))
+          subprocess.run([sys.executable,'tests/history_backup.py'],check=True)
+          PY
       - name: Save tested files on candidate branch only
         if: success()
         run: |

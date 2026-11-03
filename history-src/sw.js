@@ -1,10 +1,41 @@
-/* Independent history cache. Never removes or reads Spanish cache entries. */
-const BASE=new URL(self.registration.scope),PREFIX='alaina-history-'+BASE.pathname+':',CACHE=PREFIX+'v1.0.0';
+/* Independent, version-scoped history cache. Never reads or removes Spanish data. */
+const BASE=new URL(self.registration.scope),VERSION='v1.0.0';
+const PREFIX='alaina-history-'+BASE.pathname+':',CACHE=PREFIX+VERSION;
 const FILES=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 const ALLOWED=FILES.map(p=>new URL(p,BASE).pathname),INDEX=new URL('./index.html',BASE).href;
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith(PREFIX)&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==BASE.origin||!ALLOWED.includes(u.pathname))return;
- if(e.request.mode==='navigate')e.respondWith(fetch(e.request).then(async r=>{if(r.ok){const c=await caches.open(CACHE);await c.put(INDEX,r.clone());}return r;}).catch(()=>caches.match(INDEX)));
- else e.respondWith(caches.match(e.request,{ignoreSearch:true}).then(c=>c||fetch(e.request)));
+self.addEventListener('install',event=>event.waitUntil((async()=>{
+ const cache=await caches.open(CACHE);
+ // A new version must not seed itself with a previous release from the HTTP cache.
+ await cache.addAll(FILES.map(path=>new Request(new URL(path,BASE).href,{cache:'reload'})));
+ await self.skipWaiting();
+})()));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{
+ const keys=await caches.keys();
+ await Promise.all(keys.filter(k=>k.startsWith(PREFIX)&&k!==CACHE).map(k=>caches.delete(k)));
+ await self.clients.claim();
+})()));
+self.addEventListener('message',event=>{
+ if(event.data?.type==='HISTORY_CACHE_VERSION')event.ports[0]?.postMessage({version:VERSION,cache:CACHE});
+});
+self.addEventListener('fetch',event=>{
+ const url=new URL(event.request.url);
+ if(event.request.method!=='GET'||url.origin!==BASE.origin||!ALLOWED.includes(url.pathname))return;
+ if(event.request.mode==='navigate')event.respondWith((async()=>{
+  const cache=await caches.open(CACHE);
+  try{
+   const response=await fetch(new Request(event.request,{cache:'no-cache'}));
+   if(response.ok){
+    // Failure to save offline must not turn a successful network response into an error.
+    try{await cache.put(INDEX,response.clone());}catch(_){}
+   }
+   return response;
+  }catch(_){
+   // Search this release only; a late old-worker write must never revive an old app.
+   return await cache.match(INDEX)||new Response('Reconnect to load History Studio. Your saved practice has not been cleared.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+  }
+ })());
+ else event.respondWith((async()=>{
+  const cache=await caches.open(CACHE);
+  return await cache.match(event.request,{ignoreSearch:true})||fetch(event.request);
+ })());
 });
