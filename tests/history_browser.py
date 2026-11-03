@@ -29,7 +29,7 @@ def answer(p,text,action='check'):
 def home(p):tap(p,'header [data-action=home]')
 def onboarding(p):
  expect(p).to_have_title('Alaina’s History Studio');p.screenshot(path=str(OUT/'history-home.png'),full_page=True)
- tap(p,'[data-action=setup]');assert p.locator('[data-mode]').count()==4;assert p.locator('input[name=topic]:checked').count()==3
+ tap(p,'[data-action=setup]');assert p.locator('[data-mode]').count()==5;assert p.locator('input[name=topic]:checked').count()==3
  tap(p,'[data-action=all-topics]');expect(p.locator('#begin-round')).to_be_disabled();tap(p,'[data-action=all-topics]')
  tap(p,'[data-length=all]');expect(p.locator('#begin-round')).to_contain_text('15')
  for w,h in [(320,740),(393,852),(852,393),(1200,850)]:
@@ -130,7 +130,7 @@ try:
     ctx.add_init_script(f"if(!localStorage.getItem('{SPAN}'))localStorage.setItem('{SPAN}','SPANISH_SENTINEL_DO_NOT_TOUCH')")
     p=ctx.new_page();p.set_default_timeout(12000);errors=[];p.on('pageerror',lambda err:errors.append(str(err)))
     try:
-     p.goto(URL);expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.0.0');fn(p)
+     p.goto(URL);expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.1.0');fn(p)
      assert not errors,errors;assert p.evaluate(f'localStorage.getItem("{SPAN}")')=='SPANISH_SENTINEL_DO_NOT_TOUCH'
      report['checks'].append({'engine':engine,'test':fn.__name__,'passed':True});print(engine,fn.__name__,'PASS',flush=True)
     except Exception:
