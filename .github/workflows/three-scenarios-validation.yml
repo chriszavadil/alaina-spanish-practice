@@ -21,9 +21,14 @@ jobs:
           from pathlib import Path
           p=Path('tools/expand_history_scenarios.py');s=p.read_text()
           s=s.replace("['history-src/shell.html','history-src/sw.js','tools/verify_history_live.py']", "['history-src/shell.html','history-src/sw.js']")
+          s=s.replace("('range(2):','range(3):')", "('for roundno in range(2):','for roundno in range(3):')")
           p.write_text(s)
           PY
           python tools/expand_history_scenarios.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('HISTORY_README.md');s=p.read_text();s=s.replace('dedicated 30-scenario collection','dedicated 45-scenario collection');p.write_text(s)
+          PY
           python tools/build_history.py
       - name: Content, grading and original data preservation
         run: |
