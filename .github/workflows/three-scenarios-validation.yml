@@ -28,6 +28,15 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           p=Path('HISTORY_README.md');s=p.read_text();s=s.replace('dedicated 30-scenario collection','dedicated 45-scenario collection');p.write_text(s)
+          p=Path('history-src/app.js');s=p.read_text()
+          old='Two illustrative situations showing this word in context.'
+          new='${c.scenarios.length} illustrative situations showing this word in context.'
+          assert old in s or new in s
+          p.write_text(s.replace(old,new))
+          p=Path('tests/history_scenarios.py');s=p.read_text()
+          assertion=" expect(p.locator('.scenario-examples > .note')).to_contain_text('3 illustrative situations')\n"
+          if assertion not in s:s=s.replace(" for line in p.locator('.scenario-example strong')",assertion+" for line in p.locator('.scenario-example strong')")
+          p.write_text(s)
           PY
           python tools/build_history.py
       - name: Content, grading and original data preservation
