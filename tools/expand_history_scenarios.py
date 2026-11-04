@@ -29,7 +29,7 @@ for old,c in zip(original['cards'],data['cards']):
  assert {k:v for k,v in c.items() if k!='scenarios'}=={k:v for k,v in old.items() if k!='scenarios'}
 data['version']='1.1.1';dump('history-src/data.json',data);dump('history-src/scenarios.json',scenarios)
 # Version and visible counts only. The selection/rotation/persistence code is unchanged.
-for name in ['history-src/app.js','history-src/shell.html','history-src/sw.js']:
+for name in ['history-src/shell.html','history-src/sw.js']:
  p=ROOT/name;s=p.read_text(encoding='utf-8');assert '1.1.0' in s,name;p.write_text(s.replace('1.1.0','1.1.1'),encoding='utf-8')
 edit('history-src/app.js','30 illustrative situations','60 illustrative situations')
 edit('history-src/app.js','Two different examples for every word.','Four different examples for every word.',1)
@@ -50,7 +50,7 @@ edit('tests/history_scenarios.py',"if roundno==0:tap(p,'[data-action=again-round
 edit('tests/history_scenarios.py','all(set(v)=={0,1} for v in seen.values())','all(len(v)==4 and set(v)=={0,1,2,3} for v in seen.values())',1)
 edit('tests/history_scenarios.py',"prog['rounds']==2 and prog['perfect']==2","prog['rounds']==4 and prog['perfect']==4",1)
 edit('tests/history_scenarios.py',"v['meaning']==2 and v['spelling']==0 and v['correct']==2","v['meaning']==4 and v['spelling']==0 and v['correct']==4",1)
-edit('tests/history_scenarios.py',"def resume_and_backup(p):\n start(p,'5');", "def resume_and_backup(p):\n initial=db(p);initial['scenarioLast']={id:2 for id in BY};seed_next_load(p,initial,'fourth-variant-resume')\n start(p,'5');",1)
+edit('tests/history_scenarios.py',"def resume_and_backup(p):\n start(p,'5');", "def resume_and_backup(p):\n initial=db(p) or {};initial['scenarioLast']={id:2 for id in BY};seed_next_load(p,initial,'fourth-variant-resume')\n start(p,'5');",1)
 edit('tests/history_scenarios.py',"snapshot=db(p)['session'];tap", "snapshot=db(p)['session'];assert all(x['scenarioIndex']==3 for x in snapshot['questions']);tap",1)
 # Exercise a real installed 1.1.0 -> 1.1.1 update, retaining the old 1.0 test for history.
 s=read_old('tests/history_scenario_upgrade.py')

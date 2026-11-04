@@ -1,0 +1,25 @@
+{
+  "version": "1.1.1",
+  "baseline": "4be9257df1a506c749b96396469fffcbcb2f113a",
+  "terms": 15,
+  "previous_scenarios_preserved": 30,
+  "scenarios_added": 30,
+  "scenarios_per_term": 4,
+  "total_scenarios": 60,
+  "history_storage_key": "alaina-history-studio-v1",
+  "rotation_logic_changed": false,
+  "spanish_assets_unchanged": [
+    "index.html",
+    "docs/index.html",
+    "src/core.js",
+    "src/data.json",
+    "src/unit2.json",
+    "sw.js",
+    "docs/sw.js",
+    "manifest.webmanifest",
+    "docs/manifest.webmanifest"
+  ],
+  "live_verified": false,
+  "history_sha256": "8a79bc767782cfdda921330b7ab63816c09d95f3920c60dcc199a96067fd2191",
+  "content_audit_passed": true
+}
