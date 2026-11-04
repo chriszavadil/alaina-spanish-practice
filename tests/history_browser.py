@@ -130,7 +130,7 @@ try:
     ctx.add_init_script(f"if(!localStorage.getItem('{SPAN}'))localStorage.setItem('{SPAN}','SPANISH_SENTINEL_DO_NOT_TOUCH')")
     p=ctx.new_page();p.set_default_timeout(12000);errors=[];p.on('pageerror',lambda err:errors.append(str(err)))
     try:
-     p.goto(URL);expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.1.1');fn(p)
+     p.goto(URL);expect(p.locator('meta[name=app-version]')).to_have_attribute('content','1.1.2');fn(p)
      assert not errors,errors;assert p.evaluate(f'localStorage.getItem("{SPAN}")')=='SPANISH_SENTINEL_DO_NOT_TOUCH'
      report['checks'].append({'engine':engine,'test':fn.__name__,'passed':True});print(engine,fn.__name__,'PASS',flush=True)
     except Exception:

@@ -1,12 +1,12 @@
-# Alaina’s History Studio — v1.1.1
+# Alaina’s History Studio — v1.1.2
 
-Live app: https://chriszavadil.github.io/alaina-spanish-practice/history/?v=1.1.1
+Live app: https://chriszavadil.github.io/alaina-spanish-practice/history/?v=1.1.2
 
 A separate English-language app for Alaina’s 15 Global Tapestry terms. No worksheet photos, handwriting, surname or grades are published.
 
 ## Scenario Practice
 
-Choose **Scenario Practice** on the home screen or practice-mode screen. Read a situation and choose the associated term from four options. After checking, read **Why this term fits**. There are 45 original illustrative situations: three for each term. Rounds shuffle terms and cycle through all three examples for a term on later rounds.
+Choose **Scenario Practice** on the home screen or practice-mode screen. Read a situation and choose the associated term from four options. After checking, read **Why this term fits**. There are 60 original illustrative situations: four for each term. Rounds shuffle terms and cycle through all four examples for a term on later rounds.
 
 For studying rather than quizzing, open **Word list** and expand **Scenario examples**. The situation, matching term and explanation appear together. These examples also appear on revealed flashcards. Situations are learning examples, not historical quotations or a teacher’s official answer key.
 
@@ -14,7 +14,7 @@ For studying rather than quizzing, open **Word list** and expand **Scenario exam
 
 - Flashcards: term, definition, example, memory cue, pronunciation, scenarios, sketch idea and sources.
 - Meaning Quiz: the original mix of definitions and brief situations.
-- Scenario Practice: dedicated 45-scenario collection with explanations.
+- Scenario Practice: dedicated 60-scenario collection with explanations.
 - Recall Challenge: type the term matching a definition; documented aliases are accepted.
 - Listen & Spell: hear an English term and spell the actual term spoken; one initial playback plus three replays.
 
@@ -39,10 +39,10 @@ python tests/history_scenario_upgrade.py
 python tests/history_offline.py
 ```
 
-The three-scenario release is gated on all 45 examples, three-round rotation, legacy saves, third-example backup/restore, and the installed 1.1.0-to-1.1.1 offline upgrade. The public-release workflow separately verifies the exact deployed HTML and runs history, scenario and Spanish browser suites.
+The four-scenario release retains all 45 examples from the briefly published three-example update, then adds the fourth. This is 60 total, or two more per term than the original 30-scenario collection. Tests cover four-round rotation, old saved rounds, fourth-example backups, the installed 1.1.1-to-1.1.2 update and the public app.
 
 Tests use Playwright WebKit and Chromium at phone-sized touch viewports. Offline tests use real service workers. Speech events in the existing listening tests are simulated; these checks are not a sound test on Alaina’s physical iPhone. Tests use isolated browser contexts, not the learner’s profile.
 
 ## Updating
 
-Open the history app online, refresh and look for **History v1.1.1** in the footer. Do not clear Safari website data. Offline access needs a successful online update; device speech voices may still require internet. The X pauses and returns home rather than closing Safari.
+Open the history app online, refresh and look for **History v1.1.2** in the footer. Do not clear Safari website data. Offline access needs a successful online update; device speech voices may still require internet. The X pauses and returns home rather than closing Safari.
