@@ -1,0 +1,81 @@
+name: Reconciled four-scenario release validation
+on:
+  push:
+    branches: [feature/history-four-scenarios-1.1.2]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Preserve published examples and build four per term
+        run: |
+          python tools/four_scenarios_release.py
+          python tools/build_history.py
+          python tools/four_scenarios_release.py --audit
+      - name: Content, grading and Spanish preservation
+        run: |
+          node --test tests/history.test.cjs tests/history_scenarios.test.cjs
+          node --test tests/core.test.cjs tests/unit2.test.cjs tests/grading_paths.test.cjs
+      - name: Install browser engines
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: All sixty examples, existing modes and backups
+        run: |
+          python - <<'PY'
+          import subprocess,sys
+          from pathlib import Path
+          out=Path('four-scenario-results');out.mkdir(exist_ok=True)
+          jobs=[]
+          for f in ['history_scenarios.py','history_browser.py','history_backup.py']:
+            log=(out/(f+'.log')).open('w');jobs.append((f,subprocess.Popen([sys.executable,'-u','tests/'+f],stdout=log,stderr=subprocess.STDOUT),log))
+          failed=[]
+          for f,p,log in jobs:
+            code=p.wait();log.close();print((out/(f+'.log')).read_text(),flush=True)
+            if code:failed.append(f)
+          if failed:raise SystemExit('Failed: '+', '.join(failed))
+          PY
+      - name: Installed three-example update and app isolation
+        run: |
+          python tests/history_four_upgrade.py
+          python tests/history_offline.py
+      - name: Save only validated generated files
+        if: success()
+        run: |
+          python tools/four_scenarios_release.py --audit
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add history docs/history history-src/app.js history-src/data.json history-src/scenarios.json history-src/shell.html history-src/sw.js HISTORY_BUILD.json HISTORY_README.md FOUR_SCENARIO_BUILD.json tests/history_scenarios.py tests/history_scenarios.test.cjs tests/history_browser.py tests/history.test.cjs tests/history_backup.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build validated History Studio 1.1.2 with all four scenarios'
+            git push origin HEAD:feature/history-four-scenarios-1.1.2
+          fi
+      - name: Package release and evidence
+        if: always()
+        run: |
+          mkdir -p four-scenario-results
+          cp -r history-scenario-results four-scenario-results/scenarios 2>/dev/null || true
+          cp -r history-test-results four-scenario-results/history 2>/dev/null || true
+          cp HISTORY_BUILD.json FOUR_SCENARIO_BUILD.json four-scenario-results/ 2>/dev/null || true
+          git archive --format=zip HEAD > four-scenario-results/source.zip
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          with zipfile.ZipFile('four-scenario-results/Alaina-History-1.1.2.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in Path('history').glob('*'):
+              if p.is_file():z.write(p,p.name)
+          PY
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: four-scenarios-validation
+          path: four-scenario-results/
+          retention-days: 7
