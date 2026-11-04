@@ -1,0 +1,73 @@
+name: Four scenarios per term validation
+on:
+  push:
+    branches: [feature/history-scenarios-1.1.1]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Expand to four scenarios per term and build
+        run: |
+          python tools/prepare_scenario_expansion.py
+          python tools/expand_history_scenarios.py
+          python tools/build_history.py
+          python tools/check_scenario_expansion.py
+      - name: All content, grading and syntax checks
+        run: |
+          node --test tests/history.test.cjs tests/history_scenarios.test.cjs
+          node --test tests/core.test.cjs tests/unit2.test.cjs tests/grading_paths.test.cjs
+      - name: Install browser engines
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: All sixty scenarios, four-round rotation, fourth-example resume and backups
+        run: python tests/history_scenarios.py
+      - name: Existing modes and backups
+        run: |
+          python tests/history_browser.py
+          python tests/history_backup.py
+      - name: Installed-app upgrade and offline separation
+        run: |
+          python tests/history_expansion_upgrade.py
+          python tests/history_offline.py
+      - name: Commit fully tested candidate only
+        if: success()
+        run: |
+          python tools/check_scenario_expansion.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add history docs/history history-src/data.json history-src/scenarios.json history-src/app.js history-src/shell.html history-src/sw.js tests/history* tools/expand_history_scenarios.py HISTORY_BUILD.json HISTORY_README.md SCENARIO_EXPANSION.md SCENARIO_EXPANSION_BUILD.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build tested 60-scenario History Studio v1.1.1'
+            git push origin HEAD:feature/history-scenarios-1.1.1
+          fi
+      - name: Package evidence and source
+        if: always()
+        run: |
+          mkdir -p expansion-results
+          cp -r history-test-results expansion-results/history 2>/dev/null || true
+          cp -r history-scenario-results expansion-results/scenarios 2>/dev/null || true
+          cp SCENARIO_EXPANSION_BUILD.json HISTORY_BUILD.json expansion-results/ 2>/dev/null || true
+          git archive --format=zip HEAD > expansion-results/source.zip
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          with zipfile.ZipFile('expansion-results/Alaina-History-1.1.1.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in Path('history').glob('*'):
+              if p.is_file():z.write(p,p.name)
+          PY
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: sixty-scenario-validation
+          path: expansion-results/
+          retention-days: 7
