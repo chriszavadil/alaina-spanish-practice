@@ -83,7 +83,7 @@ replace_file('history-src/app.js',[
  ('Two different examples for every word.','Three different examples for every word.'),
  ('New rounds alternate between two examples per term.','New rounds cycle through three examples per term.'),
  ('own 30 illustrative situations, two per term','own 45 illustrative situations, three per term')])
-for name in ['history-src/shell.html','history-src/sw.js','tools/verify_history_live.py']:
+for name in ['history-src/shell.html','history-src/sw.js']:
  replace_file(name,[('1.1.0','1.1.1')])
 # Assertions of the current release change; old release fixtures remain historical.
 for name in ['tests/history.test.cjs','tests/history_scenarios.test.cjs','tests/history_browser.py','tests/history_scenarios.py','tests/history_backup.py','tests/history_scenario_upgrade.py']:
@@ -94,7 +94,7 @@ replace_file('tests/history_scenarios.test.cjs',[
  ('new Set(prompts).size,30','new Set(prompts).size,45')])
 replace_file('tests/history_scenarios.py',[
  ("expect(p.locator('.scenario-example')).to_have_count(2)","expect(p.locator('.scenario-example')).to_have_count(3)"),
- ('range(2):','range(3):'),
+ ('for roundno in range(2):','for roundno in range(3):'),
  ("if roundno==0:tap(p,'[data-action=again-round]')","if roundno<2:tap(p,'[data-action=again-round]')"),
  ('set(v)=={0,1}','set(v)=={0,1,2}'),
  ("prog['rounds']==2 and prog['perfect']==2","prog['rounds']==3 and prog['perfect']==3"),

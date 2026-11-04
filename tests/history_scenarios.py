@@ -34,12 +34,13 @@ def entry_points(p):
  expect(p.locator('[data-mode=scenario]')).to_have_attribute('aria-pressed','true');p.wait_for_timeout(250);p.screenshot(path=str(OUT/'scenario-modes.png'),full_page=True)
  tap(p,'header [data-action=library]');assert p.locator('.scenario-examples').count()==15
  p.locator('#search').fill('feudalism');expect(p.locator('.word-entry')).to_have_count(1)
- tap(p,'.scenario-examples summary');expect(p.locator('.scenario-example')).to_have_count(2)
+ tap(p,'.scenario-examples summary');expect(p.locator('.scenario-example')).to_have_count(3)
+ expect(p.locator('.scenario-examples > .note')).to_contain_text('3 illustrative situations')
  for line in p.locator('.scenario-example strong').all_inner_texts():assert line=='Matching term: Feudalism'
  p.wait_for_timeout(250);p.screenshot(path=str(OUT/'scenario-library.png'),full_page=True)
 def all_examples(p):
  start(p);seen={};first_order=[]
- for roundno in range(2):
+ for roundno in range(3):
   for i in range(15):
    q,c,item=question(p);expect(p.locator('.prompt')).to_have_text(item['text'])
    assert p.locator('#feedback .scenario-explanation').count()==0
@@ -51,10 +52,10 @@ def all_examples(p):
     p.wait_for_timeout(250);p.screenshot(path=str(OUT/'scenario-correct.png'),full_page=True)
    nextq(p)
   expect(p.locator('.score')).to_have_text('15 / 15');expect(p.locator('.breakdown')).to_contain_text('0 incorrect')
-  if roundno==0:tap(p,'[data-action=again-round]');assert db(p)['session']['ids']!=first_order
- assert len(seen)==15 and all(set(v)=={0,1} for v in seen.values())
- prog=db(p)['progress'];assert prog['rounds']==2 and prog['perfect']==2
- assert all(v['meaning']==2 and v['spelling']==0 and v['correct']==2 for v in prog['items'].values())
+  if roundno<2:tap(p,'[data-action=again-round]');assert db(p)['session']['ids']!=first_order
+ assert len(seen)==15 and all(set(v)=={0,1,2} for v in seen.values())
+ prog=db(p)['progress'];assert prog['rounds']==3 and prog['perfect']==3
+ assert all(v['meaning']==3 and v['spelling']==0 and v['correct']==3 for v in prog['items'].values())
  tap(p,'header [data-action=home]');tap(p,'[data-action=badges]');expect(p.locator('.badge.earned',has_text='Meaning detective')).to_be_visible()
 def wrong_skips_and_retry(p):
  start(p,'5');tap(p,'[data-action=check]');expect(p.locator('#answer-error')).to_contain_text('Choose')
@@ -70,7 +71,8 @@ def wrong_skips_and_retry(p):
  for i in range(2):right(p);nextq(p)
  assert all(not x['review'] for x in db(p)['progress']['items'].values())
 def resume_and_backup(p):
- start(p,'5');q,c,item=question(p);tap(p,f'[data-choice="{c["id"]}"]');snapshot=db(p)['session'];tap(p,'header [data-action=home]');p.reload();tap(p,'[data-action=resume]')
+ legacy={'schema':1,'settings':{'mode':'scenario','length':'5','topics':['power','belief','exchange']},'progress':{'items':{},'rounds':0,'perfect':0,'earned':{}},'session':None,'lastOrder':[],'scenarioLast':{id:1 for id in BY}}
+ seed_next_load(p,legacy,'seed-third-backup');start(p,'5');assert all(x['scenarioIndex']==2 for x in db(p)['session']['questions']);q,c,item=question(p);tap(p,f'[data-choice="{c["id"]}"]');snapshot=db(p)['session'];tap(p,'header [data-action=home]');p.reload();tap(p,'[data-action=resume]')
  expect(p.locator('.prompt')).to_have_text(item['text']);expect(p.locator(f'[data-choice="{c["id"]}"]')).to_have_attribute('aria-pressed','true')
  assert db(p)['session']['questions']==snapshot['questions'];tap(p,'[data-action=show]');before=db(p)['progress'];p.reload();tap(p,'[data-action=resume]')
  expect(p.locator('[data-result=correct]')).to_be_visible();assert db(p)['progress']==before
@@ -97,7 +99,7 @@ def phone_and_storage(p):
  right(p);expect(p.locator('#storage-warning')).to_be_visible();nextq(p);expect(p.locator('.progress-label')).to_contain_text('2 of 5')
  assert p.evaluate('document.documentElement.scrollWidth<=innerWidth')
 suite=[entry_points,all_examples,wrong_skips_and_retry,resume_and_backup,old_progress_and_filters,phone_and_storage]
-report={'url':URL,'version':'1.1.0','speech':'not used for scenario questions','checks':[]}
+report={'url':URL,'version':'1.1.1','speech':'not used for scenario questions','checks':[]}
 try:
  with sync_playwright() as pw:
   for engine in ['webkit','chromium'] if args.engine=='both' else [args.engine]:
@@ -108,7 +110,7 @@ try:
     ctx.add_init_script(f"if(!localStorage.getItem('{SPAN}'))localStorage.setItem('{SPAN}','SPANISH_UNCHANGED')")
     page=ctx.new_page();page.set_default_timeout(12000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     try:
-     page.goto(URL);expect(page.locator('meta[name=app-version]')).to_have_attribute('content','1.1.0');fn(page);assert not errors,errors
+     page.goto(URL);expect(page.locator('meta[name=app-version]')).to_have_attribute('content','1.1.1');fn(page);assert not errors,errors
      assert page.evaluate(f'localStorage.getItem("{SPAN}")')=='SPANISH_UNCHANGED';report['checks'].append({'engine':engine,'test':fn.__name__,'passed':True});print(engine,fn.__name__,'PASS',flush=True)
     except Exception:
      page.screenshot(path=str(OUT/f'FAILED-{engine}-{fn.__name__}.png'),full_page=True);report['checks'].append({'engine':engine,'test':fn.__name__,'passed':False,'errors':errors});raise
