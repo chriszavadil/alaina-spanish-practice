@@ -1,7 +1,7 @@
 {
   "title": "Alaina’s History Studio",
   "set": "Global Tapestry",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "categories": [
     {
       "id": "power",
@@ -104,6 +104,10 @@
         {
           "text": "Officials in several cities report to a ruler called a caliph, who claims leadership of the Muslim community as well as political authority. What term describes the larger state those cities belong to?",
           "why": "The state is a caliphate because it is ruled by a caliph. A city within that state is not an independent city-state simply because it has local officials."
+        },
+        {
+          "text": "A museum labels a large territory on a map. Its explanation says that the state's ruler claimed to succeed Muhammad as leader of the Muslim community, but did not claim to be a prophet. Which government term belongs on the label?",
+          "why": "A state led by a caliph is a caliphate. The leadership claim identifies the institution; the ruler is not regarded as another prophet."
         }
       ]
     },
@@ -133,6 +137,10 @@
         {
           "text": "A museum visitor reads a Gospel passage about Jesus and sees an exhibit explaining belief in his resurrection. The guide says these beliefs unite many different churches. Which religion connects the exhibit?",
           "why": "The focus on Jesus Christ and his resurrection points to Christianity. Different churches can share this central religious identity without having identical practices."
+        },
+        {
+          "text": "A visitor attends an Easter service where worshippers celebrate their belief that Jesus rose from the dead. They explain that Jesus Christ is central to their faith. Which religion does this service belong to?",
+          "why": "The celebration of Jesus Christ's resurrection identifies Christianity. Gathering for worship alone would not distinguish it from other religions."
         }
       ]
     },
@@ -165,6 +173,10 @@
         {
           "text": "A harbor city makes its own treaty with a neighboring country and governs the countryside around its port. It answers to no larger national government. What kind of political unit is the city and its territory?",
           "why": "The city and its surrounding land form an independent city-state. Making its own decisions as a state, rather than simply having a busy port, is the important clue."
+        },
+        {
+          "text": "On a fictional map, one border encloses a single city and the villages that supply it with food. The city sets laws for this territory and is independent of the kingdoms around it. Which term best describes the whole territory?",
+          "why": "The independent city and its surrounding land together form a city-state. The nearby villages do not change the city's role as the center of an independent state."
         }
       ]
     },
@@ -195,6 +207,10 @@
         {
           "text": "Before crossing a mountain pass, a guide brings several merchants together with their loaded mules. The people and animals will make the long journey as one group. What term names that group?",
           "why": "The travelers and pack animals form a caravan. The animals can be mules rather than camels; the defining feature is the group traveling together, not a particular animal or landscape."
+        },
+        {
+          "text": "At an oasis, several trading families refill their water containers and check the bundles on their animals. After resting, the entire group sets off together for the next trading town. What is this traveling group called?",
+          "why": "The families and their loaded animals form a caravan. An oasis is a stopping place, while the caravan is the group that moves from place to place."
         }
       ]
     },
@@ -224,6 +240,10 @@
         {
           "text": "In a medieval-history simulation, a knight is called to provide military service to a lord. The knight holds land rights in return for this service and loyalty. Which system explains the obligation?",
           "why": "The land rights and the promise of loyal service illustrate the lord-vassal relationships associated with feudalism. This is a simplified classroom example, not a rule for every medieval society."
+        },
+        {
+          "text": "A medieval noble receives land rights from a more powerful lord in return for loyal service. The same noble grants some land rights to another vassal who promises service in return. Which system connects these relationships?",
+          "why": "These linked lord-vassal exchanges illustrate feudalism in the simplified classroom model. A person could be a vassal in one relationship and a lord in another; actual medieval arrangements varied."
         }
       ]
     },
@@ -255,6 +275,10 @@
         {
           "text": "For a class project, a student traces how craft techniques and religious ideas spread through trading towns between Asia, the Middle East, and Europe. Which connected trade network should the project identify?",
           "why": "The Silk Road connected trading communities and helped carry ideas and techniques as well as goods. The question asks for the network, not the people traveling in a caravan."
+        },
+        {
+          "text": "A guide links inland trading towns and sea routes on a map stretching across Asia toward Europe and Africa. The guide discusses exchanges of beliefs, skills, and merchandise along these connections. Which broad historical network is the focus?",
+          "why": "The Silk Road, also called the Silk Roads, included connected land and maritime routes. Its importance involved cultural exchange as well as the movement of goods."
         }
       ]
     },
@@ -287,6 +311,10 @@
         {
           "text": "In a history simulation set in the mid-1300s, many towns lose large numbers of residents during a widespread plague pandemic. The class must name the event behind this population decline. Which term fits?",
           "why": "The time period and devastating plague pandemic identify the Black Plague, also called the Black Death. This is an illustrative simulation of the event, not a claim about one particular town."
+        },
+        {
+          "text": "In a classroom simulation set in 1348, a town's records describe many deaths during a plague outbreak. Reports from distant towns show it is part of a much larger pandemic. Which historical event provides the setting?",
+          "why": "The date and the widespread medieval plague pandemic point to the Black Plague, also called the Black Death. This imagined town is a learning example, not a quotation from a real record."
         }
       ]
     },
@@ -318,6 +346,10 @@
         {
           "text": "A learner wants every plan to follow their wishes. A teacher drawing on Laozi instead asks them to observe natural patterns and live in harmony with the Way. Which Chinese tradition guides this advice?",
           "why": "Laozi and harmony with the Dao, or Way, are specific clues for Daoism. The advice illustrates the tradition without claiming that simply enjoying nature makes someone a follower."
+        },
+        {
+          "text": "In a discussion of Laozi's ideas, a student compares a thoughtful life to a garden tended with the seasons rather than against them. The student connects the example to following the Way. Which Chinese tradition is being illustrated?",
+          "why": "Laozi and the Way are clues to Daoism, also spelled Taoism. The garden is an original analogy for harmony with nature, not a historical quotation or a rule about gardening."
         }
       ]
     },
@@ -347,6 +379,10 @@
         {
           "text": "During a school visit, a community member explains that they read the Quran, worship Allah alone, and follow Muhammad as a prophet rather than a god. Which religion are they describing?",
           "why": "The Quran, worship of one God, and Muhammad as a prophet identify Islam. The question is about the religion, not a political institution such as a caliphate."
+        },
+        {
+          "text": "A student learns about the Five Pillars, including prayer, giving to those in need, and fasting during Ramadan. The lesson explains that these practices express the faith of Muslims. Which religion is the lesson about?",
+          "why": "The Five Pillars are foundational practices of Islam. The reference to Muslims and Ramadan distinguishes this religion from other traditions that also value prayer and generosity."
         }
       ]
     },
@@ -379,6 +415,10 @@
         {
           "text": "A household already has everyday dishes but spends much more on an ornate gold cup to impress guests. The purchase is mainly for beauty and status rather than a basic need. Which category best describes it?",
           "why": "The cup is an example of luxury goods because its special value here is beauty and status, not meeting a basic need. The situation explains why this particular purchase is a luxury."
+        },
+        {
+          "text": "After buying enough basic food and clothing, a wealthy household orders rare ornaments and finely woven wall hangings to display its status. Which term describes these extra purchases?",
+          "why": "These are luxury goods: nonessential items prized for beauty, rarity, or status. The example separates them from basic necessities the household already has."
         }
       ]
     },
@@ -408,6 +448,10 @@
         {
           "text": "A Muslim learner keeps setting aside distractions to study their faith and live according to God’s guidance. They describe this sustained effort as striving in God’s path. Which word names the effort?",
           "why": "This religious striving is an example of jihad in its spiritual sense. The term can have other meanings in different historical and legal contexts; this scenario concerns learning and faithful living."
+        },
+        {
+          "text": "A student encounters a word in two readings about Islam. In one it describes personal spiritual striving; in a historical discussion it can refer to armed struggle. The teacher says to read the context instead of translating it only as war. Which word is being studied?",
+          "why": "Jihad has meanings of striving or struggle that depend on context, including spiritual effort and armed struggle in historical and legal discussions. It should not be reduced to just one of those meanings."
         }
       ]
     },
@@ -437,6 +481,10 @@
         {
           "text": "In a fictional kingdom, power passes from a queen to her son and later to her granddaughter. A historian groups their reigns together because all three belong to the same ruling family. What is that line of rulers called?",
           "why": "A succession of rulers from the same family forms a dynasty. The family connection across reigns matters, rather than any single ruler’s wealth or achievements."
+        },
+        {
+          "text": "In a fictional kingdom, one ruling family's line ends. A different family takes power, and several generations of its relatives later rule. What term describes the new family's succession of rulers?",
+          "why": "The new succession of related rulers forms a dynasty. The concept identifies a ruling lineage, rather than a single ruler or a system for selecting people by skill."
         }
       ]
     },
@@ -466,6 +514,10 @@
         {
           "text": "An official studying Confucius tries to govern honestly, care for family responsibilities, and set a good moral example for others. Which tradition connects the official’s public conduct and family duties?",
           "why": "Confucianism emphasizes moral conduct and responsibilities within family and society. Confucius is the specific clue; honesty or family care alone would not identify just one tradition."
+        },
+        {
+          "text": "A class discusses a teaching associated with Confucius: a good ruler should model moral behavior and take responsibilities to others seriously. Students connect good government with ethical conduct. Which tradition are they studying?",
+          "why": "Confucianism links moral behavior, responsibilities in relationships, and good social order. Naming Confucius makes the connection more specific than a general appeal to kindness."
         }
       ]
     },
@@ -495,6 +547,10 @@
         {
           "text": "A school awards a scholarship using demonstrated skills and achievement. The judges assess the work without giving preference to famous parents or influential friends. Which principle is the selection meant to follow?",
           "why": "Choosing by ability and achievement illustrates the ideal of meritocracy. It contrasts with inherited advantages or personal connections, although this example does not prove that every applicant had equal opportunities."
+        },
+        {
+          "text": "A research fund compares applicants by the quality of their work and demonstrated ability. It does not award funding simply because an applicant comes from a wealthy family or knows the judges. Which selection principle is it trying to follow?",
+          "why": "Meritocracy favors demonstrated ability and achievement rather than inherited status or personal connections. This describes the selection ideal, not a guarantee that every applicant had equal opportunities."
         }
       ]
     },
@@ -524,6 +580,10 @@
         {
           "text": "At a study group, a learner asks how to respond to suffering without harming others. The group turns to the Buddha’s teachings and a path of ethical action and wisdom toward liberation. Which tradition guides the discussion?",
           "why": "The Buddha’s teachings about suffering and liberation identify Buddhism. The scenario applies those teachings to a learner’s concern rather than treating meditation as the tradition’s only practice."
+        },
+        {
+          "text": "At a study center, a teacher explains that meditation is one part of practicing the Buddha's teachings. Students also discuss ethical behavior and understanding suffering. Which religious and philosophical tradition connects these activities?",
+          "why": "The Buddha's teachings connect these practices to Buddhism. Meditation by itself is not unique to this tradition, so the reference to the Buddha and suffering is essential."
         }
       ]
     }

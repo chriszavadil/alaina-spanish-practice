@@ -1,0 +1,27 @@
+{
+  "version": "1.1.2",
+  "release_base": "36dec311f5240cc8efbb95251064cdf49f793dcf",
+  "original_two_example_base": "4be9257df1a506c749b96396469fffcbcb2f113a",
+  "terms": 15,
+  "scenarios_per_term": 4,
+  "total_scenarios": 60,
+  "original_examples_preserved": 30,
+  "intermediate_published_examples_preserved": 45,
+  "added_relative_to_original": 30,
+  "storage_key": "alaina-history-studio-v1",
+  "grading_rotation_storage_logic_unchanged": true,
+  "spanish_files_unchanged": [
+    "index.html",
+    "docs/index.html",
+    "src/core.js",
+    "src/data.json",
+    "src/unit2.json",
+    "sw.js",
+    "docs/sw.js",
+    "manifest.webmanifest",
+    "docs/manifest.webmanifest"
+  ],
+  "live_verified": false,
+  "history_sha256": "ca731bcde77b6a103c6f949c322ab710942ee0666ca6d61bdad8746adc2767be",
+  "content_audit_passed": true
+}
