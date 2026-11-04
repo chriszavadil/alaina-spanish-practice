@@ -1,5 +1,5 @@
 /* Independent, version-scoped history cache. Never reads or removes Spanish data. */
-const BASE=new URL(self.registration.scope),VERSION='v1.1.0';
+const BASE=new URL(self.registration.scope),VERSION='v1.1.1';
 const PREFIX='alaina-history-'+BASE.pathname+':',CACHE=PREFIX+VERSION;
 const FILES=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 const ALLOWED=FILES.map(p=>new URL(p,BASE).pathname),INDEX=new URL('./index.html',BASE).href;

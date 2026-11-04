@@ -1,0 +1,119 @@
+name: Three scenarios per term validation
+on:
+  push:
+    branches: [feature/history-three-scenarios-1.1.1]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Build scoped candidate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('tools/expand_history_scenarios.py');s=p.read_text()
+          s=s.replace("['history-src/shell.html','history-src/sw.js','tools/verify_history_live.py']", "['history-src/shell.html','history-src/sw.js']")
+          s=s.replace("('range(2):','range(3):')", "('for roundno in range(2):','for roundno in range(3):')")
+          p.write_text(s)
+          PY
+          python tools/expand_history_scenarios.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('HISTORY_README.md');s=p.read_text();s=s.replace('dedicated 30-scenario collection','dedicated 45-scenario collection');p.write_text(s)
+          p=Path('history-src/app.js');s=p.read_text()
+          old='Two illustrative situations showing this word in context.'
+          new='${c.scenarios.length} illustrative situations showing this word in context.'
+          assert old in s or new in s
+          p.write_text(s.replace(old,new))
+          p=Path('tests/history_scenarios.py');s=p.read_text()
+          assertion=" expect(p.locator('.scenario-examples > .note')).to_contain_text('3 illustrative situations')\n"
+          if assertion not in s:s=s.replace(" for line in p.locator('.scenario-example strong')",assertion+" for line in p.locator('.scenario-example strong')")
+          p.write_text(s)
+          PY
+          python tools/build_history.py
+      - name: Content, grading and original data preservation
+        run: |
+          node --test tests/history.test.cjs tests/history_scenarios.test.cjs
+          node --test tests/core.test.cjs tests/unit2.test.cjs tests/grading_paths.test.cjs
+          git diff --exit-code 4be9257df1a506c749b96396469fffcbcb2f113a -- index.html docs/index.html src/core.js src/data.json src/unit2.json sw.js docs/sw.js
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          old=json.loads(subprocess.check_output(['git','show','4be9257df1a506c749b96396469fffcbcb2f113a:history-src/data.json']))
+          new=json.loads(Path('history-src/data.json').read_text())
+          assert new['version']=='1.1.1'
+          for a,b in zip(old['cards'],new['cards']):
+              assert len(b['scenarios'])==3
+              assert a=={**b,'scenarios':b['scenarios'][:2]}
+          assert new['sources']==old['sources'] and new['categories']==old['categories']
+          assert len(new['cards'])==15 and sum(len(c['scenarios']) for c in new['cards'])==45
+          print('45 scenarios; all original 30 and all original term data preserved.')
+          PY
+      - name: Install existing browser dependencies
+        run: |
+          pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium webkit
+      - name: All 45 scenarios, rotation, legacy saves and existing modes
+        run: |
+          python - <<'PY'
+          import subprocess,sys
+          from pathlib import Path
+          out=Path('history-scenario-results');out.mkdir(exist_ok=True)
+          jobs=[]
+          for script in ['history_scenarios.py','history_browser.py','history_three_scenarios.py']:
+              log=(out/(script+'.log')).open('w')
+              jobs.append((script,subprocess.Popen([sys.executable,'-u','tests/'+script],stdout=log,stderr=subprocess.STDOUT),log))
+          failed=[]
+          for script,proc,log in jobs:
+              code=proc.wait();log.close();print((out/(script+'.log')).read_text(),flush=True)
+              if code:failed.append(script)
+          if failed:raise SystemExit('Failed: '+', '.join(failed))
+          PY
+      - name: Backup safety and installed-app offline upgrades
+        run: |
+          python tests/history_backup.py
+          python tests/history_scenario_upgrade.py
+          python tests/history_three_scenario_upgrade.py
+          python tests/history_offline.py
+      - name: Save validated candidate only
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add history docs/history history-src HISTORY_README.md HISTORY_BUILD.json tools/expand_history_scenarios.py tests/history.test.cjs tests/history_scenarios.test.cjs tests/history_browser.py tests/history_scenarios.py tests/history_backup.py tests/history_scenario_upgrade.py tests/history_three_scenario_upgrade.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build validated 45-scenario History Studio 1.1.1'
+            git push origin HEAD:feature/history-three-scenarios-1.1.1
+          fi
+      - name: Collect evidence and app package
+        if: always()
+        run: |
+          mkdir -p three-scenario-results
+          cp -r history-scenario-results three-scenario-results/scenarios 2>/dev/null || true
+          cp -r history-test-results three-scenario-results/history 2>/dev/null || true
+          cp HISTORY_BUILD.json three-scenario-results/ 2>/dev/null || true
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          with zipfile.ZipFile('three-scenario-results/Alaina-History-1.1.1.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in Path('history').glob('*'):
+                  if p.is_file():z.write(p,p.name)
+          with zipfile.ZipFile('three-scenario-results/working-source.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for parent in ['history-src','tests','tools','.github/workflows']:
+                  for p in Path(parent).glob('*'):
+                      if p.is_file():z.write(p,str(p))
+          PY
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: three-scenario-validation
+          path: three-scenario-results/
+          retention-days: 7

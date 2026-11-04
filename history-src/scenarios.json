@@ -1,62 +1,212 @@
 {
   "caliphate": [
-    {"text":"A traveler enters a territory whose ruler is called a caliph. The ruler claims both political authority and leadership of the Muslim community. Which term describes the state the traveler has entered?","why":"A caliphate is the state or territory ruled by a caliph. The clue is the form of government, not simply the religion practiced there."},
-    {"text":"A student is sorting descriptions of governments. One describes a state led by someone claiming to succeed Muhammad in leading the Muslim community. Which heading belongs above that description?","why":"The political institution led by a caliph is a caliphate. The caliph is a community leader, not a new prophet."}
+    {
+      "text": "A traveler enters a territory whose ruler is called a caliph. The ruler claims both political authority and leadership of the Muslim community. Which term describes the state the traveler has entered?",
+      "why": "A caliphate is the state or territory ruled by a caliph. The clue is the form of government, not simply the religion practiced there."
+    },
+    {
+      "text": "A student is sorting descriptions of governments. One describes a state led by someone claiming to succeed Muhammad in leading the Muslim community. Which heading belongs above that description?",
+      "why": "The political institution led by a caliph is a caliphate. The caliph is a community leader, not a new prophet."
+    },
+    {
+      "text": "Officials in several cities report to a ruler called a caliph, who claims leadership of the Muslim community as well as political authority. What term describes the larger state those cities belong to?",
+      "why": "The state is a caliphate because it is ruled by a caliph. A city within that state is not an independent city-state simply because it has local officials."
+    }
   ],
   "christianity": [
-    {"text":"A family gathers for worship and reads about Jesus Christ. Their beliefs center on his teachings, death, and resurrection. Which religion is being described?","why":"Jesus Christ and beliefs about his resurrection are central to Christianity. These clues identify the religion more clearly than worship alone would."},
-    {"text":"In a classroom presentation, a student describes a monotheistic faith whose followers look to Jesus as the Christ. Which term should appear as the presentation's title?","why":"Christianity is the monotheistic religion centered on Jesus Christ. Monotheism alone would not identify it, but the reference to Jesus does."}
+    {
+      "text": "A family gathers for worship and reads about Jesus Christ. Their beliefs center on his teachings, death, and resurrection. Which religion is being described?",
+      "why": "Jesus Christ and beliefs about his resurrection are central to Christianity. These clues identify the religion more clearly than worship alone would."
+    },
+    {
+      "text": "In a classroom presentation, a student describes a monotheistic faith whose followers look to Jesus as the Christ. Which term should appear as the presentation's title?",
+      "why": "Christianity is the monotheistic religion centered on Jesus Christ. Monotheism alone would not identify it, but the reference to Jesus does."
+    },
+    {
+      "text": "A museum visitor reads a Gospel passage about Jesus and sees an exhibit explaining belief in his resurrection. The guide says these beliefs unite many different churches. Which religion connects the exhibit?",
+      "why": "The focus on Jesus Christ and his resurrection points to Christianity. Different churches can share this central religious identity without having identical practices."
+    }
   ],
   "city-state": [
-    {"text":"A walled city makes its own laws and governs the farms around it. It is independent, not part of a larger country. What kind of political unit is it?","why":"A city-state consists of an independent city and the surrounding territory it governs. A wall alone is not enough; independence is the key clue."},
-    {"text":"Two neighboring cities each have their own independent government and nearby territory. Neither answers to a shared national government. What could each city and its land be called?","why":"Each city acts as its own state, so each is a city-state. An ordinary city within a country would not meet the independence condition."}
+    {
+      "text": "A walled city makes its own laws and governs the farms around it. It is independent, not part of a larger country. What kind of political unit is it?",
+      "why": "A city-state consists of an independent city and the surrounding territory it governs. A wall alone is not enough; independence is the key clue."
+    },
+    {
+      "text": "Two neighboring cities each have their own independent government and nearby territory. Neither answers to a shared national government. What could each city and its land be called?",
+      "why": "Each city acts as its own state, so each is a city-state. An ordinary city within a country would not meet the independence condition."
+    },
+    {
+      "text": "A harbor city makes its own treaty with a neighboring country and governs the countryside around its port. It answers to no larger national government. What kind of political unit is the city and its territory?",
+      "why": "The city and its surrounding land form an independent city-state. Making its own decisions as a state, rather than simply having a busy port, is the important clue."
+    }
   ],
   "caravan": [
-    {"text":"Several merchants load bundles onto pack animals and set off together across a desert. Which term names the traveling group, rather than the road or the goods?","why":"The merchants and pack animals traveling together form a caravan. The group is different from a trade route such as the Silk Road."},
-    {"text":"A traveler sees a long line of traders and loaded animals moving together between towns. They plan to stay together for the journey. What is this group called?","why":"A caravan is a group traveling together, often with pack animals and merchandise. It does not have to contain only camels."}
+    {
+      "text": "Several merchants load bundles onto pack animals and set off together across a desert. Which term names the traveling group, rather than the road or the goods?",
+      "why": "The merchants and pack animals traveling together form a caravan. The group is different from a trade route such as the Silk Road."
+    },
+    {
+      "text": "A traveler sees a long line of traders and loaded animals moving together between towns. They plan to stay together for the journey. What is this group called?",
+      "why": "A caravan is a group traveling together, often with pack animals and merchandise. It does not have to contain only camels."
+    },
+    {
+      "text": "Before crossing a mountain pass, a guide brings several merchants together with their loaded mules. The people and animals will make the long journey as one group. What term names that group?",
+      "why": "The travelers and pack animals form a caravan. The animals can be mules rather than camels; the defining feature is the group traveling together, not a particular animal or landscape."
+    }
   ],
   "feudalism": [
-    {"text":"A medieval lord gives a vassal rights to a piece of land. In return, the vassal promises loyalty and military service. Which system of relationships does this illustrate?","why":"The exchange of land or rights for loyalty and service is central to the classroom model of feudalism. The bargain, not just the presence of a king, is the clue."},
-    {"text":"In a medieval-history role-play, one student offers land rights and another promises to provide service when called upon. They are acting as a lord and a vassal. Which concept are they modeling?","why":"They are modeling feudalism through the lord-vassal relationship. Real medieval arrangements varied, so this is a simplified learning example."}
+    {
+      "text": "A medieval lord gives a vassal rights to a piece of land. In return, the vassal promises loyalty and military service. Which system of relationships does this illustrate?",
+      "why": "The exchange of land or rights for loyalty and service is central to the classroom model of feudalism. The bargain, not just the presence of a king, is the clue."
+    },
+    {
+      "text": "In a medieval-history role-play, one student offers land rights and another promises to provide service when called upon. They are acting as a lord and a vassal. Which concept are they modeling?",
+      "why": "They are modeling feudalism through the lord-vassal relationship. Real medieval arrangements varied, so this is a simplified learning example."
+    },
+    {
+      "text": "In a medieval-history simulation, a knight is called to provide military service to a lord. The knight holds land rights in return for this service and loyalty. Which system explains the obligation?",
+      "why": "The land rights and the promise of loyal service illustrate the lord-vassal relationships associated with feudalism. This is a simplified classroom example, not a rule for every medieval society."
+    }
   ],
   "silk-road": [
-    {"text":"A map shows many connected trade routes linking regions of Asia, the Middle East, and Europe. Goods, ideas, and beliefs move along them. Which network is the map showing?","why":"The Silk Road was a network of connected trade routes, not one single road. The movement of ideas and beliefs alongside goods is another important clue."},
-    {"text":"A merchant passes goods to another trader, who carries them farther west. Across a linked network between Asia and Europe, technologies and beliefs travel too. Which term names the network, not a group of travelers?","why":"The Silk Road names the trade network. A caravan would name a traveling group, while luxury goods would describe some of the items being traded."}
+    {
+      "text": "A map shows many connected trade routes linking regions of Asia, the Middle East, and Europe. Goods, ideas, and beliefs move along them. Which network is the map showing?",
+      "why": "The Silk Road was a network of connected trade routes, not one single road. The movement of ideas and beliefs alongside goods is another important clue."
+    },
+    {
+      "text": "A merchant passes goods to another trader, who carries them farther west. Across a linked network between Asia and Europe, technologies and beliefs travel too. Which term names the network, not a group of travelers?",
+      "why": "The Silk Road names the trade network. A caravan would name a traveling group, while luxury goods would describe some of the items being traded."
+    },
+    {
+      "text": "For a class project, a student traces how craft techniques and religious ideas spread through trading towns between Asia, the Middle East, and Europe. Which connected trade network should the project identify?",
+      "why": "The Silk Road connected trading communities and helped carry ideas and techniques as well as goods. The question asks for the network, not the people traveling in a caravan."
+    }
   ],
   "black-plague": [
-    {"text":"A history book describes a devastating plague pandemic in the 1300s that killed millions across parts of Eurasia and North Africa. Which event is the class studying?","why":"This is the Black Plague, commonly called the Black Death. The time period and widespread pandemic distinguish it from a small local outbreak."},
-    {"text":"A museum display explains a fourteenth-century pandemic that caused enormous population losses. It notes that plague is caused by bacteria, not a virus. Which event fits the display?","why":"The fourteenth-century plague pandemic is the Black Plague or Black Death. The bacterial cause also corrects a common misunderstanding about plague."}
+    {
+      "text": "A history book describes a devastating plague pandemic in the 1300s that killed millions across parts of Eurasia and North Africa. Which event is the class studying?",
+      "why": "This is the Black Plague, commonly called the Black Death. The time period and widespread pandemic distinguish it from a small local outbreak."
+    },
+    {
+      "text": "A museum display explains a fourteenth-century pandemic that caused enormous population losses. It notes that plague is caused by bacteria, not a virus. Which event fits the display?",
+      "why": "The fourteenth-century plague pandemic is the Black Plague or Black Death. The bacterial cause also corrects a common misunderstanding about plague."
+    },
+    {
+      "text": "In a history simulation set in the mid-1300s, many towns lose large numbers of residents during a widespread plague pandemic. The class must name the event behind this population decline. Which term fits?",
+      "why": "The time period and devastating plague pandemic identify the Black Plague, also called the Black Death. This is an illustrative simulation of the event, not a claim about one particular town."
+    }
   ],
   "daoism": [
-    {"text":"A teacher in a Chinese philosophical tradition compares a wise life to water following a natural course. The lesson emphasizes harmony with the Way rather than forcing everything to obey personal wishes. Which tradition fits?","why":"Daoism emphasizes harmony with the Dao, or Way, and the natural order. The water comparison is an illustrative memory aid, not a quotation."},
-    {"text":"Someone studying Chinese traditions chooses a path focused on living in harmony with nature and the Dao. Which term names the tradition they are exploring?","why":"The reference to the Dao identifies Daoism, also spelled Taoism. Nature alone could be a broad clue, but the Way makes the connection specific."}
+    {
+      "text": "A teacher in a Chinese philosophical tradition compares a wise life to water following a natural course. The lesson emphasizes harmony with the Way rather than forcing everything to obey personal wishes. Which tradition fits?",
+      "why": "Daoism emphasizes harmony with the Dao, or Way, and the natural order. The water comparison is an illustrative memory aid, not a quotation."
+    },
+    {
+      "text": "Someone studying Chinese traditions chooses a path focused on living in harmony with nature and the Dao. Which term names the tradition they are exploring?",
+      "why": "The reference to the Dao identifies Daoism, also spelled Taoism. Nature alone could be a broad clue, but the Way makes the connection specific."
+    },
+    {
+      "text": "A learner wants every plan to follow their wishes. A teacher drawing on Laozi instead asks them to observe natural patterns and live in harmony with the Way. Which Chinese tradition guides this advice?",
+      "why": "Laozi and harmony with the Dao, or Way, are specific clues for Daoism. The advice illustrates the tradition without claiming that simply enjoying nature makes someone a follower."
+    }
   ],
   "islam": [
-    {"text":"A student describes a faith whose followers are Muslims. They worship one God, called Allah in Arabic, and regard Muhammad as God's final prophet. Which religion is it?","why":"These beliefs identify Islam. Islam names the religion, while Muslim names a follower; Muhammad is regarded as a prophet, not as God."},
-    {"text":"A family explains that the Quran is their sacred scripture and that they submit to one God. They identify themselves as Muslims. Which religion are they describing?","why":"Islam is the religion practiced by Muslims, with the Quran as sacred scripture. This asks for the religion, not a particular government or personal practice."}
+    {
+      "text": "A student describes a faith whose followers are Muslims. They worship one God, called Allah in Arabic, and regard Muhammad as God's final prophet. Which religion is it?",
+      "why": "These beliefs identify Islam. Islam names the religion, while Muslim names a follower; Muhammad is regarded as a prophet, not as God."
+    },
+    {
+      "text": "A family explains that the Quran is their sacred scripture and that they submit to one God. They identify themselves as Muslims. Which religion are they describing?",
+      "why": "Islam is the religion practiced by Muslims, with the Quran as sacred scripture. This asks for the religion, not a particular government or personal practice."
+    },
+    {
+      "text": "During a school visit, a community member explains that they read the Quran, worship Allah alone, and follow Muhammad as a prophet rather than a god. Which religion are they describing?",
+      "why": "The Quran, worship of one God, and Muhammad as a prophet identify Islam. The question is about the religion, not a political institution such as a caliphate."
+    }
   ],
   "luxury-goods": [
-    {"text":"A wealthy customer buys rare jewels and finely made silk to display status, although neither is needed for basic survival. Which term describes these purchases?","why":"These are luxury goods: nonessential items prized for beauty, rarity, comfort, or status. Their purpose in the scenario separates them from basic necessities."},
-    {"text":"At a market, a shopper passes over a simple everyday bag and buys an expensive decorated one mainly for prestige. Which category best describes the decorated bag in this situation?","why":"Here the decorated bag is a luxury good because it is chosen for prestige rather than basic need. What counts as a luxury depends on the situation."}
+    {
+      "text": "A wealthy customer buys rare jewels and finely made silk to display status, although neither is needed for basic survival. Which term describes these purchases?",
+      "why": "These are luxury goods: nonessential items prized for beauty, rarity, comfort, or status. Their purpose in the scenario separates them from basic necessities."
+    },
+    {
+      "text": "At a market, a shopper passes over a simple everyday bag and buys an expensive decorated one mainly for prestige. Which category best describes the decorated bag in this situation?",
+      "why": "Here the decorated bag is a luxury good because it is chosen for prestige rather than basic need. What counts as a luxury depends on the situation."
+    },
+    {
+      "text": "A household already has everyday dishes but spends much more on an ornate gold cup to impress guests. The purchase is mainly for beauty and status rather than a basic need. Which category best describes it?",
+      "why": "The cup is an example of luxury goods because its special value here is beauty and status, not meeting a basic need. The situation explains why this particular purchase is a luxury."
+    }
   ],
   "jihad": [
-    {"text":"A Muslim works to resist the temptation to cheat and to act honestly as an effort in the path of God. Which term can describe this striving, rather than the religion as a whole?","why":"Jihad can mean striving to live faithfully and do what is right. This scenario illustrates spiritual and moral effort; the term also has an armed-struggle meaning in other contexts."},
-    {"text":"A Muslim describes an ongoing struggle to overcome selfish habits and follow God's guidance. The question asks for the word for that religious striving. Which term fits?","why":"The striving described here is an example of jihad. The example shows one meaning and does not imply that jihad has only a personal or only a military meaning."}
+    {
+      "text": "A Muslim works to resist the temptation to cheat and to act honestly as an effort in the path of God. Which term can describe this striving, rather than the religion as a whole?",
+      "why": "Jihad can mean striving to live faithfully and do what is right. This scenario illustrates spiritual and moral effort; the term also has an armed-struggle meaning in other contexts."
+    },
+    {
+      "text": "A Muslim describes an ongoing struggle to overcome selfish habits and follow God's guidance. The question asks for the word for that religious striving. Which term fits?",
+      "why": "The striving described here is an example of jihad. The example shows one meaning and does not imply that jihad has only a personal or only a military meaning."
+    },
+    {
+      "text": "A Muslim learner keeps setting aside distractions to study their faith and live according to God’s guidance. They describe this sustained effort as striving in God’s path. Which word names the effort?",
+      "why": "This religious striving is an example of jihad in its spiritual sense. The term can have other meanings in different historical and legal contexts; this scenario concerns learning and faithful living."
+    }
   ],
   "dynasty": [
-    {"text":"A ruler is succeeded by a relative. Several more relatives from the same family rule over the next generations. What is this line of rulers called?","why":"A succession of rulers from the same family or lineage is a dynasty. One ruler alone does not establish the family succession described here."},
-    {"text":"A museum timeline places several rulers beneath one family tree. The guide explains that political power stayed within that family for generations. Which term labels the group of rulers?","why":"Dynasty names the ruling family line across generations. The family connection, rather than a method of earning office, is the key clue."}
+    {
+      "text": "A ruler is succeeded by a relative. Several more relatives from the same family rule over the next generations. What is this line of rulers called?",
+      "why": "A succession of rulers from the same family or lineage is a dynasty. One ruler alone does not establish the family succession described here."
+    },
+    {
+      "text": "A museum timeline places several rulers beneath one family tree. The guide explains that political power stayed within that family for generations. Which term labels the group of rulers?",
+      "why": "Dynasty names the ruling family line across generations. The family connection, rather than a method of earning office, is the key clue."
+    },
+    {
+      "text": "In a fictional kingdom, power passes from a queen to her son and later to her granddaughter. A historian groups their reigns together because all three belong to the same ruling family. What is that line of rulers called?",
+      "why": "A succession of rulers from the same family forms a dynasty. The family connection across reigns matters, rather than any single ruler’s wealth or achievements."
+    }
   ],
   "confucianism": [
-    {"text":"A teacher following Confucius emphasizes learning, moral conduct, and responsibilities toward family and society. Which tradition shapes these lessons?","why":"Confucianism emphasizes ethical behavior, education, duties, and good relationships. The reference to Confucius and family responsibilities makes the connection clear."},
-    {"text":"A student studies a Chinese tradition in which people should improve their conduct, respect family responsibilities, and help create a well-ordered society. The teachings are associated with Confucius. Which tradition is it?","why":"These are central themes of Confucianism. This is about relationships and moral conduct, not simply a hiring system or a general interest in nature."}
+    {
+      "text": "A teacher following Confucius emphasizes learning, moral conduct, and responsibilities toward family and society. Which tradition shapes these lessons?",
+      "why": "Confucianism emphasizes ethical behavior, education, duties, and good relationships. The reference to Confucius and family responsibilities makes the connection clear."
+    },
+    {
+      "text": "A student studies a Chinese tradition in which people should improve their conduct, respect family responsibilities, and help create a well-ordered society. The teachings are associated with Confucius. Which tradition is it?",
+      "why": "These are central themes of Confucianism. This is about relationships and moral conduct, not simply a hiring system or a general interest in nature."
+    },
+    {
+      "text": "An official studying Confucius tries to govern honestly, care for family responsibilities, and set a good moral example for others. Which tradition connects the official’s public conduct and family duties?",
+      "why": "Confucianism emphasizes moral conduct and responsibilities within family and society. Confucius is the specific clue; honesty or family care alone would not identify just one tradition."
+    }
   ],
   "meritocracy": [
-    {"text":"A council chooses an official by comparing demonstrated skills and achievements. A powerful family's relative does not receive special preference. Which principle is the council trying to follow?","why":"Meritocracy favors ability and achievement rather than inherited status or personal connections. The example illustrates the ideal, not proof that every opportunity is equal."},
-    {"text":"A workplace awards a leadership role to the person with the strongest relevant performance, not the owner's friend. Which term describes the selection principle?","why":"Choosing on demonstrated merit illustrates meritocracy. The clue is how the role is awarded, rather than who inherits power."}
+    {
+      "text": "A council chooses an official by comparing demonstrated skills and achievements. A powerful family's relative does not receive special preference. Which principle is the council trying to follow?",
+      "why": "Meritocracy favors ability and achievement rather than inherited status or personal connections. The example illustrates the ideal, not proof that every opportunity is equal."
+    },
+    {
+      "text": "A workplace awards a leadership role to the person with the strongest relevant performance, not the owner's friend. Which term describes the selection principle?",
+      "why": "Choosing on demonstrated merit illustrates meritocracy. The clue is how the role is awarded, rather than who inherits power."
+    },
+    {
+      "text": "A school awards a scholarship using demonstrated skills and achievement. The judges assess the work without giving preference to famous parents or influential friends. Which principle is the selection meant to follow?",
+      "why": "Choosing by ability and achievement illustrates the ideal of meritocracy. It contrasts with inherited advantages or personal connections, although this example does not prove that every applicant had equal opportunities."
+    }
   ],
   "buddhism": [
-    {"text":"A learner studies the Buddha's teachings about suffering and liberation, practices ethical behavior, and meditates. Which tradition is the learner exploring?","why":"Buddhism is based on the Buddha's teachings, including the path away from suffering. Meditation alone is not unique to Buddhism; the Buddha and these teachings identify it."},
-    {"text":"A teacher asks students to examine suffering and follow a path of ethical living and wisdom taught by the Buddha. Which tradition do these lessons belong to?","why":"The reference to the Buddha and liberation from suffering points to Buddhism. Practices vary among Buddhist traditions, so this is a broad learning example."}
+    {
+      "text": "A learner studies the Buddha's teachings about suffering and liberation, practices ethical behavior, and meditates. Which tradition is the learner exploring?",
+      "why": "Buddhism is based on the Buddha's teachings, including the path away from suffering. Meditation alone is not unique to Buddhism; the Buddha and these teachings identify it."
+    },
+    {
+      "text": "A teacher asks students to examine suffering and follow a path of ethical living and wisdom taught by the Buddha. Which tradition do these lessons belong to?",
+      "why": "The reference to the Buddha and liberation from suffering points to Buddhism. Practices vary among Buddhist traditions, so this is a broad learning example."
+    },
+    {
+      "text": "At a study group, a learner asks how to respond to suffering without harming others. The group turns to the Buddha’s teachings and a path of ethical action and wisdom toward liberation. Which tradition guides the discussion?",
+      "why": "The Buddha’s teachings about suffering and liberation identify Buddhism. The scenario applies those teachings to a learner’s concern rather than treating meditation as the tradition’s only practice."
+    }
   ]
 }
