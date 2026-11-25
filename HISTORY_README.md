@@ -4,6 +4,14 @@ Live app: https://chriszavadil.github.io/alaina-spanish-practice/history/?v=1.1.
 
 A separate English-language app for Alaina’s 15 Global Tapestry terms. No worksheet photos, handwriting, surname or grades are published.
 
+## Empires Vocabulary
+
+Open the [Empires unit on GitHub Pages](https://chriszavadil.github.io/alaina-spanish-practice/history/empires/) or choose **Empires Vocabulary** on the History Studio home screen. Its notebook follows the five worksheet pages in order. Each of the 20 entries includes three definitions, a sentence, a drawing and its explanation. Five practice modes include 80 historical situations.
+
+The review list holds bookmarked terms and missed answers. Bookmarks, practice results and a paused round stay in the current browser. The Empires unit also supports offline practice after its first successful online load. Listen & Spell uses the device’s English voice.
+
+To release an update, edit the unit under `history/empires/` and run `python tools/sync_empires.py` to refresh the offline version and the `docs/` mirror.
+
 ## Scenario Practice
 
 Choose **Scenario Practice** on the home screen or practice-mode screen. Read a situation and choose the associated term from four options. After checking, read **Why this term fits**. There are **60 illustrative situations: four for each term**. Rounds shuffle terms and cycle through all four examples for a term on later rounds.

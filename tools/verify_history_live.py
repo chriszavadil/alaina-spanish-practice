@@ -21,6 +21,7 @@ report={'url':H,'history_version':VERSION,'history_sha256':sha(html),'spanish_ht
 (OUT/'verification.json').write_text(json.dumps(report,indent=2))
 for cmd in [[sys.executable,'tests/history_browser.py','--url',H+'?v='+VERSION],[sys.executable,'tests/history_scenarios.py','--url',H+'?v='+VERSION],[sys.executable,'tests/listening_browser.py','--url',S+'?v=1.4.2','--quick']]:
  print('RUN_LIVE',cmd,flush=True);subprocess.run(cmd,cwd=ROOT,check=True)
-report.update(live_verified=True,history_browser_groups_passed=18,scenario_browser_groups_passed=12,spanish_regression_groups_passed=14)
+subprocess.run([sys.executable,'tests/empires_browser.py','--url',H,'--verify-assets'],cwd=ROOT,check=True)
+report.update(live_verified=True,history_browser_groups_passed=18,scenario_browser_groups_passed=12,spanish_regression_groups_passed=14,empires_browser_groups_passed=4)
 (OUT/'verification.json').write_text(json.dumps(report,indent=2))
 print('PUBLIC_HISTORY_AND_SPANISH_VERIFIED',flush=True)
