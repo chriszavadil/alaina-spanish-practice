@@ -1,7 +1,7 @@
 /* This worker owns only the Empires unit at its registered Pages path. */
 const base = new URL(self.registration.scope);
 const prefix = 'history-studio-empires:' + base.pathname + ':';
-const cacheName = prefix + 'c32ec3faff0f';
+const cacheName = prefix + '09e7a39eec4a';
 const files = ["app.js", "caravel.webp", "core.js", "index.html", "manifest.webmanifest", "matching.js", "practice.js", "sprite.svg", "style.css", "terms.js", "../icon-192.png", "../icon-512.png"].map(file => new URL(file, base).href);
 const index = new URL('index.html', base).href;
 self.addEventListener('install', event => {

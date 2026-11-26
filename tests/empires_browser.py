@@ -32,7 +32,15 @@ def verify_files(history_url):
 
 
 def check_size(page):
-    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), "Horizontal overflow"
+    layout = page.evaluate("""() => ({
+      width: innerWidth,
+      content: document.documentElement.scrollWidth,
+      route: location.hash,
+      outside: Array.from(document.querySelectorAll('main *, header *, footer *'))
+        .filter(el => el.getBoundingClientRect().right > innerWidth + 0.5)
+        .slice(0, 8).map(el => el.id || el.className?.baseVal || el.className || el.tagName)
+    })""")
+    assert layout["content"] <= layout["width"], f"Horizontal overflow: {layout}"
 
 
 def check_word_bank(page):
@@ -183,6 +191,7 @@ def exercise(page, history_url):
         page.get_by_role("link", name="Resume round").click()
         expect(page.locator(".practice-stats")).to_contain_text("2 of 5")
         page.get_by_role("button", name="Pause round").click()
+        expect(page.locator("#overview-view")).to_be_visible()
         check_size(page)
     check_definition_rotation(page)
     assert not errors, errors
