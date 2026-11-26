@@ -7,7 +7,7 @@
   const bySlug = new Map(terms.map(item => [slug(item.term), item]));
   const byName = new Map(terms.map(item => [item.term, item]));
   const profiles = 'history-studio-empires-notebook-v1';
-  const ids = ['overview', 'library', 'review', 'practice'];
+  const ids = ['matching', 'overview', 'library', 'review', 'practice'];
   const paths = {
     book:'<path d="M3 4c3-.8 6-.5 9 1.3C15 3.5 18 3.2 21 4v14c-3-.7-6-.5-9 1.5C9 17.5 6 17.3 3 18zM12 5.3v14"/>',
     stack:'<rect x="7" y="6" width="13" height="16" rx="2"/><path d="M4 17H3V3h12"/>',
@@ -137,8 +137,8 @@
       <div class="hero-copy">
         <div class="eyebrow"><span class="rule"></span>World history</div>
         <h1>Empires<br><em>Vocabulary</em></h1>
-        <p>Explore the ships, trade systems, and people that shaped empires. Study each term in your own words, then test what you remember.</p>
-        <div class="actions"><a class="primary" href="#vocabulary">${icon('book')}Open word list</a><a class="secondary" href="#practice/flash">${icon('stack')}Flashcards</a></div>
+        <p>Match definitions to the words in a shared bank, or look up a term in the illustrated notebook.</p>
+        <div class="actions"><a class="primary" href="#matching">${icon('list')}Start word bank quiz</a><a class="secondary" href="#vocabulary">${icon('book')}Open word list</a></div>
       </div>
       <figure class="hero-figure">
         <img src="caravel.webp" alt="An illustrated caravel with triangular sails on the open sea" width="1100" height="733" fetchpriority="high">
@@ -188,7 +188,7 @@
   function library(termId) {
     const chosen = bySlug.get(termId);
     if (chosen && !filtered().includes(chosen)) query='';
-    get('library-view').innerHTML = crumbs('Word list')+`<div class="page-title"><div class="eyebrow">20 worksheet terms</div><h1>Vocabulary notebook</h1><p>Choose a term to see three definitions, an example, and a drawing you can copy.</p></div>
+    get('library-view').innerHTML = crumbs('Word list')+`<div class="page-title"><div class="eyebrow">20 worksheet terms</div><h1>Vocabulary notebook</h1><p>Choose a term to see three definitions, an example, and a drawing you can copy.</p><a class="primary notebook-quiz" href="#matching">${icon('list')}Start word bank quiz</a></div>
     <div class="notebook"><aside class="index"><label class="search-box">${icon('search')}<input id="term-search" type="search" placeholder="Search words or definitions" aria-label="Search words or definitions" value="${esc(query)}"></label><p class="list-count" id="term-count" aria-live="polite"></p><nav id="term-list" aria-label="Worksheet terms"></nav></aside><div id="entry-wrap"></div></div>`;
     renderWordList(chosen);
   }
@@ -199,14 +199,15 @@
   }
   function route() {
     const [page,arg] = location.hash.slice(1).split('/');
-    const view = page==='vocabulary' ? 'library' : ['practice','review'].includes(page) ? page : 'overview';
+    const view = page==='vocabulary' ? 'library' : ids.includes(page) ? page : 'matching';
     if (lastRoute==='practice') window.EmpiresPractice.leave();
     stopSpeech();
     ids.forEach(id => {get(id+'-view').hidden=id!==view;});
     document.querySelectorAll('[data-nav]').forEach(link=>{
       if(link.dataset.nav===(view==='library'?'vocabulary':view)) link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');
     });
-    if (view==='library') library(arg);
+    if (view==='matching') window.EmpiresMatching.open();
+    else if (view==='library') library(arg);
     else if (view==='review') showReview();
     else if (view==='practice') {
       if (arg==='resume' && window.EmpiresPractice.hasSaved()) window.EmpiresPractice.resume();

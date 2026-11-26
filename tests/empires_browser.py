@@ -35,6 +35,79 @@ def check_size(page):
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), "Horizontal overflow"
 
 
+def check_word_bank(page):
+    """Match a five-word sheet and its retry, then inspect three full worksheets."""
+    expect(page.get_by_role("heading", name="Word bank quiz", exact=True)).to_be_visible()
+    size = page.locator("#match-size")
+    expect(size).to_have_value("5")
+    bank = page.locator("#match-bank button[data-word]")
+    prompts = page.locator("#match-questions .match-definition")
+    selects = page.locator("#match-questions select[data-row]")
+    words = bank.evaluate_all("(buttons) => buttons.map(b => b.dataset.word)")
+    cards = page.evaluate("HISTORY_TERMS.map(c => [c.term, c.quizDefinitions])")
+    assert len(cards) == 20 and all(len(set(defs)) == 3 for _, defs in cards)
+    answers = {definition: term for term, definitions in cards for definition in definitions}
+    assert len(answers) == 60
+
+    initial = prompts.all_text_contents()
+    assert len(initial) == len(set(words)) == len(words) == 5
+    correct = [answers[p] for p in initial]
+    assert set(correct) == set(words)
+    dropdowns = selects.evaluate_all("(rows) => rows.map(s => Array.from(s.options, o => o.value))")
+    assert all(options == ["", *words] for options in dropdowns)
+    expect(selects).to_have_count(5)
+
+    # Two chip taps fill successive rows. Reusing a word swaps the existing matches.
+    bank.nth(words.index(correct[0])).click()
+    bank.nth(words.index(correct[1])).click()
+    expect(selects.nth(0)).to_have_value(correct[0])
+    expect(selects.nth(1)).to_have_value(correct[1])
+    selects.nth(0).select_option(correct[1])
+    expect(selects.nth(1)).to_have_value(correct[0])
+    page.locator("#match-check").click()
+    expect(page.locator("#match-result")).to_have_count(0)
+    expect(page.locator("#match-message")).to_contain_text("still needs a match")
+
+    # A half-filled worksheet must survive a reload with both the bank and rows in order.
+    page.reload()
+    expect(prompts).to_have_text(initial)
+    assert bank.evaluate_all("(buttons) => buttons.map(b => b.dataset.word)") == words
+    expect(selects.nth(0)).to_have_value(correct[1])
+    expect(selects.nth(1)).to_have_value(correct[0])
+    for i in range(2, 5):
+        selects.nth(i).select_option(correct[i])
+    page.locator("#match-check").click()
+    expect(page.locator("#match-result")).to_contain_text("3 of 5 correct")
+    expect(page.locator("#match-questions .incorrect")).to_have_count(2)
+    page.reload()
+    expect(page.locator("#match-result")).to_contain_text("3 of 5 correct")
+    page.locator("#match-retry").click()
+    retry = prompts.all_text_contents()
+    assert len(retry) == 2 and set(retry) == set(initial[:2])
+    assert bank.evaluate_all("(buttons) => buttons.map(b => b.dataset.word)") == words
+    for i, definition in enumerate(retry):
+        selects.nth(i).select_option(answers[definition])
+    page.locator("#match-check").click()
+    expect(page.locator("#match-result")).to_contain_text("2 of 2 correct")
+
+    size.select_option("10")
+    expect(prompts).to_have_count(10)
+    expect(bank).to_have_count(10)
+    size.select_option("20")
+    seen = set()
+    for sheet in range(3):
+        if sheet:
+            page.locator("#match-new").click()
+        definitions = prompts.all_text_contents()
+        choices = bank.evaluate_all("(buttons) => buttons.map(b => b.dataset.word)")
+        assert len(definitions) == len(set(choices)) == len(choices) == 20
+        assert {answers[text] for text in definitions} == set(choices)
+        assert seen.isdisjoint(definitions), "Repeated a definition before all three variants appeared"
+        seen.update(definitions)
+    assert seen == set(answers)
+    check_size(page)
+
+
 def check_definition_rotation(page):
     """All 20 words cycle through three different clues across meaning and recall rounds."""
     cards = {card["term"]: card for card in page.evaluate("HISTORY_TERMS")}
@@ -67,7 +140,10 @@ def exercise(page, history_url):
     page.goto(history_url, wait_until="domcontentloaded")
     page.get_by_role("link", name="Empires Vocabulary").click()
     page.wait_for_url("**/history/empires/")
+    check_word_bank(page)
+    page.get_by_role("link", name="Overview", exact=True).click()
     expect(page.get_by_role("heading", name=re.compile(r"^Empires\s*Vocabulary$"))).to_be_visible()
+    expect(page.get_by_role("link", name="Start word bank quiz", exact=True)).to_have_attribute("href", "#matching")
     check_size(page)
 
     page.get_by_role("link", name="Open word list").first.click()
@@ -128,7 +204,7 @@ if __name__ == "__main__":
                     context = browser.new_context(viewport={"width": width, "height": height}, has_touch=width < 500)
                     try:
                         exercise(context.new_page(), url)
-                        print(f"{engine.name} {width}px passed notebook, five modes, grading and resumed-round checks.", flush=True)
+                        print(f"{engine.name} {width}px passed the shared word bank, 60 definitions, notebook, five modes, grading and resumed-round checks.", flush=True)
                     finally:
                         context.close()
             finally:

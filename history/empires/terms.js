@@ -1,6 +1,11 @@
 const HISTORY_TERMS = [
   {
     "term": "Caravel",
+    "quizDefinitions": [
+      "Portuguese and Spanish sailors used this small, easy-to-steer ship for trade and exploration. Its shallow hull let it enter bays that larger ships had trouble reaching.",
+      "This light sailing vessel often carried triangular sails called lateen sails. Its crew could make progress against the wind by steering a zigzag course.",
+      "This was a small ocean-going ship used on early Atlantic expeditions. The Niña and the Pinta, two of the three ships that sailed with Columbus in 1492, were both this type of vessel."
+    ],
     "simple": "A caravel was a small, easy-to-steer ship used by Portuguese and Spanish sailors for trade and exploration. It sat shallow enough in the water to enter bays that were hard for larger ships to reach.",
     "detailed": "A caravel was a light sailing vessel that often carried triangular sails called lateen sails. With these sails, a crew could make progress against the wind by zigzagging.",
     "alternate": "Caravels were small ocean-going ships used on early Atlantic expeditions. The Niña and the Pinta, two of the three ships that sailed with Columbus in 1492, were caravels.",
@@ -31,6 +36,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Colony",
+    "quizDefinitions": [
+      "This is a territory ruled by another country. Large numbers of settlers from the ruling country moved to some such territories, while few moved to others.",
+      "A territory under outside rule can have a local assembly and still answer to a distant government. Its residents might elect representatives whose decisions the ruling country can overrule.",
+      "Puerto Rico under Spanish rule was an example of this type of territory governed by another country. Spain held power over the island for about four centuries, even as people there pushed for greater control of their own affairs."
+    ],
     "simple": "A colony is a territory ruled by another country. Some colonies attracted large numbers of settlers from the ruling country, while others had few.",
     "detailed": "A territory under outside rule can have a local assembly and still answer to a distant government. Its residents might elect representatives whose decisions the ruling country can overrule.",
     "alternate": "Puerto Rico under Spanish rule is an example of a territory governed by another country. Spain held power over the island for about four centuries, even as people there pushed for greater control of their own affairs.",
@@ -61,6 +71,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Mercantilism",
+    "quizDefinitions": [
+      "This economic policy used government control over trade to increase a country’s wealth and power. Its supporters wanted merchants to sell more abroad than they bought so that gold and silver would flow into the country.",
+      "Under this economic policy, rulers shaped trade to favor producers and merchants at home. A government might tax imported cloth so shoppers would buy cloth made by local weavers.",
+      "This trade policy let an empire direct colonial commerce for the benefit of the home country. England reserved much of its colonial shipping for English and colonial ships, limiting competition from Dutch merchants."
+    ],
     "simple": "Mercantilism was an economic policy that used trade to increase a country’s wealth and power. Its supporters wanted merchants to sell more abroad than they bought so that gold and silver would flow into the country.",
     "detailed": "Under this approach, rulers shaped trade to favor producers and merchants at home. A government might tax imported cloth so shoppers would buy cloth made by local weavers.",
     "alternate": "In this system, an empire wrote trade rules so that its home country would benefit from its colonies. England, for example, reserved much of its colonial shipping for English and colonial ships, limiting competition from Dutch merchants.",
@@ -91,6 +106,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Export",
+    "quizDefinitions": [
+      "As a verb, this means to sell a good or service to someone in another country. A farmer does this when she sells part of her apple harvest to a buyer across the border.",
+      "As a noun, this is what a country sells abroad. When Brazil ships a sack of coffee to a buyer in France, the same shipment counts as an import in France.",
+      "This trade term applies when a business sells its services to a customer abroad. A translator in Mexico can do this by translating a document for a client in Canada without shipping a physical product."
+    ],
     "simple": "To export is to sell a good or service to someone in another country. A farmer exports apples when she sells part of her harvest to a buyer across the border.",
     "detailed": "An export is the product a country sells abroad. A sack of coffee shipped from Brazil to France is an export for Brazil and an import for France.",
     "alternate": "A service counts as an export when a business does paid work for a customer abroad. A translator in Mexico can export a translation to a client in Canada without shipping a physical product.",
@@ -121,6 +141,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Plantation",
+    "quizDefinitions": [
+      "This is a large farm or estate organized to grow crops for sale. Its fields often specialize in one crop, such as tobacco.",
+      "On this kind of large farming estate, workers might both grow a crop and prepare it for buyers. A Caribbean sugar estate could include fields, a cane mill, and a boiling house where workers made sugar.",
+      "In the colonial Americas, these large farms supplied distant markets with crops such as rice and sugar. Many owners built their wealth by forcing enslaved people to cultivate and harvest the crops."
+    ],
     "simple": "A plantation is a large farm or estate organized to grow crops for sale. Its fields often specialize in one crop, such as tobacco.",
     "detailed": "On this kind of commercial estate, workers might both grow a crop and prepare it for buyers. A Caribbean sugar estate could include fields, a cane mill, and a boiling house where workers made sugar.",
     "alternate": "In the colonial Americas, these large farms supplied distant markets with crops such as rice and sugar. Many owners built their wealth by forcing enslaved people to cultivate and harvest the crops.",
@@ -151,6 +176,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Middle Passage",
+    "quizDefinitions": [
+      "This was the forced sea journey that carried captive Africans across the Atlantic to the Americas during the slave trade. Many had already been forced to travel far from home before they reached the ships.",
+      "During this part of the slave trade, crews confined captive Africans aboard ships bound for the Americas. Overcrowding and disease made the crossing deadly, and some captives resisted by organizing revolts at sea.",
+      "Slave traders forced millions of African children and adults across the Atlantic on this voyage. Most of the captives who survived the crossing landed in the Caribbean or South America."
+    ],
     "simple": "The Middle Passage was the forced sea journey that carried captive Africans across the Atlantic to the Americas during the slave trade. Many had already been forced to travel far from home before they reached the ships.",
     "detailed": "During this part of the slave trade, crews confined captive Africans aboard ships bound for the Americas. Overcrowding and disease made the crossing deadly, and some captives resisted by organizing revolts at sea.",
     "alternate": "Slave traders forced millions of African children and adults across the Atlantic on this voyage. Most of the captives who survived the crossing landed in the Caribbean or South America.",
@@ -181,6 +211,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Peninsulares",
+    "quizDefinitions": [
+      "Members of this group were Spaniards born in Spain who moved to its colonies. A merchant born in Madrid who settled in colonial Lima belonged to this group, whatever his occupation.",
+      "In Spanish America, this social group consisted of Spaniards who had moved there from their birthplace in Spain. Their children of Spanish ancestry born in the Americas belonged to a different group called creoles.",
+      "The Spanish crown often favored this group of Spain-born colonists when it filled high offices in the Americas. Some American-born people of Spanish descent resented seeing important government and church positions go to newcomers from Spain."
+    ],
     "simple": "Peninsulares were Spaniards born in Spain who moved to its colonies. A merchant born in Madrid who settled in colonial Lima belonged to this group, whatever his occupation.",
     "detailed": "Colonial Spanish society placed immigrants from Spain in a different group from their American-born children. The parents belonged to the Spain-born group, while children of Spanish ancestry born in the Americas were called creoles.",
     "alternate": "The Spanish crown often favored this group of Spain-born colonists when it filled high offices in the Americas. Some American-born people of Spanish descent resented seeing important government and church positions go to newcomers from Spain.",
@@ -211,6 +246,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Encomienda",
+    "quizDefinitions": [
+      "This Spanish royal grant gave its holder permission to collect tribute from an Indigenous community in the Americas. Community members could be forced to hand over goods or work for the person who held the grant.",
+      "Under this Spanish colonial system, the crown assigned an Indigenous community’s tribute to a grant holder. The holder was supposed to protect the people and arrange Christian instruction, but many used their power to force people to work.",
+      "This Spanish colonial grant entitled its holder to tribute from a particular Indigenous community. The grant itself gave the holder no ownership of the community’s land, although some holders also seized land."
+    ],
     "simple": "An encomienda was permission from the Spanish crown to collect tribute from an Indigenous community in the Americas. The people could be forced to hand over goods or work for the person who held the grant.",
     "detailed": "Under this Spanish colonial system, the crown assigned a community’s tribute to a grant holder. The holder was supposed to protect the people and arrange Christian instruction, but many used their power to force people to work.",
     "alternate": "An encomienda was a Spanish colonial grant tied to the tribute owed by a particular Indigenous community. The grant itself gave the holder no ownership of the community’s land, although some holders also seized land.",
@@ -241,6 +281,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Cash Crop",
+    "quizDefinitions": [
+      "This is a plant grown mainly so the farmer can sell its harvest. Even a food such as rice fits this term when most of it goes to buyers.",
+      "Farmers plant this kind of product chiefly to earn income, so the price buyers offer can shape what goes into their fields. High prices for cotton, for example, can encourage farmers to devote more land to it.",
+      "This is a farm product planted chiefly to sell, whether the buyer is across town or across an ocean. In colonial South Carolina, enslaved workers grew and processed indigo for merchants who sold its blue dye."
+    ],
     "simple": "A cash crop is a plant grown mainly so the farmer can sell its harvest. Even a food such as rice is a cash crop when most of it goes to buyers.",
     "detailed": "Cash crops are planted to earn income, so the price buyers offer can change which crops a farmer chooses. For example, high prices for cotton can encourage farmers to devote more fields to it.",
     "alternate": "A cash crop is a farm product planted chiefly to sell, whether the buyer is across town or across an ocean. In colonial South Carolina, enslaved workers grew and processed indigo for merchants who sold its blue dye.",
@@ -271,6 +316,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Commodity",
+    "quizDefinitions": [
+      "This is a basic good that people buy and sell, such as wheat, sugar, or silver. A merchant can buy it in bulk and divide it among several buyers.",
+      "This kind of basic product from one supplier can usually be replaced by the same grade of product from another. A miller can compare prices on two grain shipments if both contain wheat of similar quality.",
+      "This is a basic good with trade value even when people swap it directly for another good. On trans-Saharan trade routes, merchants traded salt from the Sahara for gold from West Africa."
+    ],
     "simple": "A commodity is a basic good that people buy and sell, such as wheat, sugar, or silver. A merchant can buy it in bulk and divide it among several buyers.",
     "detailed": "In a market, a commodity is a product that one supplier can usually replace with another supplier’s product of the same grade. A miller can compare the price of two grain shipments if both contain wheat of similar quality.",
     "alternate": "A commodity is a basic good with trade value even when people exchange it directly for another good. On trans-Saharan trade routes, merchants exchanged salt from the Sahara for gold from West Africa.",
@@ -301,6 +351,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Imperialism",
+    "quizDefinitions": [
+      "This is a policy of extending a country’s power over people and lands beyond its borders. A government following this policy might take territory by force and install its own officials to rule it.",
+      "A state pursues this policy when it uses its strength to control another society’s choices. It can gain power indirectly by pressing local rulers to give its merchants special privileges.",
+      "This policy pursues control abroad through military force, political pressure, or economic demands. After Britain defeated China in the First Opium War, it forced China to open five ports to British trade."
+    ],
     "simple": "Imperialism is a policy of extending a country’s power over people and lands beyond its borders. A government might take territory by force and install its own officials to rule it.",
     "detailed": "A state practices imperialism when it uses its strength to control another society’s choices. It can gain power indirectly by pressing local rulers to give its merchants special privileges.",
     "alternate": "Imperialism is the pursuit of control abroad through conquest, political pressure, or economic demands. After Britain defeated China in the First Opium War, it forced China to open five ports to British trade.",
@@ -331,6 +386,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Sphere of Influence",
+    "quizDefinitions": [
+      "This is a region where an outside country has special power over local decisions. The region can keep its own government while the foreign power shapes its trade or politics.",
+      "In this kind of region, a foreign state can steer what happens without taking full charge of the local government. It might use that position to secure mining rights for its companies.",
+      "This is an area where one outside power claims privileges that its rivals do not share. In late nineteenth-century China, foreign powers sought such advantages in particular regions while China kept formal authority over them."
+    ],
     "simple": "A sphere of influence is a region where an outside country has special power over local decisions. The region can keep its own government while the foreign power shapes its trade or politics.",
     "detailed": "A foreign state has a sphere of influence when it can steer what happens in a particular area without taking full charge of its government. It might use that position to secure mining rights for its companies.",
     "alternate": "A sphere of influence is an area where one outside power claims privileges that its rivals do not share. In late nineteenth-century China, foreign powers sought such advantages in particular regions while China kept formal authority over them.",
@@ -361,6 +421,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Empire",
+    "quizDefinitions": [
+      "This is a political system in which one ruling power controls several territories and peoples. People in different parts of it may speak different languages and follow different customs.",
+      "This political unit forms when a state extends its rule over other lands and keeps authority over them. Its central government can appoint governors or allow local rulers to stay in power if they obey the center.",
+      "This type of state joins many territories under a dominant ruler or government. In South America, the Inca used roads from their capital at Cusco to connect distant provinces across the Andes."
+    ],
     "simple": "An empire is a political system in which one ruling power controls several territories and peoples. People in different parts of it may speak different languages and follow different customs.",
     "detailed": "An empire forms when a state extends its rule over other lands and keeps authority over them. It can appoint governors or allow local rulers to stay in power if they obey the center.",
     "alternate": "An empire joins many territories under a dominant ruler or government. In South America, the Inca used roads from their capital at Cusco to connect distant provinces across the Andes.",
@@ -391,6 +456,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Columbian Exchange",
+    "quizDefinitions": [
+      "This was the movement of people, plants, animals, and diseases between the Americas and the rest of the world after 1492. Crops that Indigenous Americans had grown for centuries, including maize, became staple foods on other continents.",
+      "This historical process began when regular Atlantic voyages after 1492 carried living things between the Eastern and Western Hemispheres. Sailors brought livestock on purpose, while travelers also spread infections such as smallpox without knowing it.",
+      "This lasting transfer of living things linked the Americas with Europe, Africa, and Asia as Atlantic crossings became regular after 1492. Cassava from South America became a food crop in Africa, while wheat crossed the Atlantic to the Americas."
+    ],
     "simple": "The Columbian Exchange was the movement of people, plants, animals, and diseases between the Americas and the rest of the world after 1492. Crops that Indigenous Americans had grown for centuries, including maize, became staple foods on other continents.",
     "detailed": "The term describes how regular Atlantic voyages after 1492 carried living things between the Eastern and Western Hemispheres. Sailors brought livestock on purpose, while travelers also spread infections such as smallpox without knowing it.",
     "alternate": "The Columbian Exchange was a lasting transfer of living things that linked the Americas with Europe, Africa, and Asia after Columbus’s first Atlantic crossing. Cassava from South America became a food crop in Africa, while wheat crossed the Atlantic to the Americas.",
@@ -421,6 +491,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Shogun",
+    "quizDefinitions": [
+      "This commander headed Japan’s military government. The emperor remained on the throne even when the commander made the country’s most important political decisions.",
+      "The Japanese emperor granted this title to the ruler of the military government. Under the Tokugawa family, the holder could require powerful regional lords to spend part of their time at his seat of government.",
+      "This was the top office in Japan’s warrior government, and it could pass from one family member to another. The Tokugawa family held it for more than 250 years and governed from Edo, the city now called Tokyo."
+    ],
     "simple": "A shogun was the commander who headed Japan’s military government. The emperor remained on the throne even when the shogun made the country’s most important political decisions.",
     "detailed": "Shogun was a title the Japanese emperor granted to a military ruler. Under the Tokugawa family, the shogun could require powerful lords to spend part of their time at his seat of government.",
     "alternate": "A shogun held the top office in Japan’s warrior government, and that office could pass from one family member to another. The Tokugawa family held it for more than 250 years and governed from Edo, the city now called Tokyo.",
@@ -451,6 +526,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Daimyo",
+    "quizDefinitions": [
+      "This Japanese lord ruled a territory called a domain. He could call on samurai in his service to defend it.",
+      "In Japan’s warrior society, this regional landholder governed his own domain. Taxes on the harvest helped support his officials and pay the warriors who served him.",
+      "Under Japan’s Tokugawa military government, these regional lords often governed their domains from castle towns. Around each lord’s castle, samurai lived alongside the merchants and craftspeople who supplied the town."
+    ],
     "simple": "A daimyo was a Japanese lord who ruled a territory called a domain. He could call on samurai in his service to defend it.",
     "detailed": "In Japan’s warrior society, a daimyo was a landholding ruler with a government of his own. Taxes on the harvest helped support his officials and pay the warriors who served him.",
     "alternate": "Under the Tokugawa shoguns, daimyo were regional rulers who often governed their domains from castle towns. Around a lord’s castle, samurai lived alongside the merchants and craftspeople who supplied the town.",
@@ -481,6 +561,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Capitalism",
+    "quizDefinitions": [
+      "In this economic system, individuals or companies own businesses and try to earn a profit. A bakery earns a profit when its sales bring in more money than it costs to make and sell the bread.",
+      "In this kind of economy, private owners decide what to produce and compete for customers in markets. If buyers start choosing a rival’s shoes, a shoemaker might change the design or lower the price.",
+      "This economic system lets private investors buy shares in a business and earn part of its profit. Investors who help pay for a trading ship can share its earnings, but they risk losing their investment if the voyage fails."
+    ],
     "simple": "Capitalism is an economic system in which individuals or companies own businesses and try to earn a profit. A bakery earns a profit when its sales bring in more money than it costs to make and sell the bread.",
     "detailed": "In a capitalist economy, private owners decide what to produce and compete for customers in markets. If buyers start choosing a rival’s shoes, a shoemaker might change the design or lower the price.",
     "alternate": "Capitalism lets people invest money in businesses, own a share of them, and earn part of the profit. Investors who help pay for a trading ship can share its earnings, but they risk losing their investment if the voyage fails.",
@@ -511,6 +596,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Aristocracy",
+    "quizDefinitions": [
+      "This is a small, privileged upper class whose members often inherit their rank. A child born into a noble family might inherit both a title and a large estate.",
+      "This is a form of government in which a small group of nobles holds the power to rule. In such a system, membership in the right family can determine who gets to make laws.",
+      "This social class consists of high-ranking families whose position gives them unusual political influence. In medieval England, kings called on earls and barons for support when they wanted to raise taxes."
+    ],
     "simple": "An aristocracy is a small, privileged upper class whose members often inherit their rank. A child born into a noble family might inherit both a title and a large estate.",
     "detailed": "Aristocracy can mean a form of government in which a small group of nobles holds the power to rule. In such a system, membership in the right family can determine who gets to make laws.",
     "alternate": "A society’s aristocracy consists of high-ranking families whose social position gives them unusual influence. In medieval England, kings called on earls and barons for support when they wanted to raise taxes.",
@@ -541,6 +631,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Conquistador",
+    "quizDefinitions": [
+      "This was a soldier or commander who fought to take territory for Spain, especially in the Americas. Many joined these expeditions hoping to gain wealth, land, or royal rewards.",
+      "This was a participant in Spain’s armed campaigns to bring Indigenous peoples and their lands under Spanish rule. In Mexico, Indigenous allies supplied many of the fighters and pursued political goals of their own.",
+      "This person joined a military expedition to seize territory for Spain in the Americas. Francisco Pizarro, whose expedition captured the Inca ruler Atahualpa in 1532 during a struggle for control of the Andes, was one example."
+    ],
     "simple": "A conquistador was a soldier or commander who fought to take territory for Spain, especially in the Americas. Many joined expeditions hoping to gain wealth, land, or royal rewards.",
     "detailed": "A conquistador took part in Spain’s armed campaigns to bring Indigenous peoples and their lands under Spanish rule. In Mexico, Indigenous allies supplied many of the fighters and pursued political goals of their own.",
     "alternate": "In the Americas, a conquistador was someone who joined an expedition to seize territory for Spain. Francisco Pizarro’s expedition captured the Inca ruler Atahualpa in 1532 during a struggle for control of the Andes.",
@@ -571,6 +666,11 @@ const HISTORY_TERMS = [
   },
   {
     "term": "Conquest",
+    "quizDefinitions": [
+      "This is the act of gaining control of land or people by military force. Winning a battle becomes part of such a takeover when the winning side uses its victory to rule a territory.",
+      "This takeover happens when an invading power defeats the defenders and gains control of their territory. Capturing a capital can be one step in the process, even if people elsewhere keep resisting.",
+      "This is the taking of another ruler’s lands by military force. After the Norman invasion of England in 1066, William took the crown and gave much of the English nobles’ land to his followers."
+    ],
     "simple": "Conquest is the act of gaining control of land or people by military force. Winning a battle becomes part of a conquest when the winning side uses that victory to take power over a territory.",
     "detailed": "A conquest happens when an invading power defeats the defenders and takes over their territory. Capturing a capital can be one step in that process, even if people elsewhere keep resisting.",
     "alternate": "In history, conquest describes the use of an army to bring another ruler’s lands under new rule. After the Norman invasion of England in 1066, William took the crown and gave much of the English nobles’ land to his followers.",

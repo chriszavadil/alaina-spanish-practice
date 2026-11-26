@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="style.css">
   <script defer src="core.js"></script>
   <script defer src="terms.js"></script>
+  <script defer src="matching.js"></script>
   <script defer src="practice.js"></script>
   <script defer src="app.js"></script>
 </head>
@@ -21,6 +22,7 @@
     <div class="top-inner">
       <a href="#overview" class="brand" aria-label="History Studio, Empires overview"><span class="brand-icon" data-icon="book"></span><span>History Studio</span></a>
       <nav aria-label="Empires unit">
+        <a href="#matching" data-nav="matching">Word bank quiz</a>
         <a href="#overview" data-nav="overview">Overview</a>
         <a href="#vocabulary" data-nav="vocabulary">Word list</a>
         <a href="#review" data-nav="review">My review <span id="review-nav-count"></span></a>
@@ -30,7 +32,8 @@
   </header>
   <main id="main" tabindex="-1">
     <p id="storage-note" class="storage" role="status" hidden>Your browser couldn’t save this session. You can keep studying while this tab is open.</p>
-    <div id="overview-view"></div>
+    <div id="matching-view" hidden></div>
+    <div id="overview-view" hidden></div>
     <div id="library-view" hidden></div>
     <div id="review-view" hidden></div>
     <div id="practice-view" class="panel" hidden></div>
