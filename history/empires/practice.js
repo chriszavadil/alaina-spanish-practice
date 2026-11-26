@@ -5,9 +5,9 @@
   const key = 'alaina-empires-practice-round-v1';
   const modes = {
     flash: ['Flashcards', 'Say what the term means, then flip the card.'],
-    choice: ['Meaning Quiz', 'Read a definition and choose the term it describes.'],
+    choice: ['Meaning Quiz', 'Match each clue to its term. Later rounds test different details about the same word.'],
     scenario: ['Scenario Practice', 'Read a situation and decide which term best explains it.'],
-    type: ['Recall Challenge', 'Read a definition and type the matching term.'],
+    type: ['Recall Challenge', 'Type the term that fits the clue. Later rounds test different details about the same word.'],
     listen: ['Listen & Spell', 'Listen to a term and type what you hear.']
   };
   const { escapeHTML: escape, shuffle, normalize } = window.HistoryCore;
@@ -105,26 +105,36 @@
       (round && !round.finished ? button('Resume paused round', 'resume') : '') + '</div></div>', focus);
   }
 
+  function nextVariant(lastSeen, term, count) {
+    const last = lastSeen[term];
+    const index = Number.isInteger(last) ? (last + 1) % count : Math.floor(Math.random() * count);
+    lastSeen[term] = index;
+    return index;
+  }
+
   function begin() {
     const { mode, pool, size } = setup;
     if (!pool.length) return;
     const scenarioLast = { ...(round?.scenarioLast || {}) };
+    const definitionLast = { ...(round?.definitionLast || {}) };
     const questions = shuffle(pool).slice(0, size).map(term => {
       const card = findCard(term);
       const specified = Array.isArray(card.distractors) ? card.distractors.filter(findCard) : [];
       const candidates = [...new Set([...shuffle(specified), ...shuffle(cards().map(c => c.term))])].filter(t => t !== term);
       let prompt = card.clue || card.simple;
-      if (mode === 'scenario' && Array.isArray(card.scenarios) && card.scenarios.length) {
-        const count = card.scenarios.length;
-        const previous = scenarioLast[term];
-        const index = Number.isInteger(previous) ? (previous + 1) % count : Math.floor(Math.random() * count);
-        prompt = card.scenarios[index];
-        scenarioLast[term] = index;
+      let definitionIndex = 0;
+      if (mode === 'scenario' && card.scenarios?.length) {
+        prompt = card.scenarios[nextVariant(scenarioLast, term, card.scenarios.length)];
       }
-      return { term, prompt,
+      if (mode === 'choice' || mode === 'type') {
+        const clues = [card.clue, ...(card.extraClues || [])];
+        definitionIndex = nextVariant(definitionLast, term, clues.length);
+        prompt = clues[definitionIndex];
+      }
+      return { term, prompt, definitionIndex,
         options: shuffle([term, ...candidates.slice(0,3)]), answer: '', flipped: false, result: null };
     });
-    round = { mode, questions, scenarioLast, index: 0, finished: false };
+    round = { mode, questions, scenarioLast, definitionLast, index: 0, finished: false };
     persist();
     questionView();
     if (mode === 'listen') hear();
@@ -164,8 +174,7 @@
     const heading = '<h3>' + escape(card.term) + '</h3>';
     if (!q.flipped) return heading + '<p>What does this term mean in your own words?</p>' +
       '<div class="practice-actions">' + button('Flip card', 'flip', 'primary') + '</div>';
-    return heading + '<p>' + escape(card.simple) + '</p><p class="practice-note">' + escape(card.detailed) +
-      '</p><p class="practice-note">' + escape(card.alternate) + '</p><blockquote>' + escape(card.example) + '</blockquote>' +
+    return heading + host().definitionsHTML(card) + '<blockquote>' + escape(card.example) + '</blockquote>' +
       '<div class="practice-sketch">' + host().sketch(card.term) + '<p>' + escape(card.draw) + '</p><p>' + escape(card.why) + '</p></div>' +
       '<div class="practice-actions">' + button('Study again', 'again') + button('I knew it', 'known', 'primary') + '</div>';
   }
@@ -192,7 +201,7 @@
         const feedback = q.result === 'shown' ? 'Answer revealed' : q.result === 'correct' ? 'Correct!' : 'The answer is ' + q.term + '.';
         body += '<div class="practice-feedback ' + (q.result === 'correct' ? 'is-correct' : q.result === 'incorrect' ? 'is-incorrect' : '') +
           '" role="status" tabindex="-1" id="practice-feedback"><strong>' + escape(feedback) + '</strong><p>' +
-          escape(q.term + ' — ' + card.simple) + '</p>' +
+          escape(q.term + ' — ' + ([card.simple, card.detailed, card.alternate][q.definitionIndex] || card.simple)) + '</p>' +
           (mode === 'scenario' && card.example ? '<p>' + escape(card.example) + '</p>' : '') + '</div>' +
           '<div class="practice-actions">' + button(round.index + 1 === round.questions.length ? 'See results' : 'Next question', 'next', 'primary') + '</div>';
       }

@@ -155,12 +155,19 @@
       <a class="secondary" href="#review">${icon('bookmark')}${remaining ? 'Review '+remaining+' '+(remaining===1?'term':'terms') : 'My review list'}</a>
     </section>`;
   }
+  function definitionsHTML(item) {
+    const texts = [item.simple, item.detailed, item.alternate];
+    const labels = item.definitionLabels || ['Meaning', 'Details', 'Context'];
+    return '<div class="definition-list">' + texts.map((text, i) =>
+      '<div><b>' + esc(labels[i]) + '</b><p>' + esc(text) + '</p></div>'
+    ).join('') + '</div>';
+  }
   function detail(item) {
     const name = item.term, id = slug(name), pos = terms.indexOf(item), saved = state.saved.includes(name);
     return `<article class="entry" id="term-${id}">
       <div class="entry-head"><div><p class="eyebrow">Worksheet term ${pos+1} of ${terms.length}</p><h2>${esc(name)}</h2></div>
         <div class="entry-tools"><button data-read="${id}" class="icon-button" aria-label="Hear ${esc(name)}" title="Hear term">${icon('sound')}</button><button data-save="${id}" class="icon-button" aria-pressed="${saved}" aria-label="${saved?'Remove bookmark for':'Bookmark'} ${esc(name)}" title="${saved?'Remove bookmark':'Bookmark term'}">${icon('bookmark')}</button></div></div>
-      <p id="entry-audio-status" role="status"></p><h3>Definitions</h3><div class="definition-list"><div><b>In everyday words</b><p>${esc(item.simple)}</p></div><div><b>In more detail</b><p>${esc(item.detailed)}</p></div><div><b>Another way to say it</b><p>${esc(item.alternate)}</p></div></div>
+      <p id="entry-audio-status" role="status"></p><h3>Definitions</h3>${definitionsHTML(item)}
       <h3>Example sentence</h3><p class="example">${esc(item.example)}</p>
       <div class="draw-area"><figure>${sketch(name)}</figure><div><h3>Easy drawing</h3><p>${esc(item.draw)}</p><h3>Why the drawing fits</h3><p>${esc(item.why)}</p></div></div>
       ${item.scenarios?.length ? '<details class="situations"><summary>Practice situations ('+item.scenarios.length+')</summary><ol>'+item.scenarios.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ol></details>' : ''}
@@ -233,7 +240,7 @@
     if(event.target.id==='term-search') {query=event.target.value;renderWordList(bySlug.get(location.hash.split('/')[1]));}
   });
   document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
-  window.Empires={report, sketch, playFeedback, say, home:()=>{location.hash='overview';}};
+  window.Empires={report, sketch, definitionsHTML, playFeedback, say, home:()=>{location.hash='overview';}};
   window.addEventListener('hashchange',route);
   route();
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).catch(()=>{});
